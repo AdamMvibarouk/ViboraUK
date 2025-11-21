@@ -4,11 +4,11 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <section id="hero">
-        <div class ="content-wrapper">
+    <section id="header-section">
+        
         <title>My Basket</title>
         <link rel="icon"  type="image/x-icon" href="basket_icon.png"/>
-        </div>
+        
     </section>
         
         
@@ -22,7 +22,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" /
 
     
         <header id ="main-header" class ="logo">
-        <img src ="icon.png" alt="icon" width="100" height="100"/>
+        <img src ="icon.png" alt="icon" />
         
         <nav>
             <ul>
@@ -43,21 +43,45 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" /
         </div>
 
         
-        <table cellspacing="10"  cellpadding="5" id="table" >>
+        <table cellspacing="15"  cellpadding="10" id="table" >
             
             <tr> <div
           class="about-content"> 
                 <th align='justify'><h2> Products</h2></th>  
                 <th align='justify'><h2> Quantity<h2></th > 
-                <th align='justify'><h2>Price(INCL VAT)<h2></th>
+                <th align='justify'><h2> Price(INCL VAT)<h2></th>
                     </div>
                 </tr>
+                
+                <tr>
+                                    
+                <th align='justify'><br><h2> Total:</h2></th>  
 
-            <tr> <button type = "submit" name = proceed value = "">Proceed To Checkout: </button> </tr>
+                <th align='justify'></th >
+
+                </tr>
+                <tr>
+                    
+                </tr>
+
 </tr>
+            
+
         
         </table>
-    </div>
+        <form id ="basket-form">
+            <br><input type ="text" name="name" placeholder="Name On Card" required/>
+    
+            <br><input type ="text" name="name" placeholder="Card Number"required/>
+            <br>
+            <br><input type ="text"  name="expiry" placeholder="Expiry Date (MM/YY)" required/>  <input type ="text"  name="cvv" pattern ="" placeholder="CVV (***)" required/>           
+            
+            
+          
+          <br><br><button class="Submission-button"  type = "submit" name = proceed value = "">Pay Now</button>
+            
+        </form>
+
         
         
     </body>
