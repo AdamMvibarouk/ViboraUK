@@ -1,0 +1,247 @@
+:root {
+    --primary-green: #9fc100;
+    --dark-bg: #ffffff;
+    --light-text: #1a1a1a;
+    --card-bg: #d3d3d3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.navbar {
+    background-color: var(--card-bg);
+    padding: 1rem 2rem;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    position: sticky;
+    top: 0;
+}
+
+#logo img {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--light-text);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: var(--primary-green);
+}
+
+#basket img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+#banner {
+    height: 80vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.banner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: brightness(0.5);
+}
+
+.banner-txt h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+}
+
+.banner-txt h2 {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    font-weight: 700;
+}
+
+#store {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem 0;
+    background: none;
+    border-radius: 0;
+    text-align: center;
+}
+
+#store h2 {
+    color: var(--primary-green);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+#search {
+    width: 60%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 2px solid var(--primary-green);
+    font-size: 1rem;
+}
+
+#featured-rackets,
+#featured-tshirts,
+#featured-accessories {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    text-align: center;
+}
+
+#featured-rackets h2,
+#featured-tshirts h2,
+#featured-accessories h2 {
+    color: var(--primary-green);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    #banner {
+        height: 50vh;
+    }
+
+    .banner-txt h1 {
+        font-size: 2.2rem;
+    }
+}
+#payment-banner {
+    position: relative;
+    margin: 3rem 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#payment-banner-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+#payment-banner-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+#payment-banner-txt {
+    padding: 2.5rem 3rem;
+    color: white;
+    text-align: center;
+}
+
+#payment-methods-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+#paypal-method,
+#klarna-method {
+    max-width: 320px;
+    text-align: left;
+}
+
+#paypal-method img,
+#klarna-method img {
+    width: 160px;
+    height: auto;
+    background: #ffffff;
+    border: 4px solid #ffffff;
+    margin-bottom: 1rem;
+}
+
+#paypal-method h4,
+#klarna-method h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+#paypal-method h5,
+#klarna-method h5 {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+#paypal-method a,
+#klarna-method a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.9rem;
+    position: relative;
+    padding-bottom: 0.2rem;
+}
+
+#paypal-method a::after,
+#klarna-method a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 2px;
+    background: #00a2ff;
+}
+
+@media (max-width: 768px) {
+    #payment-methods-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
