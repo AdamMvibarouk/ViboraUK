@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 29, 2025 at 07:34 PM
+-- Generation Time: Nov 29, 2025 at 07:45 PM
 -- Server version: 8.0.44-0ubuntu0.22.04.1
 -- PHP Version: 8.3.21
 
@@ -49,6 +49,21 @@ CREATE TABLE `carts` (
   `user_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_items`
+--
+
+CREATE TABLE `cart_items` (
+  `cart_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `cart_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
+  `line_total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -461,6 +476,14 @@ ALTER TABLE `carts`
   ADD KEY `fk_carts_user` (`user_id`);
 
 --
+-- Indexes for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`cart_item_id`),
+  ADD KEY `fk_cart_items_cart` (`cart_id`),
+  ADD KEY `fk_cart_items_product` (`product_id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -623,6 +646,13 @@ ALTER TABLE `addresses`
 --
 ALTER TABLE `carts`
   ADD CONSTRAINT `fk_carts_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD CONSTRAINT `fk_cart_items_cart` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`cart_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cart_items_product` FOREIGN KEY (`product_id`) REFERENCES `product_variants` (`variant_id`) ON DELETE RESTRICT;
 
 --
 -- Constraints for table `contact_requests`
