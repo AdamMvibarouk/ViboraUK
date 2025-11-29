@@ -16,13 +16,13 @@ app.use(express.json());
 
 // API routes
 
-app.use("api/products", productsRoute);
-app.use("api/cart", cartRoute);
-app.use("api/orders", ordersRoute);
-app.use("api/users", usersRoute);
+app.use("/api/products", productsRoute);
+app.use("/api/cart", cartRoute);
+app.use("/api/orders", ordersRoute);
+app.use("/api/users", usersRoute);
 
 const PORT = process.env.PORT || 5000;
 
-App.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
 });
