@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 29, 2025 at 10:36 AM
+-- Generation Time: Nov 29, 2025 at 07:34 PM
 -- Server version: 8.0.44-0ubuntu0.22.04.1
 -- PHP Version: 8.3.21
 
@@ -65,6 +65,18 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `name`, `slug`, `description`, `is_active`, `created_at`) VALUES
+('352883ba-cd3f-11f0-982a-005056b707be', 'Padel Rackets', 'padel-rackets', 'Performance padel rackets for all levels', 1, '2025-11-29 16:19:40'),
+('352887e2-cd3f-11f0-982a-005056b707be', 'Padel Balls', 'padel-balls', 'High-quality padel balls', 1, '2025-11-29 16:19:40'),
+('352891b3-cd3f-11f0-982a-005056b707be', 'Racket Bags', 'racket-bags', 'Bags to carry and protect your padel rackets', 1, '2025-11-29 16:19:40'),
+('3528928f-cd3f-11f0-982a-005056b707be', 'Grips & Accessories', 'grips-accessories', 'Overgrips and accessories', 1, '2025-11-29 16:19:40'),
+('35289332-cd3f-11f0-982a-005056b707be', 'Sportswear', 'sportswear', 'Padel clothing and apparel', 1, '2025-11-29 16:19:40'),
+('352893d0-cd3f-11f0-982a-005056b707be', 'Coaching & Services', 'coaching-services', 'Padel coaching lessons and services', 1, '2025-11-29 16:19:40');
 
 -- --------------------------------------------------------
 
@@ -144,6 +156,23 @@ CREATE TABLE `padel_attributes` (
   `name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `padel_attributes`
+--
+
+INSERT INTO `padel_attributes` (`attribute_id`, `name`) VALUES
+('40ffd25b-cd3f-11f0-982a-005056b707be', 'Balance'),
+('40ffde32-cd3f-11f0-982a-005056b707be', 'Ball Pack Size'),
+('40ffded5-cd3f-11f0-982a-005056b707be', 'Clothing Size'),
+('40ffdd89-cd3f-11f0-982a-005056b707be', 'Colour'),
+('40ffdc2d-cd3f-11f0-982a-005056b707be', 'Core'),
+('40ffe0f4-cd3f-11f0-982a-005056b707be', 'Duration (minutes)'),
+('40ffdfa8-cd3f-11f0-982a-005056b707be', 'Gender'),
+('40ffdcd8-cd3f-11f0-982a-005056b707be', 'Grip Size'),
+('40ffe04e-cd3f-11f0-982a-005056b707be', 'Level'),
+('40ffdb4a-cd3f-11f0-982a-005056b707be', 'Shape'),
+('40ffce70-cd3f-11f0-982a-005056b707be', 'Weight (g)');
+
 -- --------------------------------------------------------
 
 --
@@ -163,6 +192,15 @@ CREATE TABLE `products` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `description`, `image_url`, `base_price`, `is_active`, `created_at`, `updated_at`) VALUES
+('650e3d6b-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Venom Pro Padel Racket', 'viborauk-venom-pro-padel-racket', 'Advanced-level racket with teardrop shape and medium balance.', '/images/products/rackets/venom-pro.jpg', '199.99', 1, '2025-11-29 16:21:01', '2025-11-29 16:21:01'),
+('650f7cec-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Strike Control Padel Racket', 'viborauk-strike-control-padel-racket', 'Control-oriented round-shaped racket ideal for intermediate players.', '/images/products/rackets/strike-control.jpg', '159.99', 1, '2025-11-29 16:21:01', '2025-11-29 16:21:01'),
+('78bbde7a-cd3f-11f0-982a-005056b707be', '352893d0-cd3f-11f0-982a-005056b707be', '1-to-1 Padel Coaching Session', '1-to-1-padel-coaching-session', 'Personal coaching session with a ViboraUK certified coach.', '/images/products/coaching/1-to-1-session.jpg', '40.00', 1, '2025-11-29 16:21:34', '2025-11-29 16:21:34');
+
 -- --------------------------------------------------------
 
 --
@@ -179,6 +217,16 @@ CREATE TABLE `product_variants` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `product_variants`
+--
+
+INSERT INTO `product_variants` (`variant_id`, `product_id`, `sku`, `variant_name`, `price`, `is_active`, `created_at`) VALUES
+('e85ae4e1-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-360-BLK', 'Venom Pro 360g - Black', '199.99', 1, '2025-11-29 16:24:41'),
+('e85c3963-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-370-BLU', 'Venom Pro 370g - Blue', '209.99', 1, '2025-11-29 16:24:41'),
+('f2aec2a8-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-60', '1-to-1 Coaching 60 Minutes', '40.00', 1, '2025-11-29 16:24:58'),
+('f2b02b11-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-90', '1-to-1 Coaching 90 Minutes', '55.00', 1, '2025-11-29 16:24:58');
+
 -- --------------------------------------------------------
 
 --
@@ -190,6 +238,17 @@ CREATE TABLE `product_variant_attributes` (
   `attribute_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_variant_attributes`
+--
+
+INSERT INTO `product_variant_attributes` (`variant_id`, `attribute_id`, `value`) VALUES
+('e85ae4e1-cd3f-11f0-982a-005056b707be', '40ffce70-cd3f-11f0-982a-005056b707be', '360'),
+('e85ae4e1-cd3f-11f0-982a-005056b707be', '40ffdd89-cd3f-11f0-982a-005056b707be', 'Black'),
+('e85c3963-cd3f-11f0-982a-005056b707be', '40ffce70-cd3f-11f0-982a-005056b707be', '370'),
+('e85c3963-cd3f-11f0-982a-005056b707be', '40ffdd89-cd3f-11f0-982a-005056b707be', 'Blue'),
+('f2aec2a8-cd3f-11f0-982a-005056b707be', '40ffe0f4-cd3f-11f0-982a-005056b707be', '60');
 
 -- --------------------------------------------------------
 
@@ -275,6 +334,14 @@ CREATE TABLE `roles` (
   `role_name` enum('customer','admin') COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+('3470626c-cd3e-11f0-982a-005056b707be', 'customer'),
+('347065ea-cd3e-11f0-982a-005056b707be', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -319,6 +386,16 @@ CREATE TABLE `stock_levels` (
   `reorder_threshold` int NOT NULL DEFAULT '0'
 ) ;
 
+--
+-- Dumping data for table `stock_levels`
+--
+
+INSERT INTO `stock_levels` (`variant_id`, `on_hand`, `reserved`, `reorder_threshold`) VALUES
+('e85ae4e1-cd3f-11f0-982a-005056b707be', 20, 0, 5),
+('e85c3963-cd3f-11f0-982a-005056b707be', 15, 0, 5),
+('f2aec2a8-cd3f-11f0-982a-005056b707be', 0, 0, 0),
+('f2b02b11-cd3f-11f0-982a-005056b707be', 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -337,6 +414,14 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password_hash`, `first_name`, `last_name`, `phone`, `must_change_password`, `created_at`, `updated_at`) VALUES
+('f5403f50-cd3e-11f0-982a-005056b707be', 'macdonald@viborauk.com', '<HASHED_ADMIN_PASSWORD>', 'Macdonald', 'Admin', '07000000000', 1, '2025-11-29 16:17:53', '2025-11-29 16:17:53'),
+('f5404352-cd3e-11f0-982a-005056b707be', 'customer1@viborauk.com', '<HASHED_CUSTOMER_PASSWORD>', 'Alex', 'Player', '07111111111', 0, '2025-11-29 16:17:53', '2025-11-29 16:17:53');
+
 -- --------------------------------------------------------
 
 --
@@ -347,6 +432,15 @@ CREATE TABLE `user_roles` (
   `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `role_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
+('f5403f50-cd3e-11f0-982a-005056b707be', '3470626c-cd3e-11f0-982a-005056b707be'),
+('f5404352-cd3e-11f0-982a-005056b707be', '3470626c-cd3e-11f0-982a-005056b707be'),
+('f5403f50-cd3e-11f0-982a-005056b707be', '347065ea-cd3e-11f0-982a-005056b707be');
 
 --
 -- Indexes for dumped tables
