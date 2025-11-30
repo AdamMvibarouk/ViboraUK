@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-R">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bags</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="Vibora UK.png">
+                <span>VIBORA UK</span>
+            </a>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Rackets</a></li>
+                <li><a href="#">Sportswear</a></li>
+                <li class="dropdown">
+                    <a href="#">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Bags</a></li>
+                        <li><a href="#">Shoes</a></li>
+                        <li><a href="#">Balls</a></li>
+                        <li><a href="#">Services</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div class="login">
+            <a href="#" class="basket-link">
+                <img src="basket.png" alt="Basket" class="basket-icon">
+            </a>
+            
+            <a href="#" class="login-btn">Login</a>
+        </div>
+    </header>
+
+    <div class="page-title">
+            <h1>Bags</h1>
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search Products">
+        </div>
+        <div class="filter-container">
+        <div class="filter">
+        <label for="racketbrands">Brand:</label>
+            <select name="racketbrands" id="racketbrands">
+                <option value="all">All</option>
+                <option value="bullpadel">Bullpadel</option>
+                <option value="y1">Y1</option>
+                <option value="nox">NOX</option>
+                <option value="head">Head</option>
+            </select>
+        </div>
+        <div class="filter">
+        <label for="price">Price:</label>
+            <select name="price" id="price">
+                <option value="all">All</option>
+                <option value="under50">Under £50</option>
+                <option value="50to75">£50-75</option>
+                <option value="75to100">£75-100</option>
+                <option value="100to150">£100-150</option>
+                <option value="over150">£150+</option>
+            </select>
+        </div>
+        <div class="filter">
+        <label for="level">Level:</label>
+            <select name="level" id="level">
+                <option value="all">All</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        <div class="filter">
+        <label for="material">Material:</label>
+            <select name="level" id="level">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+            </select>
+        </div>
+        </div>
+        <div class="products-container" id="productsContainer">
+        <div class="product-card">
+            <img src="images/racket1.jpg" alt="Racket image">
+            <div class="product-info">
+                <div class="product-name">Y1 Mirage</div>
+                <div class="product-bottom">
+                    <div class="product-price">£99.99</div>
+                    <button>See Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="images/racket1.jpg" alt="Racket image">
+            <div class="product-info">
+                <div class="product-name">Y1 Panna</div>
+                <div class="product-bottom">
+                    <div class="product-price">£79.99</div>
+                    <button>See Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="images/racket1.jpg" alt="Racket image">
+            <div class="product-info">
+                <div class="product-name">Bullpadel Vertex 04</div>
+                <div class="product-bottom">
+                    <div class="product-price">£249.99</div>
+                    <button>See Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="images/racket1.jpg" alt="Racket image">
+            <div class="product-info">
+                <div class="product-name">Head Delta Pro</div>
+                <div class="product-bottom">
+                    <div class="product-price">£179.99</div>
+                    <button>See Details</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+</body>
