@@ -21,21 +21,40 @@
      </head>
 
      
-     <header id ="main-header" class ="logo">
-        <img src ="icon.png" alt="icon" width="100" height="100"/>
+    <body>
 
-
-    <nav>
+    <header id ="main-header">
+            <div class ="logo">
+            
+        <a href="index.html">
+            <img src ="icon.png" alt="icon" />
+        <span>VIBORA UK</span>
+        </a>
+        </div>
+        
+        <nav>
             <ul>
                 <li><a href="#">HOME</a></li>
                 <li><a href="#">RACKETS</a></li>
                 <li><a href="#">SPORTSWEAR</a></li>
+                <li class="dropdown">
+                    <a href="#">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Bags</a></li>
+                        <li><a href="#">Shoes</a></li>
+                        <li><a href="#">Balls</a></li>
+                        <li><a href="#">Services</a></li>
+                    </ul></li>
                 <li><a href="#">MORE INFO</a></li>
                 <li><a href="#">PROFILE</a></li>
-                <li><div class="basket_icon"><img src ="basket.png" alt="baket" width="50" height="50"/></div></li>
-            </ul>
+                
         </nav>
-    
+        <div class="login">
+            <a href="login.html" class="basket-link">
+                <img src="basket.png" alt="Basket" class="basket-icon">
+            </a>
+            
+            <a href="#" class="login-btn">Login</a>
     </header>
 
 
@@ -53,7 +72,7 @@
 
 
 
-    </body>
+   
 
 
 
@@ -63,14 +82,18 @@
 
 
 <footer>
-    <h5>@ ViboraUK ltd</h5>
-    <div class = credentials>
-        <h6>Terms and Conditions</h6>
-        <h6>Privacy Policy</h6>
-        <h6>Cookies</h6>
-        <h6>Delivery Information</h6>
-        <h6>Returns</h6>
-        <h6>Contact</h6>
+    <h5>@ ViboraUK Ltd</h5>
+    <div class = "credentials">
+        <h6> <a href="">Terms and Conditions</a></h6>
+        <h6><a href ="">Privacy Policy</a></h6>
+        <h6><a href ="">Cookies</a></h6>
+        <h6><a href="">Delivery Information</a></h6>
+        <h6><a href ="">Returns</a></h6>
+        <h6><a href ="">Contact</a></h6>
         
     </div>
+    <script src="script.js"></script>
 </footer>
+
+    </body>
+</html>
