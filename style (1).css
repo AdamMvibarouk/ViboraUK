@@ -352,3 +352,7 @@ footer {
     border-top: 1px solid var(--card-bg);
     color: #888;
 }
+footer h6{
+    color: #ea0000;
+
+}
