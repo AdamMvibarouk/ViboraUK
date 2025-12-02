@@ -291,3 +291,17 @@ nav ul li a.active {
   width: 150px; /* Fixed or flexible width */
 }
 
+footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--card-bg);
+    color: #888;
+}
+footer a{
+    color: inherit;
+}
+
+page-title {
+  text-align: center;
+}
