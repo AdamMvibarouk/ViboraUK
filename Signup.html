@@ -70,8 +70,8 @@
         <h2>Enter the specified details below</h2>
     </div>
         <form id ="signup-form">
-            <input type ="text" name="name" placeholder="First Name" required/>
-            <input type ="text" name="name" placeholder="Surname"required/>
+            <input type ="text" name="name" id="first_name" placeholder="First Name" required/>
+            <input type ="text" name="name" id="last_name" placeholder="Surname"required/>
             <label for="birthday">Date of Birth:</label>
 			<input type="date" id="birthday" name="birthday" required/>
             <br>
@@ -81,7 +81,8 @@
             <input type ="password" id="password" name="password" placeholder="Password" required />
             <input type ="password" id="passwordconfirm" name="passwordconfirm" placeholder="Password Confirmation" required />
             <br>
-            <input type="tel" name="PhoneNumber"placeholder="Phone Number(optional)"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+            <input type="tel" id ="phone"name="PhoneNumber"placeholder="Phone Number(optional)"pattern="[0-9]{11}"/>
+            
 
             <br>
              How do you prefer to be contacted by?
@@ -90,6 +91,8 @@
             <br>
 
             <button class="Submission-button" type= "submit">submit</button> <br>
+            <div id ="signup-message">
+        </div>
             <br>
         </form>
         <br>
@@ -123,7 +126,10 @@
         
     </div>
     <script src="script.js"></script>
+    
 </footer>
 
-    </body>
+<script src="js/api.js"></script>
+<script src="js/Signup.js"></script>
+</body>
 </html>
