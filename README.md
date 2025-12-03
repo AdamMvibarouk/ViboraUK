@@ -1,78 +1,88 @@
-Backend Summary – Order Processing & Integration
+# Backend Summary – Order Processing & Integration
 
-This backend implementation covers all responsibilities assigned to the Order Processing & Backend Integration Engineer.
-The system provides the required functionality for handling products, baskets, and order workflows, and is fully prepared for integration with the frontend.
+This backend handles all order processing, cart management, product retrieval, and authentication integration for the Vibora UK e-commerce system.
 
-Implemented Features
+---
 
-1. Product API
+## Authentication (Provided by Anesh)
 
-A full product endpoint has been created to allow the frontend to retrieve product data from the database.
-Includes:
+### Endpoints
 
-Fetching all products
+| Method | Endpoint             | Description                                |
+| ------ | -------------------- | ------------------------------------------ |
+| POST   | `/api/auth/register` | Register a new user                        |
+| POST   | `/api/auth/login`    | Log in and receive a JWT token             |
+| GET    | `/api/auth/profile`  | Retrieve user information (requires token) |
 
-Filtering products by category
+**Technologies Used**
 
-Fetching an individual product
+- JWT authentication
+- Bcrypt password hashing
 
-This data will be used by the frontend when displaying product listings and item details.
+---
 
-2. Basket / Cart System
+## Cart System (Ahmed Feature)
 
-A complete basket workflow has been implemented.
-Includes:
+Handles adding items, updating quantities, and displaying basket contents.
 
-Creating or locating a user’s active cart
+### Endpoints
 
-Adding items to the cart
+| Method | Endpoint                       | Description                                                         |
+| ------ | ------------------------------ | ------------------------------------------------------------------- |
+| GET    | `/api/cart/:userId`            | Retrieve the user's active cart and its items                       |
+| POST   | `/api/cart/add`                | Add a product to the cart (automatically creates a cart if missing) |
+| PATCH  | `/api/cart/update/:cartItemId` | Update item quantity                                                |
+| DELETE | `/api/cart/remove/:cartItemId` | Remove a cart item                                                  |
 
-Updating item quantities
+### Key Features
 
-Removing items
+- Automatically creates a cart using UUID
+- Recalculates pricing on updates
+- Supports dynamic product pricing and product data
 
-Fetching the user’s current basket
+---
 
-This enables the frontend to manage the shopping basket dynamically.
+## Orders (Ahmed Feature)
 
-3. Checkout & Order Processing
+Handles checkout, order creation, price totals, and order history.
 
-A full checkout route has been developed, handling:
+### Endpoints
 
-Order creation
+| Method | Endpoint                      | Description                           |
+| ------ | ----------------------------- | ------------------------------------- |
+| POST   | `/api/orders/checkout`        | Creates an order from the user’s cart |
+| GET    | `/api/orders/history/:userId` | Returns all past orders for a user    |
 
-VAT and total cost calculation
+### Checkout Logic Includes
 
-First-order 10% discount for new customers
+- Subtotal calculation
+- New customer discount (10%)
+- VAT (20%)
+- Grand total calculation
+- Moves cart items into `order_items`
+- Clears the cart after checkout
 
-Converting cart items into order items
+---
 
-Clearing the cart after a successful checkout
+## Products API (Used by Frontend)
 
-The backend ensures accuracy of totals, item tracking, and correct order recording.
+### Endpoints
 
-4. Order History
+| Method | Endpoint            | Description                                                |
+| ------ | ------------------- | ---------------------------------------------------------- |
+| GET    | `/api/products`     | Retrieve all products (optional category filter supported) |
+| GET    | `/api/products/:id` | Retrieve details for a single product                      |
 
-Endpoints are included to allow the frontend to:
+---
 
-Display previous orders for a user
+## Completed Requirements
 
-Retrieve order totals, dates, status, and order numbers
+- Order placement implemented
+- Order updating implemented
+- Order tracking supported
+- Checkout workflow fully functional
+- Basket/cart system fully working
+- Backend integrated with frontend product and order pages
+- Meets all MVP backend requirements
 
-This supports the “Order History” page on the frontend.
-
-5. Backend Integration Structure
-
-The backend is fully structured and ready for the frontend team to connect using their scripts (scripts.js).
-All API routes follow a clean and consistent pattern:
-
-/api/products
-/api/cart
-/api/orders
-
-This makes it straightforward for the frontend developers to fetch data and update the UI.
-
-Outcome
-
-The backend now provides a complete order-processing pipeline, fully aligned with the project requirements.
-All routes are tested and ready for frontend integration.
+---
