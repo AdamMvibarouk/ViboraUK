@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * POST /api/auth/register
- * Body: { first_name, last_name, email, password, phone? }
+ * body: { first_name, last_name, email, password, phone? }
  */
 router.post("/register", async (req, res) => {
   try {
@@ -47,7 +47,7 @@ router.post("/register", async (req, res) => {
 
 /**
  * POST /api/auth/login
- * Body: { email, password }
+ * body: { email, password }
  */
 router.post("/login", async (req, res) => {
   try {
@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
 
 /**
  * GET /api/auth/profile
- * Header: Authorisation: Bearer <token>
+ * header: Authorisation: Bearer <token>
  */
 router.get("/profile", verifyToken, async (req, res) => {
   try {
