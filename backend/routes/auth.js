@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 const verifyToken = require("../middleware/authMiddleware");
@@ -16,7 +16,9 @@ router.post("/register", async (req, res) => {
     if (!first_name || !last_name || !email || !password) {
       return res
         .status(400)
-        .json({ message: "First name, last name, email and password are required" });
+        .json({
+          message: "First name, last name, email and password are required",
+        });
     }
 
     // checks if email already exists
@@ -54,7 +56,9 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const [users] = await db.query(
