@@ -1,17 +1,20 @@
 const express = require("express");
-const { db } = require("../db");
+const db = require("../db");
+const verifyToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+// all cart routes require a logged-in user
+router.use(verifyToken);
+
 /**
- * GET /api/cart/:userId
- * returns the latest cart for a user and its items.
+ * GET /api/cart
+ * returns the latest cart for the logged-in user and its items.
  */
-router.get("/:userId", async (req, res) => {
-  const userId = req.params.userId;
+router.get("/", async (req, res) => {
+  const userId = req.user.id;
 
   try {
-    // get latest cart for this user
     const [cartRows] = await db.query(
       "SELECT * FROM carts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
       [userId]
@@ -32,9 +35,9 @@ router.get("/:userId", async (req, res) => {
           ci.line_total,
           p.product_id,
           p.name
-       FROM cart_items ci
-       JOIN products p ON ci.product_id = p.product_id
-       WHERE ci.cart_id = ?`,
+          FROM cart_items ci
+          JOIN products p ON ci.product_id = p.product_id
+          WHERE ci.cart_id = ?`,
       [cartId]
     );
 
@@ -47,22 +50,20 @@ router.get("/:userId", async (req, res) => {
 
 /**
  * POST /api/cart/add
- *
- * Body: { userId, productId, quantity }
- * finds latest cart for user or creates a new one (UUID).
- * adds a line into cart_items.
+ * body: { productId, quantity }
  */
 router.post("/add", async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  const userId = req.user.id;
+  const { productId, quantity } = req.body;
 
-  if (!userId || !productId || !quantity) {
+  if (!productId || !quantity) {
     return res
       .status(400)
-      .json({ error: "userId, productId and quantity are required" });
+      .json({ error: "productId and quantity are required" });
   }
 
   try {
-    //get or create cart_id for this user
+    // gets or creates cart for this user
     let cartId;
 
     const [existing] = await db.query(
@@ -73,7 +74,6 @@ router.post("/add", async (req, res) => {
     if (existing.length) {
       cartId = existing[0].cart_id;
     } else {
-      // create a UUID for the new cart
       const [uuidRows] = await db.query("SELECT UUID() AS id");
       cartId = uuidRows[0].id;
 
@@ -83,7 +83,7 @@ router.post("/add", async (req, res) => {
       ]);
     }
 
-    //get unit price from products table
+    // gets unit price
     const [productRows] = await db.query(
       "SELECT base_price FROM products WHERE product_id = ?",
       [productId]
@@ -97,11 +97,10 @@ router.post("/add", async (req, res) => {
     const qty = Number(quantity);
     const lineTotal = unitPrice * qty;
 
-    //insert cart item
     await db.query(
       `INSERT INTO cart_items 
-         (cart_item_id, cart_id, product_id, quantity, unit_price, line_total)
-       VALUES (UUID(), ?, ?, ?, ?, ?)`,
+      (cart_item_id, cart_id, product_id, quantity, unit_price, line_total)
+      VALUES (UUID(), ?, ?, ?, ?, ?)`,
       [cartId, productId, qty, unitPrice, lineTotal]
     );
 
@@ -114,8 +113,7 @@ router.post("/add", async (req, res) => {
 
 /**
  * PATCH /api/cart/update/:cartItemId
- * Body: { quantity }
- * updates the quantity and line_total) for a cart item.
+ * body: { quantity }
  */
 router.patch("/update/:cartItemId", async (req, res) => {
   const { quantity } = req.body;
@@ -126,7 +124,6 @@ router.patch("/update/:cartItemId", async (req, res) => {
   }
 
   try {
-    // get current unit_price and product_id for this cart item
     const [rows] = await db.query(
       "SELECT unit_price FROM cart_items WHERE cart_item_id = ?",
       [cartItemId]
@@ -158,7 +155,6 @@ router.patch("/update/:cartItemId", async (req, res) => {
 
 /**
  * DELETE /api/cart/remove/:cartItemId
- * removes an item from the cart.
  */
 router.delete("/remove/:cartItemId", async (req, res) => {
   const cartItemId = req.params.cartItemId;
