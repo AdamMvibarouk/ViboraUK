@@ -74,15 +74,3 @@ Handles checkout, order creation, price totals, and order history.
 | GET    | `/api/products/:id` | Retrieve details for a single product                      |
 
 ---
-
-## Completed Requirements
-
-- Order placement implemented
-- Order updating implemented
-- Order tracking supported
-- Checkout workflow fully functional
-- Basket/cart system fully working
-- Backend integrated with frontend product and order pages
-- Meets all MVP backend requirements
-
----
