@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-R">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rackets</title>
     <link rel="stylesheet" href="style.css">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <header id="main-header">
@@ -19,11 +22,11 @@
                 <span>VIBORA UK</span>
             </a>
         </div>
-        
+
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
-               <li><a href="rackets.html" class="active">Rackets</a></li>
+                <li><a href="rackets.html" class="active">Rackets</a></li>
                 <li><a href="sportswear.html">Sportswear</a></li>
                 <li class="dropdown">
                     <a href="#">More</a>
@@ -38,27 +41,27 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-        
+
         <div class="login">
             <a href="#" class="basket-link">
                 <img src="basket.png" alt="Basket" class="basket-icon">
             </a>
-            
+
             <a href="#" class="login-btn">Login</a>
         </div>
     </header>
 
     <div class="page-title">
-            <h1>Rackets</h1>
+        <h1>Rackets</h1>
     </div>
-        <div class="searchbar">
-            <input type="text" id="searchInput" placeholder="Search Products">
-            <button id="searchBtn">OK</button>
-        </div>
+    <div class="searchbar">
+        <input type="text" id="searchInput" placeholder="Search Products">
+        <button id="searchBtn">OK</button>
+    </div>
 
-        <div class="filter-container">
+    <div class="filter-container">
         <div class="filter">
-        <label for="racketbrands">Brand:</label>
+            <label for="racketbrands">Brand:</label>
             <select name="racketbrands" id="racketbrands">
                 <option value="all">All</option>
                 <option value="bullpadel">Bullpadel</option>
@@ -68,7 +71,7 @@
             </select>
         </div>
         <div class="filter">
-        <label for="price">Price:</label>
+            <label for="price">Price:</label>
             <select name="price" id="price">
                 <option value="all">All</option>
                 <option value="under50">Under £50</option>
@@ -79,7 +82,7 @@
             </select>
         </div>
         <div class="filter">
-        <label for="level">Level:</label>
+            <label for="level">Level:</label>
             <select name="level" id="level">
                 <option value="all">All</option>
                 <option value="beginner">Beginner</option>
@@ -88,7 +91,7 @@
             </select>
         </div>
         <div class="filter">
-        <label for="material">Material:</label>
+            <label for="material">Material:</label>
             <select name="level" id="level">
                 <option value="a">A</option>
                 <option value="b">B</option>
@@ -96,24 +99,24 @@
                 <option value="d">D</option>
             </select>
         </div>
+    </div>
+    <div class="products-container" id="productsContainer"></div>
+    <script src="products.js"></script>
+    <br>
+    <footer>
+        <h5>@ ViboraUK Ltd</h5>
+        <div class="credentials">
+            <h6> <a href="">Terms and Conditions</a></h6>
+            <h6><a href="">Privacy Policy</a></h6>
+            <h6><a href="">Cookies</a></h6>
+            <h6><a href="">Delivery Information</a></h6>
+            <h6><a href="">Returns</a></h6>
+            <h6><a href="">Contact</a></h6>
+
         </div>
-        <div class="products-container" id="productsContainer"></div>
-        <script src="products.js"></script>
-        <br>
-        <footer>
-            <h5>@ ViboraUK Ltd</h5>
-            <div class = "credentials">
-                <h6> <a href="">Terms and Conditions</a></h6>
-                <h6><a href ="">Privacy Policy</a></h6>
-                <h6><a href ="">Cookies</a></h6>
-                <h6><a href="">Delivery Information</a></h6>
-                <h6><a href ="">Returns</a></h6>
-                <h6><a href ="">Contact</a></h6>
-        
-            </div>
-            <script src="script.js"></script>
-        </footer>
-        
-        </div>
+        <script src="script.js"></script>
+    </footer>
+
+    </div>
 
 </body>
