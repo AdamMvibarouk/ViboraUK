@@ -1,16 +1,17 @@
 const express = require("express");
-const { db } = require("../db");
+const db = require("../db");
 
 const router = express.Router();
 
 // GET /api/products
+// optional ?category_id=1
 router.get("/", async (req, res) => {
   try {
     const categoryId = req.query.category_id;
 
     let sql =
       "SELECT product_id, category_id, name, slug, base_price FROM products";
-    let params = [];
+    const params = [];
 
     if (categoryId) {
       sql += " WHERE category_id = ?";
