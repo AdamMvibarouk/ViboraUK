@@ -70,7 +70,7 @@ if (!searchInput) {
   // Use 'input' for immediate feedback as you type
   searchInput.addEventListener('input', filterProducts);
 
-  // Optional: run once on page load to apply any initial query (if input prefilled)
+  // run once on page load to apply any initial query (if input prefilled)
   document.addEventListener('DOMContentLoaded', filterProducts);
 }
 

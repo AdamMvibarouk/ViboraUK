@@ -15,14 +15,14 @@
     <header id="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="Vibora UK.png">
+                <img src="images/Vibora UK.png">
                 <span>VIBORA UK</span>
             </a>
         </div>
         
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="rackets.html">Rackets</a></li>
                 <li><a href="sportswear.html">Sportswear</a></li>
                 <li class="dropdown">
@@ -34,17 +34,17 @@
                         <li><a href="services.html">Services</a></li>
                     </ul>
                 </li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
             </ul>
         </nav>
         
         <div class="login">
-            <a href="#" class="basket-link">
-                <img src="basket.png" alt="Basket" class="basket-icon">
+            <a href="Basket.html" class="basket-link">
+                <img src="images/basket.png" alt="Basket" class="basket-icon" />
             </a>
             
-            <a href="#" class="login-btn">Login</a>
+            <a href="accountPage.html" class="login-btn">Login</a>
         </div>
     </header>
 
@@ -77,12 +77,11 @@
             </select>
         </div>
         <div class="filter">
-        <label for="level">Level:</label>
+        <label for="Gender">Gender:</label>
             <select name="level" id="level">
                 <option value="all">All</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
+                <option value="male">M</option>
+                <option value="female">F</option>
             </select>
         </div>
         <div class="filter">
@@ -93,6 +92,7 @@
                 <option value="c">C</option>
                 <option value="d">D</option>
             </select>
+        </div>
         </div>
         <div class="products-container" id="productsContainer"></div>
         <script src="shoes.js"></script>
