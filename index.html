@@ -4,32 +4,56 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vibora UK</title>
-        <link rel="stylesheet" href="styling.css">             <!--css file-->
+        <link rel="stylesheet" href="styling.css">  
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
      </head>
 
      <body>
-        <div class="navbar">
-
-            <a href="index.html" id="logo">
-                <img src="images/Vibora_UK_logo.png">                        <!--put img of logo so that when clicked will return to home-->
-            </a>
-
-            <a href="index.html">HOME</a>
-            <a href="rackets">RACKETS</a>            <!--put file names for "" -->
-            <a href="sportswear">SPORTSWEAR</a>
-            <a href="more-info">MORE INFO</a>
-            <a href="profile">PROFILE</a>
-
-            <a href="basket.html" id="basket">
-               <img src="images/shopping-basket-icon-png-3309830814.png">
-            </a>
-
-        </div>
-
+        <header id="main-header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                    <span>VIBORA UK</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="rackets">Rackets</a></li>
+                    <li><a href="sportswear">Sportswear</a></li>
+        
+                    <li class="dropdown">
+                        <a href="#">More</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="bags.html">Bags</a></li>
+                            <li><a href="shoes.html">Shoes</a></li>
+                            <li><a href="balls.html">Balls</a></li>
+                            <li><a href="services.html">Services</a></li>
+                        </ul>
+                    </li>
+        
+                    <li><a href="AboutUs.html">About Us</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="login">
+                <a href="Basket.html" class="basket-link">
+                    <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+                </a>
+                <a href="accountPage.html" class="login-btn">Login</a>
+            </div>
+        </header>
+        
+        
         <section id="banner">
             <div class="banner-image">
-               <img src="images/homepagebaanerimage.png">
+                <img src="images/homepagebaanerimage.png">
             </div>
             <div class="banner-txt">
                 <h1>VIBORA UK</h1>
@@ -44,20 +68,17 @@
 
      <section id="featured-rackets">
         <h2>FEATURED RACKETS</h2>
-        <!--BACKEND-->
-        <!--MOVING FEATURED RACKETS-->
+        <div class="products-container" id="featured-rackets-list"></div>
      </section>
 
-     <section id="featured-tshirts">
-        <h2>FEATURED T-SHIRTS</h2>
-        <!--BACKEND-->
-        <!--MOVING FEATURED T-SHIRTS-->
+     <section id="featured-balls">
+        <h2>FEATURED BALLS</h2>
+        <div class="products-container" id="featured-sportswear-list"></div>
      </section>
-     
-     <section id="featured-accessories">
-        <h2>FEATURED ACCESSORIES</h2>
-        <!--BACKEND-->
-        <!--MOVING FEATURED ACCESSORIES-->
+
+     <section id="featured-sportswear">
+        <h2>FEATURED SPORTSWEAR</h2>
+        <div class="products-container" id="featured-balls-list"></div>
      </section>
 
      <section id="payment-banner">
@@ -66,7 +87,7 @@
       </div>
   
       <div id="payment-banner-txt">
-          <h3>PAY AT YOUR PACE</h3>
+          <h2>PAY AT YOUR PACE</h2>
   
           <div id="payment-methods-row">
   
@@ -86,9 +107,25 @@
   
           </div>
       </div>
-  </section>
+    </section>
 
+
+    <footer>
+        <h4>@ ViboraUK</h4>
+        <div class = "credentials">
+            <h5> <a href="./footers/T_and_C.html">Terms and Conditions</a></h5>
+            <h5><a href ="./footers/PrivacyPolicy.html">Privacy Policy</a></h5>
+            <h5><a href ="./footers/Cookies.html">Cookies</a></h5>
+            <h5><a href="./footers/DeliveryInformation.html">Delivery Information</a></h5>
+            <h5><a href ="./footers/Returns.html">Returns</a></h5>
+            <h5><a href ="contact-us.html">Contact</a></h5>
+        </div>
+        <script src="tanimscript.js"></script>
+    </footer>
+
+    <footer>
+        <p>&copy; 2025 PADEL UK. All rights reserved.</p>
+    </footer>
 </body>
-
 
 </html>
