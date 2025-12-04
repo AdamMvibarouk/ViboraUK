@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchBtn = document.getElementById("searchBtn");
 
   // Shoes category ID
-  const SHOES_CATEGORY_ID = "e6660501-cf7e-11f0-a24b-005056b707be";
+  const SHOES_CATEGORY_ID = "e6660a4e-cf7e-11f0-a24b-005056b707be";
 
   if (!container) {
     console.error("productsContainer element not found");

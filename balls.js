@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchBtn = document.getElementById("searchBtn");
 
   // Balls category ID
-  const BALLS_CATEGORY_ID = "e6660501-cf7e-11f0-a24b-005056b707be";
+  const BALLS_CATEGORY_ID = "e6660920-cf7e-11f0-a24b-005056b707be";
 
   if (!container) {
     console.error("productsContainer element not found");
