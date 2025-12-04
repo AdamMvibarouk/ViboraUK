@@ -305,3 +305,41 @@ footer a{
 page-title {
   text-align: center;
 }
+
+.product-image img {
+    width: 350px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-details {
+    margin-left: 30px;
+    flex: 1;
+}
+
+.product-title{
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+}
+
+.price {
+    font-size: 1.6rem;
+    color: #28a745;
+    margin: 5px 0 20px 0;
+}
+
+.product-description {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.product-info li {
+    margin-bottom: 8px;
+}
+

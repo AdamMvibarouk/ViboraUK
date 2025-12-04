@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-R">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rackets</title>
+    <title>Product Details</title>
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="rackets.html" class="active">Rackets</a></li>
+                <li><a href="rackets.html">Rackets</a></li>
                 <li><a href="sportswear.html">Sportswear</a></li>
                 <li class="dropdown">
                     <a href="#">More</a>
@@ -51,58 +51,35 @@
         </div>
     </header>
 
-    <div class="page-title">
-        <h1>Rackets</h1>
-    </div>
-    <div class="searchbar">
-        <input type="text" id="searchInput" placeholder="Search Products">
-        <button id="searchBtn">OK</button>
+
+    <div class="product-container">
+        
+
+        <div class="product-details">
+            <h1 class="product-title">Product Name</h1>
+            
+            <div class="product-image">
+                <img src="your-product-image.jpg" alt="Product Image">
+            </div>
+            
+            <p class="product-description">
+                This is a short description of the product. Highlight key features,
+                quality, materials, and anything important for the buyer.
+            </p>
+
+            
+
+            <ul class="product-info">
+                <li><strong>Brand:</strong> Y1</li>
+                <li><strong>Availability:</strong> In stock</li>
+            </ul>
+            <div class="price">£79.99</div>
+            
+            <button class="add-cart-btn">Add to Cart</button>
+            
+        </div>
     </div>
 
-    <div class="filter-container">
-        <div class="filter">
-            <label for="racketbrands">Brand:</label>
-            <select name="racketbrands" id="racketbrands">
-                <option value="all">All</option>
-                <option value="bullpadel">Bullpadel</option>
-                <option value="y1">Y1</option>
-                <option value="nox">NOX</option>
-                <option value="head">Head</option>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="price">Price:</label>
-            <select name="price" id="price">
-                <option value="all">All</option>
-                <option value="under50">Under £50</option>
-                <option value="50to75">£50-75</option>
-                <option value="75to100">£75-100</option>
-                <option value="100to150">£100-150</option>
-                <option value="over150">£150+</option>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="level">Level:</label>
-            <select name="level" id="level">
-                <option value="all">All</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="material">Material:</label>
-            <select name="level" id="level">
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
-            </select>
-        </div>
-    </div>
-    <div class="products-container" id="productsContainer"></div>
-    <script src="rackets.js"></script>
-    <br>
     <footer>
         <h5>@ ViboraUK Ltd</h5>
         <div class="credentials">
@@ -117,7 +94,6 @@
         <script src="script.js"></script>
         
     </footer>
-
-    </div>
+        
 
 </body>

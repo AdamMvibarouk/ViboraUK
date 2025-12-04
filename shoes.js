@@ -3,17 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const searchBtn = document.getElementById("searchBtn");
 
-  // Rackets category ID
-  const RACKETS_CATEGORY_ID = "352883ba-cd3f-11f0-982a-005056b707be";
+  // Shoes category ID
+  const SHOES_CATEGORY_ID = "e6660501-cf7e-11f0-a24b-005056b707be";
 
   if (!container) {
     console.error("productsContainer element not found");
     return;
   }
 
-  // load ONLY racket products from backend
+  // load ONLY shoe products from backend
   function loadProducts() {
-    fetch(`http://localhost:5000/api/products?category_id=${RACKETS_CATEGORY_ID}`)
+    fetch(`http://localhost:5000/api/products?category_id=${SHOES_CATEGORY_ID}`)
       .then((res) => res.json())
       .then((products) => renderProducts(products))
       .catch((err) => console.error("Error loading products:", err));
@@ -51,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // search within racket products
+  // search within shoe products
   if (searchBtn && searchInput) {
     searchBtn.addEventListener("click", () => {
       const term = searchInput.value.toLowerCase().trim();
 
-      fetch(`http://localhost:5000/api/products?category_id=${RACKETS_CATEGORY_ID}`)
+      fetch(`http://localhost:5000/api/products?category_id=${SHOES_CATEGORY_ID}`)
         .then((res) => res.json())
         .then((products) =>
           renderProducts(
@@ -69,4 +69,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadProducts();
 });
-
