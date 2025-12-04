@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="product-name">${product.name}</div>
           <div class="product-bottom">
             ${priceHtml}
-            <button onclick="window.location.href='product.html?id=${product.product_id}'">
-              See Details
+            <button onclick="window.location.href='product-details.html?id=${product.product_id}'">
+                See Details
             </button>
           </div>
         </div>
