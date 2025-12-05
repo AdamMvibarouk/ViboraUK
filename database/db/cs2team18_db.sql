@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2025 at 12:26 PM
+-- Generation Time: Dec 05, 2025 at 01:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -74,6 +74,13 @@ CREATE TABLE `cart_items` (
   `line_total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`cart_item_id`, `cart_id`, `product_id`, `quantity`, `unit_price`, `line_total`) VALUES
+('d6877f55-d1d0-11f0-a4d7-107c6124c5e6', '935a1b50-d16c-11f0-99f5-107c6124c5e6', '14e2ddc5-d12f-11f0-a24b-005056b707be', 1, 59.99, 59.99);
+
 -- --------------------------------------------------------
 
 --
@@ -132,15 +139,15 @@ CREATE TABLE `enquiries` (
   `enquiry_id` char(36) NOT NULL,
   `email` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `enquiries`
 --
 
 INSERT INTO `enquiries` (`enquiry_id`, `email`, `message`, `created_at`) VALUES
-('f3209468-a449-4cf2-b90d-200b426ee5a6', 'ajaysangha1@gmail.com', 'This is a test', '2025-12-04 22:49:02');
+('dbe2ab78-bae8-4213-9b30-8b77aa7c1886', 'ahmedtesting@viborauk.com', 'test', '2025-12-05 12:04:09');
 
 -- --------------------------------------------------------
 
@@ -185,6 +192,7 @@ INSERT INTO `orders` (`order_id`, `user_id`, `order_number`, `status`, `subtotal
 ('0ddf1729-d174-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764895682212', 'paid', 44.99, 0.00, 9.00, 0.00, 53.99, '2025-12-05 00:48:02'),
 ('0e6abe44-d176-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764896542120', 'paid', 537.96, 53.80, 96.83, 0.00, 581.00, '2025-12-05 01:02:19'),
 ('120f5ca0-d172-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764894830246', 'paid', 169.97, 0.00, 33.99, 0.00, 203.96, '2025-12-05 00:33:50'),
+('501908ce-d1cf-11f0-a4d7-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764934878073', 'paid', 2639.86, 0.00, 527.97, 0.00, 3167.83, '2025-12-05 11:41:18'),
 ('53ec2b09-d176-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764896655787', 'paid', 189.97, 0.00, 37.99, 0.00, 227.96, '2025-12-05 01:04:15'),
 ('73ec3a77-d179-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764897997965', 'paid', 340.96, 0.00, 68.19, 0.00, 409.15, '2025-12-05 01:26:37'),
 ('85cf7fad-d179-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764898027976', 'paid', 44.99, 0.00, 9.00, 0.00, 53.99, '2025-12-05 01:27:07'),
@@ -220,6 +228,8 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `variant_id`, `quantity`
 ('0e6ba166-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 2, 249.99, 499.98),
 ('0e6c5865-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', '3a2810ed-cf7f-11f0-a24b-005056b707be', 1, 29.99, 29.99),
 ('0e6cbf25-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', 'e0a64b34-d12e-11f0-a24b-005056b707be', 1, 7.99, 7.99),
+('5019585f-d1cf-11f0-a4d7-107c6124c5e6', '501908ce-d1cf-11f0-a4d7-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 10, 249.99, 2499.90),
+('5019acd1-d1cf-11f0-a4d7-107c6124c5e6', '501908ce-d1cf-11f0-a4d7-107c6124c5e6', '3a2818d6-cf7f-11f0-a24b-005056b707be', 4, 34.99, 139.96),
 ('53ecf27d-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', '14e2ddc5-d12f-11f0-a24b-005056b707be', 1, 59.99, 59.99),
 ('53ee4b07-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', '67e58211-cf7f-11f0-a24b-005056b707be', 1, 69.99, 69.99),
 ('53eea809-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', 'e75613ac-d12e-11f0-a24b-005056b707be', 1, 59.99, 59.99),
