@@ -1,70 +1,55 @@
+balls.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("productsContainer");
   const searchInput = document.getElementById("searchInput");
   const searchBtn = document.getElementById("searchBtn");
+  const CATEGORY_ID = "e6660920-cf7e-11f0-a24b-005056b707be";
+  if (!container) return;
 
-  // Balls category ID
-  const BALLS_CATEGORY_ID = "e6660920-cf7e-11f0-a24b-005056b707be";
-
-  if (!container) {
-    console.error("productsContainer element not found");
-    return;
-  }
-
-  // load ONLY ball products from backend
-  function loadProducts() {
-    fetch(`http://localhost:5000/api/products?category_id=${BALLS_CATEGORY_ID}`)
-      .then((res) => res.json())
-      .then((products) => renderProducts(products))
-      .catch((err) => console.error("Error loading products:", err));
-  }
-
-  // rendering products
   function renderProducts(products) {
     container.innerHTML = "";
-
+    if (!products.length) {
+      container.innerHTML = "<p>No balls found.</p>";
+      return;
+    }
     products.forEach((product) => {
       const card = document.createElement("div");
       card.classList.add("product-card");
-
-      const imageUrl = "images/racket1.jpg";
-
-      let priceHtml = "";
-      if (product.base_price !== null && product.base_price !== undefined) {
-        priceHtml = `<div class="product-price">£${Number(product.base_price).toFixed(2)}</div>`;
-      }
-
+      const imageUrl = "images/balls1.jpg";
+      const priceHtml =
+        product.base_price !== null && product.base_price !== undefined
+          ? <div class="product-price">£${Number(product.base_price).toFixed(2)}</div>
+          : "";
       card.innerHTML = `
         <img src="${imageUrl}" alt="${product.name}">
         <div class="product-info">
           <div class="product-name">${product.name}</div>
           <div class="product-bottom">
             ${priceHtml}
-            <button onclick="window.location.href='product-details.html?id=${product.product_id}'">
-                See Details
-            </button>
+            <button onclick="window.location.href='product-details.html?id=${product.product_id}'">See Details</button>
           </div>
-        </div>
-      `;
-
+        </div>`;
       container.appendChild(card);
     });
   }
 
-  // search within ball products
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener("click", () => {
-      const term = searchInput.value.toLowerCase().trim();
+  function loadProducts(term = "") {
+    fetch(http://localhost:5000/api/products?category_id=${CATEGORY_ID})
+      .then((res) => res.json())
+      .then((products) => {
+        const filtered = term
+          ? products.filter((p) => p.name.toLowerCase().includes(term.toLowerCase()))
+          : products;
+        renderProducts(filtered);
+      })
+      .catch(() => {
+        container.innerHTML = "<p>Error loading balls.</p>";
+      });
+  }
 
-      fetch(`http://localhost:5000/api/products?category_id=${BALLS_CATEGORY_ID}`)
-        .then((res) => res.json())
-        .then((products) =>
-          renderProducts(
-            products.filter((p) => p.name.toLowerCase().includes(term))
-          )
-        )
-        .catch((err) => console.error("Error loading products:", err));
-    });
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener("click", () => loadProducts(searchInput.value.trim()));
   }
 
   loadProducts();

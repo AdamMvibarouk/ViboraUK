@@ -1,38 +1,67 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id");
+product-details.js
 
-    if (!productId) {
-        console.error("No product ID found in URL");
-        return;
-    }
+document.addEventListener("DOMContentLoaded", async () => {
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
+if (!productId) return;
 
-    // Fetch single product
-    fetch(`http://localhost:5000/api/products/${productId}`)
-        .then(res => res.json())
-        .then(product => renderProduct(product))
-        .catch(err => console.error("Error loading product:", err));
+const titleEl = document.querySelector(".product-title");
+const descEl = document.querySelector(".product-description");
+const priceEl = document.querySelector(".price");
+const addBtn = document.querySelector(".add-cart-btn");
+
+try {
+const res = await fetch(http://localhost:5000/api/products/${productId});
+const data = await res.json();
+
+if (!res.ok) {
+alert(data.error || "Error loading product");
+return;
+}
+
+if (titleEl) titleEl.textContent = data.name || "Product";
+if (priceEl && data.base_price != null) {
+priceEl.textContent = £${Number(data.base_price).toFixed(2)};
+}
+if (descEl) {
+descEl.textContent = data.description || "No description available.";
+}
+} catch (err) {
+console.error("Error loading product:", err);
+alert("Server error while loading product");
+}
+
+if (addBtn) {
+addBtn.addEventListener("click", async () => {
+const token = localStorage.getItem("token");
+if (!token) {
+alert("Please log in to add items to your basket.");
+return;
+}
+
+try {
+const res = await fetch("http://localhost:5000/api/cart/add", {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: Bearer ${token},
+},
+body: JSON.stringify({ productId, quantity: 1 }),
 });
 
+const data = await res.json();
 
-function renderProduct(product) {
-    // Page elements
-    const titleEl = document.querySelector(".product-title");
-    const imgEl = document.querySelector(".product-image img");
-    const descEl = document.querySelector(".product-description");
-    const priceEl = document.querySelector(".price");
-    const brandEl = document.querySelector(".product-info");
-
-    // Update content
-    titleEl.textContent = product.name;
-    descEl.textContent = product.description || "No description available.";
-    priceEl.textContent = `£${Number(product.base_price).toFixed(2)}`;
-
-    imgEl.src = "images/racket1.jpg";   // Replace when you have real images
-
-    // Brand + stock info
-    brandEl.innerHTML = `
-        <li><strong>Brand:</strong> ${product.brand || "Unknown"}</li>
-        <li><strong>Availability:</strong> ${product.stock > 0 ? "In Stock" : "Out of Stock"}</li>
-    `;
+if (!res.ok) {
+alert(data.error || "Server error while adding to basket");
+return;
 }
+
+alert("Item added to basket.");
+} catch (err) {
+console.error("Error adding to basket:", err);
+alert("Server error while adding to basket");
+}
+});
+}
+});
+

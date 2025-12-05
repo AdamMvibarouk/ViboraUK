@@ -18,7 +18,7 @@
     <header id="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="images/Vibora UK.png">
+                <img src="images/icon.png" alt="icon">
                 <span>VIBORA UK</span>
             </a>
         </div>
@@ -38,13 +38,13 @@
                     </ul>
                 </li>
                 <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="contact-us.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
 
         <div class="login">
             <a href="Basket.html" class="basket-link">
-                <img src="images/basket.png" alt="Basket" class="basket-icon" />
+                <img src="images/basket.png" alt="Basket" class="basket-icon">
             </a>
 
             <a href="accountPage.html" class="login-btn">Login</a>
@@ -54,6 +54,7 @@
     <div class="page-title">
         <h1>Sportswear</h1>
     </div>
+
     <div class="searchbar">
         <input type="text" id="searchInput" placeholder="Search Products">
         <button id="searchBtn">OK</button>
@@ -61,8 +62,8 @@
 
     <div class="filter-container">
         <div class="filter">
-            <label for="racketbrands">Brand:</label>
-            <select name="racketbrands" id="racketbrands">
+            <label>Brand:</label>
+            <select id="racketbrands">
                 <option value="all">All</option>
                 <option value="bullpadel">Bullpadel</option>
                 <option value="y1">Y1</option>
@@ -70,9 +71,10 @@
                 <option value="head">Head</option>
             </select>
         </div>
+
         <div class="filter">
-            <label for="price">Price:</label>
-            <select name="price" id="price">
+            <label>Price:</label>
+            <select id="price">
                 <option value="all">All</option>
                 <option value="under50">Under £50</option>
                 <option value="50to75">£50-75</option>
@@ -81,18 +83,19 @@
                 <option value="over150">£150+</option>
             </select>
         </div>
+
         <div class="filter">
-            <label for="level">Gender:</label>
-            <select name="level" id="level">
+            <label>Gender:</label>
+            <select id="level">
                 <option value="all">All</option>
                 <option value="male">M</option>
                 <option value="female">F</option>
-                
             </select>
         </div>
+
         <div class="filter">
-            <label for="material">Material:</label>
-            <select name="level" id="level">
+            <label>Material:</label>
+            <select id="material">
                 <option value="a">A</option>
                 <option value="b">B</option>
                 <option value="c">C</option>
@@ -100,24 +103,23 @@
             </select>
         </div>
     </div>
+
     <div class="products-container" id="productsContainer"></div>
     <script src="sportswear.js"></script>
-    <br>
+
     <footer>
         <h5>@ ViboraUK Ltd</h5>
         <div class="credentials">
-            <h6> <a href="">Terms and Conditions</a></h6>
+            <h6><a href="">Terms and Conditions</a></h6>
             <h6><a href="">Privacy Policy</a></h6>
             <h6><a href="">Cookies</a></h6>
             <h6><a href="">Delivery Information</a></h6>
             <h6><a href="">Returns</a></h6>
             <h6><a href="">Contact</a></h6>
-
         </div>
         <script src="script.js"></script>
-        
     </footer>
 
-    </div>
-
 </body>
+
+</html>
