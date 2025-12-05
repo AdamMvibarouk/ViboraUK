@@ -4,19 +4,14 @@ const verifyToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// all cart routes require a logged-in user
 router.use(verifyToken);
 
-/**
- * GET /api/cart
- * returns the latest cart for the logged-in user and its items.
- */
 router.get("/", async (req, res) => {
   const userId = req.user.id;
 
   try {
     const [cartRows] = await db.query(
-      "SELECT * FROM carts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
+      "SELECT cart_id FROM carts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
       [userId]
     );
 
@@ -24,34 +19,31 @@ router.get("/", async (req, res) => {
       return res.json({ cartId: null, items: [] });
     }
 
-    const cart = cartRows[0];
-    const cartId = cart.cart_id;
+    const cartId = cartRows[0].cart_id;
 
     const [items] = await db.query(
-      `SELECT 
-          ci.cart_item_id,
-          ci.quantity,
-          ci.unit_price,
-          ci.line_total,
-          p.product_id,
-          p.name
-          FROM cart_items ci
-          JOIN products p ON ci.product_id = p.product_id
-          WHERE ci.cart_id = ?`,
+      `
+      SELECT 
+        ci.cart_item_id,
+        ci.quantity,
+        ci.unit_price,
+        ci.line_total,
+        p.product_id,
+        p.name
+      FROM cart_items ci
+      JOIN products p ON ci.product_id = p.product_id
+      WHERE ci.cart_id = ?
+      `,
       [cartId]
     );
 
     res.json({ cartId, items });
   } catch (err) {
     console.error("Error loading cart:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error while loading cart" });
   }
 });
 
-/**
- * POST /api/cart/add
- * body: { productId, quantity }
- */
 router.post("/add", async (req, res) => {
   const userId = req.user.id;
   const { productId, quantity } = req.body;
@@ -62,28 +54,28 @@ router.post("/add", async (req, res) => {
       .json({ error: "productId and quantity are required" });
   }
 
+  const qtyToAdd = Number(quantity);
+
   try {
-    // gets or creates cart for this user
     let cartId;
 
-    const [existing] = await db.query(
+    const [existingCart] = await db.query(
       "SELECT cart_id FROM carts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
       [userId]
     );
 
-    if (existing.length) {
-      cartId = existing[0].cart_id;
+    if (existingCart.length) {
+      cartId = existingCart[0].cart_id;
     } else {
       const [uuidRows] = await db.query("SELECT UUID() AS id");
       cartId = uuidRows[0].id;
 
-      await db.query("INSERT INTO carts (cart_id, user_id) VALUES (?, ?)", [
-        cartId,
-        userId,
-      ]);
+      await db.query(
+        "INSERT INTO carts (cart_id, user_id) VALUES (?, ?)",
+        [cartId, userId]
+      );
     }
 
-    // gets unit price
     const [productRows] = await db.query(
       "SELECT base_price FROM products WHERE product_id = ?",
       [productId]
@@ -94,27 +86,63 @@ router.post("/add", async (req, res) => {
     }
 
     const unitPrice = Number(productRows[0].base_price);
-    const qty = Number(quantity);
-    const lineTotal = unitPrice * qty;
 
-    await db.query(
-      `INSERT INTO cart_items 
-      (cart_item_id, cart_id, product_id, quantity, unit_price, line_total)
-      VALUES (UUID(), ?, ?, ?, ?, ?)`,
-      [cartId, productId, qty, unitPrice, lineTotal]
+    const [existingItem] = await db.query(
+      `
+      SELECT cart_item_id, quantity 
+      FROM cart_items 
+      WHERE cart_id = ? AND product_id = ?
+      `,
+      [cartId, productId]
     );
 
-    res.json({ message: "Added to cart", cartId });
+    if (existingItem.length) {
+      const currentQty = Number(existingItem[0].quantity);
+      const newQty = currentQty + qtyToAdd;
+      const newLineTotal = unitPrice * newQty;
+
+      await db.query(
+        `
+        UPDATE cart_items
+        SET quantity = ?, line_total = ?
+        WHERE cart_item_id = ?
+        `,
+        [newQty, newLineTotal, existingItem[0].cart_item_id]
+      );
+
+      return res.json({
+        message: "Cart item updated",
+        cartId,
+        cart_item_id: existingItem[0].cart_item_id,
+        quantity: newQty,
+      });
+    }
+
+    const [uuidItemRows] = await db.query("SELECT UUID() AS id");
+    const cartItemId = uuidItemRows[0].id;
+    const lineTotal = unitPrice * qtyToAdd;
+
+    await db.query(
+      `
+      INSERT INTO cart_items 
+        (cart_item_id, cart_id, product_id, quantity, unit_price, line_total)
+      VALUES (?, ?, ?, ?, ?, ?)
+      `,
+      [cartItemId, cartId, productId, qtyToAdd, unitPrice, lineTotal]
+    );
+
+    res.json({
+      message: "Added to cart",
+      cartId,
+      cart_item_id: cartItemId,
+      quantity: qtyToAdd,
+    });
   } catch (err) {
     console.error("Error adding to cart:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error while adding to cart" });
   }
 });
 
-/**
- * PATCH /api/cart/update/:cartItemId
- * body: { quantity }
- */
 router.patch("/update/:cartItemId", async (req, res) => {
   const { quantity } = req.body;
   const cartItemId = req.params.cartItemId;
@@ -149,13 +177,10 @@ router.patch("/update/:cartItemId", async (req, res) => {
     res.json({ message: "Quantity updated" });
   } catch (err) {
     console.error("Error updating cart item:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error while updating cart item" });
   }
 });
 
-/**
- * DELETE /api/cart/remove/:cartItemId
- */
 router.delete("/remove/:cartItemId", async (req, res) => {
   const cartItemId = req.params.cartItemId;
 
@@ -172,7 +197,7 @@ router.delete("/remove/:cartItemId", async (req, res) => {
     res.json({ message: "Item removed from cart" });
   } catch (err) {
     console.error("Error removing cart item:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error while removing cart item" });
   }
 });
 

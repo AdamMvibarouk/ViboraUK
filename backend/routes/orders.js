@@ -4,10 +4,6 @@ const verifyToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-/**
- * GET /api/orders
- * returns all past orders for the logged-in user (with items).
- */
 router.get("/", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -26,11 +22,10 @@ router.get("/", verifyToken, async (req, res) => {
         o.placed_at       AS placedAt,
 
         oi.order_item_id  AS orderItemId,
-        oi.variant_id     AS variantId,
+        oi.variant_id     AS productId,
         oi.quantity       AS quantity,
         oi.unit_price     AS unitPrice,
         oi.line_total     AS lineTotal
-
       FROM orders o
       JOIN order_items oi ON o.order_id = oi.order_id
       WHERE o.user_id = ?
@@ -59,7 +54,7 @@ router.get("/", verifyToken, async (req, res) => {
 
       ordersById[row.orderId].items.push({
         order_item_id: row.orderItemId,
-        variant_id: row.variantId,
+        product_id: row.productId,
         quantity: row.quantity,
         unit_price: row.unitPrice,
         line_total: row.lineTotal,
@@ -76,37 +71,35 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-/**
- * POST /api/orders/checkout
- * handles checkout, first-order discount, totals.
- */
 router.post("/checkout", verifyToken, async (req, res) => {
   const userId = req.user.id;
 
   try {
-    // get users most recent cart
     const [cartRows] = await db.query(
       "SELECT * FROM carts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
       [userId]
     );
 
     if (!cartRows.length) {
-      return res.status(400).json({ error: "no cart found for user" });
+      return res.status(400).json({ error: "No basket found for this user" });
     }
 
     const cart = cartRows[0];
     const cartId = cart.cart_id;
 
     const [items] = await db.query(
-      "SELECT * FROM cart_items WHERE cart_id = ?",
+      `
+      SELECT cart_item_id, product_id, quantity, unit_price, line_total
+      FROM cart_items
+      WHERE cart_id = ?
+      `,
       [cartId]
     );
 
     if (!items.length) {
-      return res.status(400).json({ error: "cart is empty" });
+      return res.status(400).json({ error: "Your basket is empty" });
     }
 
-    // calculates subtotal
     let subtotal = 0;
     items.forEach((item) => {
       const lineTotal =
@@ -114,7 +107,6 @@ router.post("/checkout", verifyToken, async (req, res) => {
       subtotal += Number(lineTotal);
     });
 
-    // checks if user is new (for first order)
     const [pastOrders] = await db.query(
       "SELECT order_id FROM orders WHERE user_id = ? LIMIT 1",
       [userId]
@@ -124,22 +116,22 @@ router.post("/checkout", verifyToken, async (req, res) => {
     const discountRate = isNewCustomer ? 0.1 : 0;
     const discountTotal = subtotal * discountRate;
 
-    // totals
     const taxableBase = subtotal - discountTotal;
-    const taxTotal = taxableBase * 0.2; // 20% VAT
+    const taxTotal = taxableBase * 0.2;
     const shippingTotal = 0.0;
     const grandTotal = taxableBase + taxTotal + shippingTotal;
 
-    // create order uuid + number
     const [uuidRows] = await db.query("SELECT UUID() AS id");
     const orderId = uuidRows[0].id;
     const orderNumber = `ORD-${Date.now()}`;
 
     await db.query(
-      `INSERT INTO orders 
+      `
+      INSERT INTO orders 
         (order_id, user_id, order_number, status,
         subtotal, discount_total, tax_total, shipping_total, grand_total)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
       [
         orderId,
         userId,
@@ -153,7 +145,6 @@ router.post("/checkout", verifyToken, async (req, res) => {
       ]
     );
 
-    // insert items into order_items
     for (const item of items) {
       const [uuidItemRows] = await db.query("SELECT UUID() AS id");
       const orderItemId = uuidItemRows[0].id;
@@ -162,19 +153,22 @@ router.post("/checkout", verifyToken, async (req, res) => {
       const qty = Number(item.quantity);
       const lineTotal = unitPrice * qty;
 
+      const variantId = item.product_id;
+
       await db.query(
-        `INSERT INTO order_items
-        (order_item_id, order_id, variant_id, quantity, unit_price, line_total)
-        VALUES (?, ?, ?, ?, ?, ?)`,
-        [orderItemId, orderId, item.product_id, qty, unitPrice, lineTotal]
+        `
+        INSERT INTO order_items
+          (order_item_id, order_id, variant_id, quantity, unit_price, line_total)
+        VALUES (?, ?, ?, ?, ?, ?)
+        `,
+        [orderItemId, orderId, variantId, qty, unitPrice, lineTotal]
       );
     }
 
-    // clears cart
     await db.query("DELETE FROM cart_items WHERE cart_id = ?", [cartId]);
 
     res.json({
-      message: "order completed",
+      message: "Your order has been processed. You will receive a confirmation email shortly.",
       orderId,
       orderNumber,
       subtotal,
@@ -185,7 +179,7 @@ router.post("/checkout", verifyToken, async (req, res) => {
     });
   } catch (err) {
     console.error("checkout error:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error while processing your order" });
   }
 });
 
