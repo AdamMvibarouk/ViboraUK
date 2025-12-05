@@ -22,10 +22,16 @@ async function loginUser(data) {
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(body.message || "Login failed");
 
-  if (body.token) localStorage.setItem("authToken", body.token);
+  if (body.token) {
+    localStorage.setItem("token", body.token);
+  }
+  if (body.user) {
+    localStorage.setItem("user", JSON.stringify(body.user));
+  }
+
   return body;
 }
 
 function getAuthToken() {
-  return localStorage.getItem("authToken");
+  return localStorage.getItem("token");
 }

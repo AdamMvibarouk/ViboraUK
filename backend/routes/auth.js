@@ -1,14 +1,11 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 const verifyToken = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-/**
- * POST /api/auth/register
- * body: { first_name, last_name, email, password, phone? }
- */
 router.post("/register", async (req, res) => {
   try {
     const { first_name, last_name, email, password, phone } = req.body;
@@ -16,12 +13,9 @@ router.post("/register", async (req, res) => {
     if (!first_name || !last_name || !email || !password) {
       return res
         .status(400)
-        .json({
-          message: "First name, last name, email and password are required",
-        });
+        .json({ message: "First name, last name, email and password are required" });
     }
 
-    // checks if email already exists
     const [exists] = await db.query(
       "SELECT user_id FROM users WHERE email = ?",
       [email]
@@ -47,18 +41,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-/**
- * POST /api/auth/login
- * body: { email, password }
- */
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email and password are required" });
     }
 
     const [users] = await db.query(
@@ -100,10 +88,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/**
- * GET /api/auth/profile
- * header: Authorisation: Bearer <token>
- */
 router.get("/profile", verifyToken, async (req, res) => {
   try {
     const [rows] = await db.query(

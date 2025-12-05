@@ -1,43 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <section id="title">
-        <div class ="title">
-        <title>My Account</title>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account</title>
+
+    <link rel="icon" href="images/icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style1.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        .account-header {
+            background-color: #00135a;
+            padding: 20px 40px;
+        }
+
+        .account-title {
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .account-intro-bar {
+            background-color: #a2c802;
+            padding: 15px 40px;
+        }
+
+        .account-intro-text {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #141414;
+        }
+
+        .account-layout {
+            display: flex;
+            gap: 50px;
+            padding: 40px;
+        }
+
+        .account-left,
+        .account-right {
+            flex: 1;
+        }
+
+        .account-left h2,
+        .account-right h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        #login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #000;
+        }
+
+        .Submission-button {
+            padding: 10px 25px;
+            background-color: #00135a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #accountTable th,
+        #accountTable td {
+            padding: 10px 15px;
+        }
+
+        .credentials a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                <span>VIBORA UK</span>
+            </a>
         </div>
-    </section>
-        
-        <link rel="icon" href="images/icon.png" type="image/x-icon"/>
-        <link rel="stylesheet" type="text/css"
 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
-    <link rel = "stylesheet" type="text/css"  href="style1.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    </head>
-
-
-
-
-    <body>
-
-    <header id ="main-header">
-            <div class ="logo">
-            
-        <a href="index.html">
-            <img src ="images/icon.png" alt="icon" />
-        <span>VIBORA UK</span>
-        </a>
-        </div>
-        
         <nav>
             <ul>
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="rackets.html">RACKETS</a></li>
-                <li><a href="sportswear.html">SPORTSWEAR</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rackets.html">Rackets</a></li>
+                <li><a href="sportswear.html">Sportswear</a></li>
                 <li class="dropdown">
                     <a href="#">More</a>
                     <ul class="dropdown-menu">
@@ -45,111 +111,84 @@
                         <li><a href="shoes.html">Shoes</a></li>
                         <li><a href="balls.html">Balls</a></li>
                         <li><a href="services.html">Services</a></li>
-                    </ul></li>
-                <li><a href="AboutUs.html">ABOUT US</a></li>
-                <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
             </ul>
-                
         </nav>
+
         <div class="login">
             <a href="Basket.html" class="basket-link">
-                <img src="images/basket.png" alt="Basket" class="basket-icon">
+                <img src="images/shopping-basket-icon-png-3309830814.png" alt="Basket" class="basket-icon">
             </a>
-            
             <a href="accountPage.html" class="login-btn">Login</a>
-            </div>
+        </div>
     </header>
 
-
-
-        <div class="account-content">
-        <h2>My Account</h2>
-        
-        
-        <p>Welcome to your account page <br> Here you can manage your Personal Info
-        </p>
-   
-
-    <section id = "login">
-        <h2>Login</h2>
+    <div class="account-header">
+        <h2 class="account-title">MY ACCOUNT</h2>
     </div>
-        <form id ="login-form">
-            <input type="email" id="email" name="email" placeholder="Email" required/>
-            <br>
-            <input type ="password" id="password" name="password" placeholder="Password" required />
-            <br>
-            <h6><button type= "submit">submit</button> <br></h6>
-            <br>
-        </form>
-        Signup Below
-        <h6><a href="signup.html"><id="signup_button"><button>signup</button></a></h6>
-        <br>
-    </section>
 
+    <div class="account-intro-bar">
+        <h3 class="account-intro-text">Welcome to your account page – manage your personal information and view your
+            orders.</h3>
+    </div>
 
+    <div class="account-layout">
 
-    <table cellspacing="15"  cellpadding="10" id="accountTable" >
-            
-             
+        <div class="account-left">
+            <h2>Login</h2>
 
-                <tr><th align='justify'><br> Name: </th>
-                <td>Customers Name</td>  
-                </tr>
-                <tr><th align='justify'><br> Email Address: </th >
-                <td>Customers Email</td></tr>
-                <tr><th align='justify'><br> Contact Number: </th>
-                <td>Customers Phone Number</td></tr> 
+            <form id="login-form">
+                <input type="email" id="email" name="email" placeholder="Email" required />
+                <input type="password" id="password" name="password" placeholder="Password" required />
+                <button type="submit" class="Submission-button">Submit</button>
+                <div id="login-message"></div>
+            </form>
 
-        </table>    
+            <p>Signup below:</p>
+            <button id="signup_button" type="button" class="Submission-button"
+                onclick="window.location.href='signup.html'">
+                Signup
+            </button>
+        </div>
 
-        <table cellspacing="15"  cellpadding="10" id="table" >
-            
-            <tr> 
-                <th align='justify'><h2> Orders</h2></th>  
-                <th align='justify'><h2> Products</h2></th>  
-                <th align='justify'><h2> Quantity</h2></th > 
-                <th align='justify'><h2> Total(INCL VAT)</h2></th>
-                </tr>
-                
+        <div class="account-right">
+            <h2>Account Details</h2>
+
+            <table cellspacing="15" cellpadding="10" id="accountTable">
                 <tr>
-                <td align='justify'> <h2>Order 1</h2> </td>
-                <td align='justify'> <h2>Products1,2 etc</h2> </td>
-                <td align='justify'> <h2> 1 </h2> </td>
-                <td align='justify'> <h2> £10.00 </h2> </td>
+                    <th>Name:</th>
+                    <td id="acct-name">Customer Name</td>
                 </tr>
-        </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer>
-    <h5>@ ViboraUK Ltd</h5>
-    <div class = "credentials">
-       <h6> <a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
-        <h6><a href ="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
-        <h6><a href ="./footers/Cookies.html">Cookies</a></h6>
-        <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
-        <h6><a href ="./footers/Returns.html">Returns</a></h6>
-        
+                <tr>
+                    <th>Email Address:</th>
+                    <td id="acct-email">Customer Email</td>
+                </tr>
+                <tr>
+                    <th>Contact Number:</th>
+                    <td id="acct-phone">Customer Phone</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <script src="script.js"></script>
-</footer>
 
- <script src="js/api.js"></script>
-<script src="js/Login.js"></script>
+    <footer>
+        <h5>@ ViboraUK Ltd</h5>
+        <div class="credentials">
+            <h6><a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
+            <h6><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
+            <h6><a href="./footers/Cookies.html">Cookies</a></h6>
+            <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
+            <h6><a href="./footers/Returns.html">Returns</a></h6>
+            <h6><a href="contact-us.html">Contact</a></h6>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
+
 </body>
+
 </html>

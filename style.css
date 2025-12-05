@@ -17,6 +17,7 @@ body {
     background-color: var(--dark-bg);
     color: var(--light-text);
     line-height: 1.6;
+    padding-bottom: 80px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -47,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 /* STICKY TEXT FIX */
 #main-header.sticky .logo a,
 #main-header.sticky nav ul li a,
-#main-header.sticky .login-btn { /* Changed to .login-btn */
+#main-header.sticky .login-btn {
     color: #fff;
     border-color: #fff;
 }
@@ -114,11 +115,10 @@ nav ul li a.active {
 
 /* --- Login & Basket Section --- */
 .login {
-    /* Changed: Use Flexbox to align Basket and Button side-by-side */
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1.25rem; /* Space between basket and login button */
+    gap: 1.25rem;
 }
 
 /* NEW: Basket Icon Styles */
@@ -129,7 +129,7 @@ nav ul li a.active {
 }
 
 .basket-icon {
-    width: 40px; /* Adjust width as needed */
+    width: 40px;
     height: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -193,102 +193,102 @@ nav ul li a.active {
 }
 
 .products-container {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-  width: 100%; /* Ensure it takes full width of its parent */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    width: 100%;
 }
 
 .product-card {
-  width: 400px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
-  background: #fff;
-  transition: transform 0.15s ease;
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    background: #fff;
+    transition: transform 0.15s ease;
 }
 .product-card:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 .product-bottom {
-  display: flex;
-  align-items: center;      
-  justify-content: space-between; 
-  gap: 10px;                  
+    display: flex;
+    align-items: center;      
+    justify-content: space-between; 
+    gap: 10px;                  
 }
 
 .product-card img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }
 .product-info {
-  padding: 12px;
+    padding: 12px;
 }
 
 .product-name {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 6px;
-  text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
 }
 .product-price {
-  font-size: 15px;
-  color: #009900;
-  margin-bottom: 12px;
+    font-size: 15px;
+    color: #009900;
+    margin-bottom: 12px;
 }
 
 .product-card button {
-  width: 100%;
-  padding: 10px;
-  background: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
 }
 .product-card button {
-  padding: 8px 12px;
-  background: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  white-space: nowrap; 
+    padding: 8px 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap; 
 }
 
 .product-card button:hover {
-  background: #0060cc;
+    background: #0060cc;
 }
 .searchbar {
-  display: block;
-  width: 500px; /* Set a fixed width or use max-width */
-  margin: 0 auto; /* This centers the element horizontally */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+    display: block;
+    width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
 }
 .filter-container {
-  display: flex;            /* Use flexbox for alignment */
-  justify-content: center;  /* Center horizontally */
-  align-items: center;      /* Center vertically (optional) */
-  gap: 12px;                /* Space between dropdowns */
-  padding: 12px;            /* Optional: Add padding around the container */
-  width: 100%;              /* Full width of the parent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    width: 100%;
 }
 .filter {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  width: 150px; /* Fixed or flexible width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 150px;
 }
 
 footer {
@@ -303,7 +303,7 @@ footer a{
 }
 
 page-title {
-  text-align: center;
+    text-align: center;
 }
 
 .product-image img {
@@ -342,4 +342,3 @@ page-title {
 .product-info li {
     margin-bottom: 8px;
 }
-

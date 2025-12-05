@@ -1,36 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <section id="title">
-        <div class ="title">
-        <title>Signup</title>
-        </div>
-    </section>
-        
-        <link rel="icon" href="images/icon.png" type="image/x-icon"/>
-        <link rel="stylesheet" type="text/css"
 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
-    <link rel = "stylesheet" type="text/css"  href="style1.css" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <link rel="icon" href="images/icon.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+</head>
 
- 
-    <body>
+<body>
 
-    <header id ="main-header">
-            <div class ="logo">
-            
-        <a href="index.html">
-            <img src ="images/icon.png" alt="icon" />
-        <span>VIBORA UK</span>
-        </a>
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/icon.png" alt="icon" />
+                <span>VIBORA UK</span>
+            </a>
         </div>
-        
+
         <nav>
             <ul>
                 <li><a href="index.html">HOME</a></li>
@@ -43,93 +38,65 @@
                         <li><a href="shoes.html">Shoes</a></li>
                         <li><a href="balls.html">Balls</a></li>
                         <li><a href="services.html">Services</a></li>
-                    </ul></li>
+                    </ul>
+                </li>
                 <li><a href="AboutUs.html">ABOUT US</a></li>
                 <li><a href="contact.html">CONTACT</a></li>
             </ul>
-                
         </nav>
+
         <div class="login">
             <a href="Basket.html" class="basket-link">
-                <img src="images/basket.png" alt="Basket" class="basket-icon">
+                <img src="images/shopping-basket-icon-png-3309830814.png" alt="Basket" class="basket-icon">
             </a>
-            
             <a href="accountPage.html" class="login-btn">Login</a>
-            </div>
+        </div>
     </header>
 
-
-
-        <div class="signup-content">
+    <div class="signup-content">
         <h1>Signup</h1>
-        <nav>
-        </nav>
-    
 
-    <section id = "Signup">
-        <h2>Enter the specified details below</h2>
+        <section id="Signup">
+            <h2>Enter the specified details below</h2>
+
+            <form id="signup-form">
+                <input type="text" name="first_name" id="first_name" placeholder="First Name" required />
+                <input type="text" name="last_name" id="last_name" placeholder="Surname" required />
+
+                <label for="birthday">Date of Birth:</label>
+                <input type="date" id="birthday" name="birthday" required />
+                <br>
+
+                <input type="email" id="email" name="email" placeholder="Email" required />
+                <input type="email" id="emailconfirm" name="emailconfirm" placeholder="Email Confirmation" required />
+                <br>
+
+                <input type="password" id="password" name="password" placeholder="Password" required />
+                <input type="password" id="passwordconfirm" name="passwordconfirm" placeholder="Password Confirmation"
+                    required />
+                <br>
+
+                <input type="tel" id="phone" name="PhoneNumber" placeholder="Phone Number (optional)"
+                    pattern="[0-9]{11}" />
+                <br>
+
+                How do you prefer to be contacted by?
+                <label><input type="checkbox" id="emailA" value="Email Address">Email</label>
+                <label><input type="checkbox" name="PhoneN" value="Phone Number">Mobile</label>
+                <br>
+
+                <button class="Submission-button" type="submit">Submit</button>
+                <br>
+
+                <div id="signup-message"></div>
+                <br>
+            </form>
+        </section>
     </div>
-        <form id ="signup-form">
-            <input type ="text" name="name" id="first_name" placeholder="First Name" required/>
-            <input type ="text" name="name" id="last_name" placeholder="Surname"required/>
-            <label for="birthday">Date of Birth:</label>
-			<input type="date" id="birthday" name="birthday" required/>
-            <br>
-            <input type="email" id="email" name="email" placeholder="Email" required/>
-            <input type="email" id="emailconfirm" name="emailconfirm" placeholder="Email Confirmation" required/>
-            <br>
-            <input type ="password" id="password" name="password" placeholder="Password" required />
-            <input type ="password" id="passwordconfirm" name="passwordconfirm" placeholder="Password Confirmation" required />
-            <br>
-            <input type="tel" id ="phone"name="PhoneNumber"placeholder="Phone Number(optional)"pattern="[0-9]{11}"/>
-            
 
-            <br>
-             How do you prefer to be contacted by?
-            <label><input type="checkbox" id="emailA" value="Email Address">Email</label>
-            <label><input type="checkbox" name="PhoneN" value="Phone Number">Mobile</label>
-            <br>
-
-            <button class="Submission-button" type= "submit">submit</button> <br>
-            <div id ="signup-message">
-        </div>
-            <br>
-        </form>
-        <br>
-    </section>
+    <script src="js/api.js"></script>
+    <script src="js/Signup.js"></script>
 
 </body>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer>
-    <h5>@ ViboraUK Ltd</h5>
-    <div class = "credentials">
-       <h6> <a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
-        <h6><a href ="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
-        <h6><a href ="./footers/Cookies.html">Cookies</a></h6>
-        <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
-        <h6><a href ="./footers/Returns.html">Returns</a></h6>
-        
-    </div>
-    <script src="script.js"></script>
-    
-</footer>
-
-<script src="js/api.js"></script>
-<script src="js/Signup.js"></script>
-</body>
 </html>

@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-R">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sportswear</title>
     <link rel="stylesheet" href="style.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
@@ -18,7 +17,7 @@
     <header id="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="images/icon.png" alt="icon">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
                 <span>VIBORA UK</span>
             </a>
         </div>
@@ -38,15 +37,14 @@
                     </ul>
                 </li>
                 <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
             </ul>
         </nav>
 
         <div class="login">
             <a href="Basket.html" class="basket-link">
-                <img src="images/basket.png" alt="Basket" class="basket-icon">
+                <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
             </a>
-
             <a href="accountPage.html" class="login-btn">Login</a>
         </div>
     </header>
@@ -96,6 +94,7 @@
         <div class="filter">
             <label>Material:</label>
             <select id="material">
+                <option value="all">All</option>
                 <option value="a">A</option>
                 <option value="b">B</option>
                 <option value="c">C</option>
@@ -105,21 +104,21 @@
     </div>
 
     <div class="products-container" id="productsContainer"></div>
-    <script src="sportswear.js"></script>
 
     <footer>
         <h5>@ ViboraUK Ltd</h5>
         <div class="credentials">
-            <h6><a href="">Terms and Conditions</a></h6>
-            <h6><a href="">Privacy Policy</a></h6>
-            <h6><a href="">Cookies</a></h6>
-            <h6><a href="">Delivery Information</a></h6>
-            <h6><a href="">Returns</a></h6>
-            <h6><a href="">Contact</a></h6>
+            <h6><a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
+            <h6><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
+            <h6><a href="./footers/Cookies.html">Cookies</a></h6>
+            <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
+            <h6><a href="./footers/Returns.html">Returns</a></h6>
+            <h6><a href="contact-us.html">Contact</a></h6>
         </div>
         <script src="script1.js"></script>
     </footer>
 
+    <script src="sportswear.js"></script>
 </body>
 
 </html>

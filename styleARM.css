@@ -1,9 +1,9 @@
 /* --- Global Styles --- */
 :root {
-    --primary-green: #9fc100; /* Green accent */
-    --dark-bg: #ffff;       /* Background (White) */
-    --light-text: #1a1a1a;    /* Text color (Black/Dark Grey) */
-    --card-bg: #d3d3d3;       /* Light gray for cards */
+    --primary-green: #9fc100; 
+    --dark-bg: #ffff;       
+    --light-text: #1a1a1a;   
+    --card-bg: #d3d3d3;       
 }
 
 * {
@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 /* STICKY TEXT FIX */
 #main-header.sticky .logo a,
 #main-header.sticky nav ul li a,
-#main-header.sticky .login-btn { 
+#main-header.sticky .login-btn {
     color: #fff;
     border-color: #fff;
 }
@@ -109,7 +109,7 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: #fff;
+    color: #bbb;
 }
 
 /* --- Login & Basket Section --- */
@@ -117,7 +117,7 @@ nav ul li a.active {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1.25rem; 
+    gap: 1.25rem;
 }
 
 /* NEW: Basket Icon Styles */
@@ -194,7 +194,7 @@ nav ul li a.active {
 /* --- HERO SECTION --- */
 .hero {
     height: 60vh;
-    background-image: url(Bac.webp);
+    background-image: url(Images/Bac.webp);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -343,124 +343,6 @@ nav ul li a.active {
     }
 }
 
-.basket-content {
-    padding: 20px;
-    background-color: rgb(2, 2, 88);
-}
-
-.basket-content h1 {
-    color: var(--primary-black);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-}
-
-.basket-content h2 {
-    color: var(--primary-green);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-}
-
-table{
-    width: 100%;
-    border-collapse: collapse;
-    
-    text-align: center;
-}
-
-table h2{
-    text-align: center;
-    margin-bottom: 1%;
-
-}
-table th{
-    background-color: var(--primary-green);
-    color: var(--dark-bg);
-    padding: 5px;
-}
-
-.accountTable td, .accountTable th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    margin: 0 ;
-}
-
-.basketTotal{
-    
-    font-weight: 700;
-    border-radius: 20px;
-    border-color: var(--primary-green);
-    border: 4px solid var(--primary-green);
-}
-
-.price h2 {
-    text-align: center ;
-    padding-left: 330px;
-    
-
-}
-
-#basket-form {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: left;
-    padding: 30px;
-    
-}
-
-input[type="text"], input[type="date"],input[type="email"], input[type="password"], input[type="tel"] {
-    width: 17%;
-    padding: 0.5%;
-    margin: 10px 0;
-    border: 2px solid #000000;
-    border-radius: 10px;
-    text-align: center;
-    
-}
-
-
-.Submission-button{
-    background-color: rgb(255, 255, 255); 
-    text-align: center;
-    margin-top: 1%;
-    border-radius: 30px;
-    width: 10%;
-    height: 15%;
-}
-.Submission-button:hover{
-    background-color: rgb(0, 9, 10);
-    color: rgb(219, 183, 2);
-    transform: scale(1.25);
-}
-
-.account-content h2 {
-    color: var(--primary-green);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-}
-.account-content p {
-    color: var(--primary-black);
-    
-    margin-bottom: 1rem;
-}
-
-
-#accountTable {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.signup-content h1 {
-    color: var(--primary-green);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-}
-
-
 /* --- Footer --- */
 footer {
     text-align: center;
@@ -468,67 +350,4 @@ footer {
     margin-top: 2rem;
     border-top: 1px solid var(--card-bg);
     color: #888;
-}
-footer a{
-    color: inherit;
-}
-
-
-h4{
-    color: var(--primary-green);
-}
-
-.qty-control {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.qty-control button {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 2px 8px;
-    font-size: 18px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.qty-control button:hover {
-    transform: scale(1.05);
-    background: var(--primary-green);
-    color: #000;
-}
-
-.qty-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-}
-
-.account-header {
-    background-color: #00135a;
-    padding: 20px 40px;
-}
-
-.account-title {
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
-    font-weight: 900;
-    margin: 0;
-}
-
-.account-intro-bar {
-    background-color: #a2c802;
-    padding: 15px 40px;
-}
-
-.account-intro-text {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #141414;
 }
