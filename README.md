@@ -1,11 +1,12 @@
-Summary of Back-End Database Development Macdonald
+
+# Summary of Back-End Database Development: Macdonald
 
 This section of the project outlines the design, creation, and population of the complete relational database used throughout our padel e-commerce website. The database forms the backbone of the application, supporting products, categories, customers, orders, stock management, and more.
 
 I was responsible for building the entire cs2team18_db schema, implementing all relationships, and preparing production-ready product data for use by the rest of the development team.
 
 
-Database Schema (implemented using MySQL)
+# Database Schema (implemented using MySQL)
 
 The database was designed from scratch to provide a structured, scalable and maintainable foundation for the website.
 It consists of all core tables required for an e-commerce platform, including:
@@ -24,10 +25,7 @@ Supporting Structures: timestamp fields, UUID primary keys, soft-activation flag
 
 The final schema is fully relational, well-normalised, and designed so front-end and back-end components can reliably query and update data.
 
-
-
-
-Product & Category Population 
+# Product & Category Population 
 
 To ensure a realistic shopping experience during development, I created and inserted a full range of detailed catalogue data, including:
 
@@ -47,8 +45,7 @@ Correct category-to-product relationships for accurate filtering
 This allowed the front-end team to work with real product listings rather than placeholders.
 
 
-
-Image & Asset Integration
+# Image & Asset Integration
 
 To prepare products for display, I introduced a consistent image-handling approach:
 
@@ -62,9 +59,7 @@ Organising the repository into /images/products/... so developers can easily loc
 
 This ensures the website displays product imagery reliably across all pages.
 
-
-
-Overall Contribution
+# Overall Contribution
 
 My main contribution was delivering a complete, production-quality database layer, including:
 
