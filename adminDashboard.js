@@ -1,90 +1,43 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var cards = document.querySelectorAll("#admin-cards .product-card");
+document.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll("[data-panel-target]");
+  const panels = document.querySelectorAll(".panel-section");
 
-    var panels = {
-        products: document.getElementById("panel-products"),
-        orders: document.getElementById("panel-orders"),
-        messages: document.getElementById("panel-messages"),
-        stats: document.getElementById("panel-stats")
-    };
 
-    function hideAllPanels() {
-        Object.keys(panels).forEach(function (key) {
-            if (panels[key]) {
-                panels[key].style.display = "none";
-            }
-        });
-    }
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.dataset.panelTarget;
+      panels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === targetId);
+      });
 
-    function showPanel(name) {
-        hideAllPanels();
-        if (panels[name]) {
-            panels[name].style.display = "block";
-        }
-    }
 
-    cards.forEach(function (card) {
-        var panelName = card.getAttribute("data-panel");
-        var button = card.querySelector("button");
-        if (panelName && button) {
-            button.addEventListener("click", function () {
-                showPanel(panelName);
-            });
-        }
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
+  });
 
-    var lowStock = [
-        "Vibora Venom Pro – 3 left",
-        "Bullpadel Hack Control – 4 left",
-        "Vibora King Cobra – 5 left"
-    ];
 
-    var orders = [
-        "Order #1042 – £249.99 – Paid",
-        "Order #1041 – £89.50 – Dispatched",
-        "Order #1040 – £129.00 – Pending"
-    ];
+  
+  const ordersEl = document.getElementById("stat-orders");
+  const revenueEl = document.getElementById("stat-revenue");
+  const usersEl = document.getElementById("stat-users");
 
-    var messages = [
-        "alice@gmail.com – Delivery question",
-        "coach@padelclub.com – Team order enquiry",
-        "info@padelacademy.uk – Bulk rackets quote"
-    ];
 
-    var stats = [
-        "Total registered customers: 241",
-        "Total products in store: 63",
-        "Orders placed this month: 112",
-        "Average order value: £94.20"
-    ];
+  if (ordersEl && revenueEl && usersEl) {
+    const totalOrders = 142;
+    const totalRevenue = 18670.35;
+    const activeUsers = 87;
 
-    function fillList(listId, items) {
-        var ul = document.getElementById(listId);
-        if (!ul) return;
-        ul.innerHTML = "";
-        items.forEach(function (text) {
-            var li = document.createElement("li");
-            li.textContent = text;
-            ul.appendChild(li);
-        });
-    }
 
-    fillList("lowStockList", lowStock);
-    fillList("ordersList", orders);
-    fillList("messagesList", messages);
-    fillList("statsList", stats);
-
-    var msgSearch = document.getElementById("msgSearch");
-    if (msgSearch) {
-        msgSearch.addEventListener("input", function () {
-            var term = msgSearch.value.toLowerCase();
-            var items = document.querySelectorAll("#messagesList li");
-            items.forEach(function (li) {
-                var match = li.textContent.toLowerCase().includes(term);
-                li.style.display = match ? "list-item" : "none";
-            });
-        });
-    }
-
-    showPanel("products");
+    ordersEl.textContent = totalOrders;
+    revenueEl.textContent = totalRevenue.toFixed(2);
+    usersEl.textContent = activeUsers;
+  }
 });
+
+
+
+
+

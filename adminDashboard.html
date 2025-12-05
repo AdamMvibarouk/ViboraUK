@@ -1,141 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vibora UK – Admin Dashboard</title>
 
-    <!-- use the shared team stylesheet -->
-    <link rel="stylesheet" href="styling.css">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@600;800&display=swap"
+        rel="stylesheet"
+    />
+
+
+    
+    <link rel="stylesheet" href="styling.css" />
+
+
+    <!-- Admin-only JS -->
+    <script defer src="adminDashboard.js"></script>
+
+
+    <!-- Admin-only styles -->
+    <style>
+        main.dashboard-wrapper {
+            max-width: 1100px;
+            margin: 140px auto 80px; /* pushes content below navbar */
+            padding: 0 20px;
+        }
+
+
+        .dashboard-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+
+        .dashboard-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+            border: 2px solid #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 150px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+        }
+
+
+        .dashboard-card h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+
+        .dashboard-card p {
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+
+        .dashboard-card button {
+            align-self: flex-start;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 2px solid #000;
+            background: var(--primary-green);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+
+        .dashboard-card button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+        }
+
+
+        /* Panels that open when you click the cards */
+        .panel-section {
+            margin-top: 50px;
+            padding: 24px 20px;
+            border-radius: 14px;
+            border: 2px solid #000;
+            background: #fafafa;
+            display: none;
+        }
+
+
+        .panel-section.active {
+            display: block;
+        }
+
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+
+        .panel-header h2 {
+            font-size: 1.2rem;
+        }
+
+
+        .panel-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--primary-green);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+
+        table.dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+
+        table.dashboard-table th,
+        table.dashboard-table td {
+            border-bottom: 1px solid #ddd;
+            padding: 8px 6px;
+            text-align: left;
+        }
+
+
+        table.dashboard-table th {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+        }
+
+
+        .status-pill {
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+
+        .status-pending {
+            background: #fff3cd;
+        }
+
+
+        .status-complete {
+            background: #d4edda;
+        }
+
+
+        .status-open {
+            background: #cfe2ff;
+        }
+    </style>
 </head>
 <body>
+    <!-- NAVBAR AS THE REST OF THE SITE -->
     <header id="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo" />
                 <span>VIBORA UK</span>
             </a>
         </div>
-        
+
+
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="rackets.html">Rackets</a></li>
                 <li><a href="sportswear.html">Sportswear</a></li>
-    
-                <li class="dropdown">
-                    <a href="#">More</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="bags.html">Bags</a></li>
-                        <li><a href="shoes.html">Shoes</a></li>
-                        <li><a href="balls.html">Balls</a></li>
-                        <li><a href="services.html">Services</a></li>
-                    </ul>
-                </li>
-    
-                <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="accountPage.html">Profile</a></li>
+                <li><a href="bags.html">More</a></li>
+                <li><a href="History.html">Info</a></li>
+                <li><a href="accountPage.html" class="active">Profile</a></li>
             </ul>
         </nav>
-        
+
+
         <div class="login">
             <a href="Basket.html" class="basket-link">
-                <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+                <img
+                    src="images/shopping-basket-icon-png-3309830814.png"
+                    class="basket-icon"
+                    alt="Basket"
+                />
             </a>
             <a href="accountPage.html" class="login-btn">Login</a>
         </div>
     </header>
 
-    <main style="max-width:1100px;margin:7rem auto 4rem;padding:0 1rem;text-align:center;">
-        <h1 style="font-family:Orbitron, sans-serif;font-size:2.4rem;margin-bottom:0.3rem;">
-            ADMIN DASHBOARD
-        </h1>
-        <p style="color:#555;margin-bottom:2rem;">
-            Quick overview of products, orders, messages and basic stats.
-        </p>
 
-        <div class="products-container" id="admin-cards">
-            <div class="product-card" data-panel="products">
-                <div class="product-info">
-                    <div class="product-name">Manage Products</div>
-                    <p>View and review items that are low on stock.</p>
-                    <div class="product-bottom">
-                        <button>Open</button>
-                    </div>
-                </div>
-            </div>
+    <main class="dashboard-wrapper">
+        <h1 class="dashboard-title">Admin Dashboard</h1>
 
-            <div class="product-card" data-panel="orders">
-                <div class="product-info">
-                    <div class="product-name">Customer Orders</div>
-                    <p>See a list of recent customer orders.</p>
-                    <div class="product-bottom">
-                        <button>Open</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="product-card" data-panel="messages">
-                <div class="product-info">
-                    <div class="product-name">Customer Messages</div>
-                    <p>Browse messages sent from the contact form.</p>
-                    <div class="product-bottom">
-                        <button>Open</button>
-                    </div>
-                </div>
-            </div>
+        <!-- TOP GRRID OF CARDS -->
+        <section class="dashboard-grid">
+            <article class="dashboard-card">
+                <h3>Manage Products</h3>
+                <p>Add, edit or remove store products.</p>
+                <button data-panel-target="panel-products">Open</button>
+            </article>
 
-            <div class="product-card" data-panel="stats">
-                <div class="product-info">
-                    <div class="product-name">Site Statistics</div>
-                    <p>Basic summary of store activity.</p>
-                    <div class="product-bottom">
-                        <button>Open</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <section id="panel-products" style="display:none;margin-top:2.5rem;text-align:left;">
-            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
-                Low Stock Products
-            </h2>
-            <ul id="lowStockList"></ul>
+            <article class="dashboard-card">
+                <h3>View Customer Orders</h3>
+                <p>Review all placed orders and their status.</p>
+                <button data-panel-target="panel-orders">Open</button>
+            </article>
+
+
+            <article class="dashboard-card">
+                <h3>Customer Messages</h3>
+                <p>Read and respond to Contact Us submissions.</p>
+                <button data-panel-target="panel-messages">Open</button>
+            </article>
+
+
+            <article class="dashboard-card">
+                <h3>Site Statistics</h3>
+                <p>View sales, active users and traffic.</p>
+                <button data-panel-target="panel-stats">Open</button>
+            </article>
         </section>
 
-        <section id="panel-orders" style="display:none;margin-top:2.5rem;text-align:left;">
-            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
-                Recent Orders
-            </h2>
-            <ul id="ordersList"></ul>
+
+        <!-- PANEL PRODUCTS -->
+        <section id="panel-products" class="panel-section">
+            <div class="panel-header">
+                <h2>Product Overview</h2>
+                <span class="panel-pill">Quick view</span>
+            </div>
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Base Price (£)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vibora Venom Pro</td>
+                        <td>Rackets</td>
+                        <td>32</td>
+                        <td>249.99</td>
+                    </tr>
+                    <tr>
+                        <td>Vibora Performance Tee</td>
+                        <td>Sportswear</td>
+                        <td>58</td>
+                        <td>39.99</td>
+                    </tr>
+                    <tr>
+                        <td>Vibora Match Balls (Tube)</td>
+                        <td>Balls</td>
+                        <td>120</td>
+                        <td>8.99</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
-        <section id="panel-messages" style="display:none;margin-top:2.5rem;text-align:left;">
-            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
-                Customer Messages
-            </h2>
-            <input
-                type="text"
-                id="msgSearch"
-                placeholder="Search messages..."
-                style="padding:0.5rem 0.7rem;border-radius:6px;border:1px solid #ccc;margin-bottom:1rem;width:260px;"
-            >
-            <ul id="messagesList"></ul>
+
+        <!-- PANEL ORDERS -->
+        <section id="panel-orders" class="panel-section">
+            <div class="panel-header">
+                <h2>Recent Orders</h2>
+                <span class="panel-pill">Demo data</span>
+            </div>
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Total (£)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#10234</td>
+                        <td>A. Ahmed</td>
+                        <td>169.97</td>
+                        <td><span class="status-pill status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>#10221</td>
+                        <td>J. Bilbao</td>
+                        <td>89.99</td>
+                        <td><span class="status-pill status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>#10198</td>
+                        <td>M. Emeshieobi</td>
+                        <td>249.99</td>
+                        <td><span class="status-pill status-complete">Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
-        <section id="panel-stats" style="display:none;margin-top:2.5rem;text-align:left;">
-            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
-                Site Stats
-            </h2>
-            <ul id="statsList"></ul>
+
+        <!-- PANEL MESSAGES -->
+        <section id="panel-messages" class="panel-section">
+            <div class="panel-header">
+                <h2>Latest Customer Messages</h2>
+                <span class="panel-pill">From Contact Us</span>
+            </div>
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>05/12/2025</td>
+                        <td>S. Tanim</td>
+                        <td>Order delivery question</td>
+                        <td><span class="status-pill status-open">Open</span></td>
+                    </tr>
+                    <tr>
+                        <td>04/12/2025</td>
+                        <td>A. Sangha</td>
+                        <td>Return request</td>
+                        <td><span class="status-pill status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>03/12/2025</td>
+                        <td>A. Mahmood</td>
+                        <td>Product recommendation</td>
+                        <td><span class="status-pill status-complete">Replied</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <!-- PANEL STATS -->
+        <section id="panel-stats" class="panel-section">
+            <div class="panel-header">
+                <h2>Site Statistics</h2>
+                <span class="panel-pill">This week</span>
+            </div>
+            <table class="dashboard-table">
+                <tbody>
+                    <tr>
+                        <th>Total Orders</th>
+                        <td id="stat-orders">–</td>
+                    </tr>
+                    <tr>
+                        <th>Total Revenue (£)</th>
+                        <td id="stat-revenue">–</td>
+                    </tr>
+                    <tr>
+                        <th>Active Users</th>
+                        <td id="stat-users">–</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
+
 
     <footer>
         <p>&copy; 2025 Vibora UK. All rights reserved.</p>
     </footer>
-
-    <script src="script.js"></script>
-    <script src="adminDashboard.js"></script>
 </body>
 </html>
+
+
+
+
+
