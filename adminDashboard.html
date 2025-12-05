@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibora UK – Admin Dashboard</title>
+
+    <!-- use the shared team stylesheet -->
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                <span>VIBORA UK</span>
+            </a>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rackets.html">Rackets</a></li>
+                <li><a href="sportswear.html">Sportswear</a></li>
+    
+                <li class="dropdown">
+                    <a href="#">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="bags.html">Bags</a></li>
+                        <li><a href="shoes.html">Shoes</a></li>
+                        <li><a href="balls.html">Balls</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </li>
+    
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="accountPage.html">Profile</a></li>
+            </ul>
+        </nav>
+        
+        <div class="login">
+            <a href="Basket.html" class="basket-link">
+                <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+            </a>
+            <a href="accountPage.html" class="login-btn">Login</a>
+        </div>
+    </header>
+
+    <main style="max-width:1100px;margin:7rem auto 4rem;padding:0 1rem;text-align:center;">
+        <h1 style="font-family:Orbitron, sans-serif;font-size:2.4rem;margin-bottom:0.3rem;">
+            ADMIN DASHBOARD
+        </h1>
+        <p style="color:#555;margin-bottom:2rem;">
+            Quick overview of products, orders, messages and basic stats.
+        </p>
+
+        <div class="products-container" id="admin-cards">
+            <div class="product-card" data-panel="products">
+                <div class="product-info">
+                    <div class="product-name">Manage Products</div>
+                    <p>View and review items that are low on stock.</p>
+                    <div class="product-bottom">
+                        <button>Open</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-panel="orders">
+                <div class="product-info">
+                    <div class="product-name">Customer Orders</div>
+                    <p>See a list of recent customer orders.</p>
+                    <div class="product-bottom">
+                        <button>Open</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-panel="messages">
+                <div class="product-info">
+                    <div class="product-name">Customer Messages</div>
+                    <p>Browse messages sent from the contact form.</p>
+                    <div class="product-bottom">
+                        <button>Open</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-panel="stats">
+                <div class="product-info">
+                    <div class="product-name">Site Statistics</div>
+                    <p>Basic summary of store activity.</p>
+                    <div class="product-bottom">
+                        <button>Open</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="panel-products" style="display:none;margin-top:2.5rem;text-align:left;">
+            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
+                Low Stock Products
+            </h2>
+            <ul id="lowStockList"></ul>
+        </section>
+
+        <section id="panel-orders" style="display:none;margin-top:2.5rem;text-align:left;">
+            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
+                Recent Orders
+            </h2>
+            <ul id="ordersList"></ul>
+        </section>
+
+        <section id="panel-messages" style="display:none;margin-top:2.5rem;text-align:left;">
+            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
+                Customer Messages
+            </h2>
+            <input
+                type="text"
+                id="msgSearch"
+                placeholder="Search messages..."
+                style="padding:0.5rem 0.7rem;border-radius:6px;border:1px solid #ccc;margin-bottom:1rem;width:260px;"
+            >
+            <ul id="messagesList"></ul>
+        </section>
+
+        <section id="panel-stats" style="display:none;margin-top:2.5rem;text-align:left;">
+            <h2 style="font-family:Orbitron, sans-serif;font-size:1.4rem;margin-bottom:1rem;">
+                Site Stats
+            </h2>
+            <ul id="statsList"></ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Vibora UK. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="adminDashboard.js"></script>
+</body>
+</html>

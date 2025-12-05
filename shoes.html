@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shoes</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                <span>VIBORA UK</span>
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rackets.html">Rackets</a></li>
+                <li><a href="sportswear.html">Sportswear</a></li>
+
+                <li class="dropdown">
+                    <a href="#">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="bags.html">Bags</a></li>
+                        <li><a href="shoes.html" class="active">Shoes</a></li>
+                        <li><a href="balls.html">Balls</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="login">
+            <a href="Basket.html" class="basket-link">
+                <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+            </a>
+            <a href="accountPage.html" class="login-btn">Login</a>
+        </div>
+    </header>
+
+    <div class="page-title">
+        <h1>Shoes</h1>
+    </div>
+
+    <div class="searchbar">
+        <input type="text" id="searchInput" placeholder="Search Products">
+        <button id="searchBtn">OK</button>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter">
+            <label for="brand">Brand:</label>
+            <select id="brand">
+                <option value="all">All</option>
+                <option value="bullpadel">Bullpadel</option>
+                <option value="y1">Y1</option>
+                <option value="nox">NOX</option>
+                <option value="head">Head</option>
+            </select>
+        </div>
+
+        <div class="filter">
+            <label for="price">Price:</label>
+            <select id="price">
+                <option value="all">All</option>
+                <option value="under50">Under £50</option>
+                <option value="50to75">£50–75</option>
+                <option value="75to100">£75–100</option>
+                <option value="100to150">£100–150</option>
+                <option value="over150">£150+</option>
+            </select>
+        </div>
+
+        <div class="filter">
+            <label for="material">Material:</label>
+            <select id="material">
+                <option value="all">All</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="products-container" id="productsContainer"></div>
+
+    <footer>
+        <h5>@ ViboraUK Ltd</h5>
+        <div class="credentials">
+            <h6><a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
+            <h6><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
+            <h6><a href="./footers/Cookies.html">Cookies</a></h6>
+            <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
+            <h6><a href="./footers/Returns.html">Returns</a></h6>
+            <h6><a href="contact-us.html">Contact</a></h6>
+        </div>
+
+        <script src="script1.js"></script>
+    </footer>
+
+    <script src="shoes.js"></script>
+
+</body>
+
+</html>

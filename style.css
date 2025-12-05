@@ -1,0 +1,344 @@
+/* --- Global Styles --- */
+:root {
+    --primary-green: #9fc100; /* Green accent */
+    --dark-bg: #ffff;       /* Background (White) */
+    --light-text: #1a1a1a;    /* Text color (Black/Dark Grey) */
+    --card-bg: #d3d3d3;       /* Light gray for cards */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    line-height: 1.6;
+    padding-bottom: 80px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* --- Header & Navigation --- */
+#main-header {
+    background-color: var(--primary-green);
+    padding: 1rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; 
+    align-items: center;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+/* Sticky State */
+#main-header.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* STICKY TEXT FIX */
+#main-header.sticky .logo a,
+#main-header.sticky nav ul li a,
+#main-header.sticky .login-btn {
+    color: #fff;
+    border-color: #fff;
+}
+
+/* STICKY BASKET ICON: Invert color to White when sticky */
+#main-header.sticky .basket-icon {
+    filter: invert(1) brightness(2);
+}
+
+/* STICKY HOVER */
+#main-header.sticky nav ul li a:hover,
+#main-header.sticky .login-btn:hover {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+    background-color: transparent; 
+}
+
+/* --- Logo --- */
+.logo a {
+    text-decoration: none;
+    color: var(--light-text);
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; 
+}
+
+.logo img {
+    height: 80px;
+    width: 80px;
+    border-radius: 5px;
+}
+
+/* --- Nav Links --- */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+    position: relative; 
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--light-text);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: #fff;
+}
+
+/* --- Login & Basket Section --- */
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.25rem;
+}
+
+/* NEW: Basket Icon Styles */
+.basket-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.basket-icon {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    
+}
+
+.basket-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Login Button Styles */
+.login-btn {
+    text-decoration: none;
+    color: var(--light-text);
+    border: 2px solid var(--light-text);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+}
+
+.login-btn:hover {
+    background-color: var(--light-text);
+    color: var(--primary-green);
+}
+
+/* --- Dropdown --- */
+.dropdown-menu {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--card-bg);
+    list-style: none;
+    padding: 0.5rem 0;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block; 
+}
+
+.dropdown-menu li {
+    margin: 0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    color: var(--light-text) !important; 
+}
+.dropdown-menu li a:hover {
+    color: var(--primary-green) !important;
+    background-color: #e0e0e0;
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    width: 100%;
+}
+
+.product-card {
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    background: #fff;
+    transition: transform 0.15s ease;
+}
+.product-card:hover {
+    transform: scale(1.1);
+}
+.product-bottom {
+    display: flex;
+    align-items: center;      
+    justify-content: space-between; 
+    gap: 10px;                  
+}
+
+.product-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+.product-info {
+    padding: 12px;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+}
+.product-price {
+    font-size: 15px;
+    color: #009900;
+    margin-bottom: 12px;
+}
+
+.product-card button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.product-card button {
+    padding: 8px 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap; 
+}
+
+.product-card button:hover {
+    background: #0060cc;
+}
+.searchbar {
+    display: block;
+    width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    width: 100%;
+}
+.filter {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 150px;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--card-bg);
+    color: #888;
+}
+footer a{
+    color: inherit;
+}
+
+page-title {
+    text-align: center;
+}
+
+.product-image img {
+    width: 350px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-details {
+    margin-left: 30px;
+    flex: 1;
+}
+
+.product-title{
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+}
+
+.price {
+    font-size: 1.6rem;
+    color: #28a745;
+    margin: 5px 0 20px 0;
+}
+
+.product-description {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.product-info li {
+    margin-bottom: 8px;
+}
