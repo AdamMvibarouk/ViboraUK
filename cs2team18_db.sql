@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 04, 2025 at 07:10 PM
+-- Generation Time: Dec 05, 2025 at 10:42 AM
 -- Server version: 8.0.44-0ubuntu0.22.04.1
 -- PHP Version: 8.3.21
 
@@ -117,6 +117,26 @@ CREATE TABLE `contact_requests` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `enquiries`
+--
+
+CREATE TABLE `enquiries` (
+  `enquiry_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `enquiries`
+--
+
+INSERT INTO `enquiries` (`enquiry_id`, `email`, `message`, `created_at`) VALUES
+('f3209468-a449-4cf2-b90d-200b426ee5a6', 'ajaysangha1@gmail.com', 'This is a test', '2025-12-04 22:49:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inventory_alerts`
 --
 
@@ -223,7 +243,7 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `descriptio
 ('14e2e040-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25022 Xplo Red Bag', 'bp-bpp25022-xplo', 'Compact Bullpadel BPP25022 Xplo red racket bag with enough space for several rackets and basic gear, ideal for players who want a light and easy-to-carry option.', NULL, '49.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4984-rackets-bag-bullpadel-bpp25022-xplo-red.html'),
 ('14e2e141-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25015 Tour Bag', 'bp-bpp25015-tour', 'Versatile Bullpadel BPP25015 Tour racket bag in greenish blue, offering multiple compartments to organise rackets, clothing, shoes and accessories for both training and competition.', NULL, '49.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4980-bolsa-bullpadel-bpp25015-tour-verde-azulado.html'),
 ('14e2e301-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Varlion Summum Lime Green Bag', 'varlion-summum-green', 'Varlion Summum padel bag in lime green with spacious central compartment, separate racket area and additional pockets, perfect for players who carry a full set of equipment to the court.', NULL, '69.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.padelnuestro.com/uk/lime-green-varlion-summum-padel-bag-29217-p'),
-('33de1609-cf7e-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-x-lamborghini-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', NULL, '249.99', 1, '2025-12-02 12:55:39', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-x-lamborghini-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', '/images/products/rackets/babolat-x-lamborghini-bl002-scandal-green.jpeg', '249.99', 1, '2025-12-02 12:55:39', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
 ('3a280bd4-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'short-sleeve-training-top-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', NULL, '29.99', 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
 ('3a2810ed-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Red', 'short-sleeve-training-top-mens-red', 'Short sleeve men\'s training top in red, using moisture-wicking material with an athletic cut that allows full freedom of movement on court.', NULL, '29.99', 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-red'),
 ('3a281241-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Navy', 'short-sleeve-training-top-mens-navy', 'Men\'s navy short sleeve training top crafted from soft, quick-dry fabric, ideal for regular padel practice or gym workouts.', NULL, '29.99', 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-navy'),
@@ -263,16 +283,16 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `descriptio
 ('78bbde7a-cd3f-11f0-982a-005056b707be', '352893d0-cd3f-11f0-982a-005056b707be', '1-to-1 Padel Coaching Session', '1-to-1-padel-coaching-session', 'Personal coaching session with a ViboraUK certified coach.', '/images/products/coaching/1-to-1-session.jpg', '40.00', 1, '2025-11-29 16:21:34', '2025-11-29 16:21:34', NULL),
 ('ac601922-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Mirage 25 Padel Racket', 'mirage-25-padel-racket', 'Mirage 25 padel racket from Y1Sport, designed for intermediate to advanced players who want a balanced mix of power and control in a manoeuvrable frame.', NULL, '119.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-mirage-25'),
 ('ac601e4f-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Panna 25 Padel Racket', 'panna-25-padel-racket', 'Panna 25 padel racket from Y1Sport, offering easy handling and a forgiving sweet spot, ideal for players who prioritise control without losing power.', NULL, '99.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-panna-25'),
-('ac6021c2-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Pro X 25 Padel Racket', 'pro-x-25-padel-racket', 'Pro X 25 padel racket from Y1Sport, a more aggressive model with a powerful response and precise feel for attacking players who dominate at the net.', NULL, '179.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-pro-x-25'),
+('ac6021c2-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Pro X 25 Padel Racket', 'pro-x-25-padel-racket', 'Pro X 25 padel racket from Y1Sport, a more aggressive model with a powerful response and precise feel for attacking players who dominate at the net.', '/images/products/rackets/pro-x-25-padel-racket.jpeg', '179.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://y1sport.com/products/padel-pro-x-25'),
 ('ac6022ee-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Arlo 25 Padel Racket', 'arlo-25-padel-racket', 'Arlo 25 padel racket from Y1Sport, built for all-round performance with a comfortable feel, great control and enough power for confident finishing shots.', NULL, '99.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-arlo-25'),
 ('ac602414-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 25', 'bullpadel-vertex-04-25', 'Bullpadel Vertex 04 2025 professional racket with diamond shape and high balance, delivering maximum power for advanced players who like to finish points quickly.', NULL, '169.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/proline/4547-pala-bullpadel-vertex-04-25.html'),
 ('ac602534-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 MX 24', 'bullpadel-vertex-04-mx-24', 'Limited-edition Bullpadel Vertex 04 MX 24, combining premium materials and an aggressive profile for players seeking explosive power and a distinctive look.', NULL, '199.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/ltd-collection/3790-racket-bullpadel-vertex-04-mx-24.html'),
 ('ac602649-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Pearl 25', 'bullpadel-pearl-25', 'Bullpadel Pearl 25 racket designed for versatile players, offering a comfortable touch, wide sweet spot and easy access to both control and power.', NULL, '149.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/proline/4552-racket-bullpadel-pearl-25.html'),
-('ac602749-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex JR 25', 'bullpadel-vertex-jr-25', 'Bullpadel Vertex JR 25 junior racket, inspired by the adult Vertex line but with a lighter construction that helps young players develop proper technique.', NULL, '89.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/junior/4920-racket-bullpadel-vertex-jr-25.html'),
-('ac602889-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox AT10 Genius 18K Alum 2026', 'nox-at10-genius-18k-alum-2026', 'Nox AT10 Genius 18K Alum 2026, signature racket of Agustin Tapia, built with 18K carbon and advanced core for exceptional power, spin and precision.', NULL, '179.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/nox-at10-genius-18k-alum-by-agustin-tapia-2026'),
-('ac602bac-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox X-One Casual Series 23', 'nox-x-one-casual-series-23', 'Nox X-One Casual Series 23, an easy-to-play padel racket that combines comfort and control, perfect for improving players who want a quality feel at a good price.', NULL, '99.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/nox-x-one-casual-series-23-31592-p'),
-('ac603612-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Evo Extreme 2025', 'head-evo-extreme-2025', 'HEAD Evo Extreme 2025 padel racket with a comfortable soft feel and enlarged sweet spot, ideal for beginners and intermediate players wanting confidence on every shot.', NULL, '129.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/head-evo-extreme-2025'),
-('ac603906-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Speed Motion 2025', 'head-speed-motion-2025', 'HEAD Speed Motion 2025, a lightweight and highly manoeuvrable racket used on tour, offering fast swing speed and excellent blend of power and control.', NULL, '159.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/head-speed-motion-2025'),
+('ac602749-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex JR 25', 'bullpadel-vertex-jr-25', 'Bullpadel Vertex JR 25 junior racket, inspired by the adult Vertex line but with a lighter construction that helps young players develop proper technique.', '/images/products/rackets/bullpadel-vertex-jr-25.jpeg', '89.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.bullpadel.com/gb/junior/4920-racket-bullpadel-vertex-jr-25.html'),
+('ac602889-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox AT10 Genius 18K Alum 2026', 'nox-at10-genius-18k-alum-2026', 'Nox AT10 Genius 18K Alum 2026, signature racket of Agustin Tapia, built with 18K carbon and advanced core for exceptional power, spin and precision.', '/images/products/rackets/nox-at10-genius-18k-alum-2026.jpeg', '179.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/nox-at10-genius-18k-alum-by-agustin-tapia-2026'),
+('ac602bac-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox X-One Casual Series 23', 'nox-x-one-casual-series-23', 'Nox X-One Casual Series 23, an easy-to-play padel racket that combines comfort and control, perfect for improving players who want a quality feel at a good price.', '/images/products/rackets/nox-x-one-casual-series-23.jpeg', '99.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/nox-x-one-casual-series-23-31592-p'),
+('ac603612-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Evo Extreme 2025', 'head-evo-extreme-2025', 'HEAD Evo Extreme 2025 padel racket with a comfortable soft feel and enlarged sweet spot, ideal for beginners and intermediate players wanting confidence on every shot.', '/images/products/rackets/head-evo-extreme-2025.jpeg', '129.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/head-evo-extreme-2025'),
+('ac603906-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Speed Motion 2025', 'head-speed-motion-2025', 'HEAD Speed Motion 2025, a lightweight and highly manoeuvrable racket used on tour, offering fast swing speed and excellent blend of power and control.', '/images/products/rackets/head-speed-motion-2025.jpeg', '159.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/head-speed-motion-2025'),
 ('ac603a2e-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-lambo-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', NULL, '249.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
 ('ac603b52-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat Air Origin', 'babolat-air-origin', 'Babolat Air Origin racket focused on speed and manoeuvrability, allowing quick reactions at the net while still providing plenty of power from the back of the court.', NULL, '139.99', 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-air-origin'),
 ('d4d75ec4-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'sst-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', NULL, '29.99', 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
@@ -585,6 +605,12 @@ ALTER TABLE `categories`
 ALTER TABLE `contact_requests`
   ADD PRIMARY KEY (`contact_id`),
   ADD KEY `fk_contact_requests_admin` (`handled_by_admin_id`);
+
+--
+-- Indexes for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  ADD PRIMARY KEY (`enquiry_id`);
 
 --
 -- Indexes for table `inventory_alerts`
