@@ -18,8 +18,8 @@ window.addEventListener("load", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  var BALLS_CATEGORY_ID = "";
-  var RACKETS_CATEGORY_ID = "";
+  var BALLS_CATEGORY_ID = "e6660920-cf7e-11f0-a24b-005056b707be";
+  var RACKETS_CATEGORY_ID = "352883ba-cd3f-11f0-982a-005056b707be";
   var SPORTSWEAR_CATEGORY_ID = "e6660501-cf7e-11f0-a24b-005056b707be";
 
   var ballsContainer = document.getElementById("featured-balls-list");
