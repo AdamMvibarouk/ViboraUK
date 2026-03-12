@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 05, 2025 at 01:06 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Mar 12, 2026 at 01:45 PM
+-- Server version: 8.0.45-0ubuntu0.22.04.1
+-- PHP Version: 8.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,15 +28,52 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `addresses` (
-  `address_id` char(36) NOT NULL DEFAULT uuid(),
-  `user_id` char(36) NOT NULL,
-  `line1` text NOT NULL,
-  `line2` text DEFAULT NULL,
-  `city` text NOT NULL,
-  `postcode` text NOT NULL,
-  `country` text NOT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT 0
+  `address_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `line1` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `line2` text COLLATE utf8mb4_unicode_520_ci,
+  `city` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `postcode` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `country` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bag_attributes`
+--
+
+CREATE TABLE `bag_attributes` (
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `bag_attributes`
+--
+
+INSERT INTO `bag_attributes` (`attribute_id`, `name`) VALUES
+('50f7a135-1e13-11f1-b595-005056b707be', 'Colour');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ball_attributes`
+--
+
+CREATE TABLE `ball_attributes` (
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `ball_attributes`
+--
+
+INSERT INTO `ball_attributes` (`attribute_id`, `name`) VALUES
+('50f71165-1e13-11f1-b595-005056b707be', 'Ball Pack Size'),
+('50f69405-1e13-11f1-b595-005056b707be', 'Brand');
 
 -- --------------------------------------------------------
 
@@ -45,10 +82,10 @@ CREATE TABLE `addresses` (
 --
 
 CREATE TABLE `carts` (
-  `cart_id` char(36) NOT NULL DEFAULT uuid(),
-  `user_id` char(36) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `cart_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -56,8 +93,8 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`cart_id`, `user_id`, `created_at`, `updated_at`) VALUES
-('935a1b50-d16c-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', '2025-12-04 23:54:30', '2025-12-04 23:54:30'),
-('f50d5457-d175-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', '2025-12-05 01:01:36', '2025-12-05 01:01:36');
+('26e6ad43-d1dd-11f0-a24b-005056b707be', 'fa27a8ef-d115-11f0-a24b-005056b707be', '2025-12-05 13:20:21', '2025-12-05 13:20:21'),
+('45b95e59-d1da-11f0-a24b-005056b707be', 'f7ed5451-d1d9-11f0-a24b-005056b707be', '2025-12-05 12:59:45', '2025-12-05 12:59:45');
 
 -- --------------------------------------------------------
 
@@ -66,20 +103,13 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `cart_items` (
-  `cart_item_id` char(36) NOT NULL DEFAULT uuid(),
-  `cart_id` char(36) NOT NULL,
-  `product_id` char(36) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `cart_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `cart_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `quantity` int NOT NULL,
   `unit_price` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
---
--- Dumping data for table `cart_items`
---
-
-INSERT INTO `cart_items` (`cart_item_id`, `cart_id`, `product_id`, `quantity`, `unit_price`, `line_total`) VALUES
-('d6877f55-d1d0-11f0-a4d7-107c6124c5e6', '935a1b50-d16c-11f0-99f5-107c6124c5e6', '14e2ddc5-d12f-11f0-a24b-005056b707be', 1, 59.99, 59.99);
 
 -- --------------------------------------------------------
 
@@ -88,12 +118,12 @@ INSERT INTO `cart_items` (`cart_item_id`, `cart_id`, `product_id`, `quantity`, `
 --
 
 CREATE TABLE `categories` (
-  `category_id` char(36) NOT NULL DEFAULT uuid(),
-  `name` text NOT NULL,
-  `slug` varchar(191) NOT NULL,
-  `description` text DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `category_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_520_ci,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -119,14 +149,14 @@ INSERT INTO `categories` (`category_id`, `name`, `slug`, `description`, `is_acti
 --
 
 CREATE TABLE `contact_requests` (
-  `contact_id` char(36) NOT NULL DEFAULT uuid(),
-  `name` text NOT NULL,
-  `email` text NOT NULL,
-  `subject` text NOT NULL,
-  `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `handled_by_admin_id` char(36) DEFAULT NULL,
-  `status` enum('open','in_progress','closed') NOT NULL DEFAULT 'open'
+  `contact_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `subject` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `handled_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `status` enum('open','in_progress','closed') COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -136,18 +166,18 @@ CREATE TABLE `contact_requests` (
 --
 
 CREATE TABLE `enquiries` (
-  `enquiry_id` char(36) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `enquiry_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
 -- Dumping data for table `enquiries`
 --
 
 INSERT INTO `enquiries` (`enquiry_id`, `email`, `message`, `created_at`) VALUES
-('dbe2ab78-bae8-4213-9b30-8b77aa7c1886', 'ahmedtesting@viborauk.com', 'test', '2025-12-05 12:04:09');
+('f3209468-a449-4cf2-b90d-200b426ee5a6', 'ajaysangha1@gmail.com', 'This is a test', '2025-12-04 22:49:02');
 
 -- --------------------------------------------------------
 
@@ -156,12 +186,12 @@ INSERT INTO `enquiries` (`enquiry_id`, `email`, `message`, `created_at`) VALUES
 --
 
 CREATE TABLE `inventory_alerts` (
-  `alert_id` char(36) NOT NULL DEFAULT uuid(),
-  `variant_id` char(36) NOT NULL,
-  `alert_type` varchar(50) NOT NULL,
-  `triggered_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `message` text NOT NULL,
-  `acknowledged_by_admin_id` char(36) DEFAULT NULL,
+  `alert_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `alert_type` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `triggered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `acknowledged_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `acknowledged_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -172,16 +202,16 @@ CREATE TABLE `inventory_alerts` (
 --
 
 CREATE TABLE `orders` (
-  `order_id` char(36) NOT NULL DEFAULT uuid(),
-  `user_id` char(36) NOT NULL,
-  `order_number` varchar(100) NOT NULL,
-  `status` varchar(50) NOT NULL DEFAULT 'pending',
-  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `tax_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `shipping_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `grand_total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `placed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `order_number` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'pending',
+  `subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `discount_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `tax_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `shipping_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `grand_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `placed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -189,20 +219,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_number`, `status`, `subtotal`, `discount_total`, `tax_total`, `shipping_total`, `grand_total`, `placed_at`) VALUES
-('0ddf1729-d174-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764895682212', 'paid', 44.99, 0.00, 9.00, 0.00, 53.99, '2025-12-05 00:48:02'),
-('0e6abe44-d176-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764896542120', 'paid', 537.96, 53.80, 96.83, 0.00, 581.00, '2025-12-05 01:02:19'),
-('120f5ca0-d172-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764894830246', 'paid', 169.97, 0.00, 33.99, 0.00, 203.96, '2025-12-05 00:33:50'),
-('501908ce-d1cf-11f0-a4d7-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764934878073', 'paid', 2639.86, 0.00, 527.97, 0.00, 3167.83, '2025-12-05 11:41:18'),
-('53ec2b09-d176-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764896655787', 'paid', 189.97, 0.00, 37.99, 0.00, 227.96, '2025-12-05 01:04:15'),
-('73ec3a77-d179-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764897997965', 'paid', 340.96, 0.00, 68.19, 0.00, 409.15, '2025-12-05 01:26:37'),
-('85cf7fad-d179-11f0-99f5-107c6124c5e6', 'ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'ORD-1764898027976', 'paid', 44.99, 0.00, 9.00, 0.00, 53.99, '2025-12-05 01:27:07'),
-('8bde4e0f-d173-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764895464103', 'paid', 169.97, 0.00, 33.99, 0.00, 203.96, '2025-12-05 00:44:24'),
-('8f8c488a-d1c8-11f0-a4d7-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764931978046', 'paid', 839.86, 0.00, 167.97, 0.00, 1007.83, '2025-12-05 10:52:58'),
-('a3354ef2-d173-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764895503261', 'paid', 284.98, 0.00, 57.00, 0.00, 341.98, '2025-12-05 00:45:03'),
-('b2986891-d1c8-11f0-a4d7-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764932036847', 'paid', 1279.90, 0.00, 255.98, 0.00, 1535.88, '2025-12-05 10:53:56'),
-('b7bedcea-d170-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764894249224', 'paid', 254.95, 25.50, 45.89, 0.00, 275.35, '2025-12-05 00:24:09'),
-('bed60fbf-d1ca-11f0-a4d7-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764932916377', 'paid', 2999.85, 0.00, 599.97, 0.00, 3599.82, '2025-12-05 11:08:36'),
-('f40c9a2b-d173-11f0-99f5-107c6124c5e6', '8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ORD-1764895638890', 'paid', 179.99, 0.00, 36.00, 0.00, 215.99, '2025-12-05 00:47:18');
+('0f62362f-d1de-11f0-a24b-005056b707be', 'fa27a8ef-d115-11f0-a24b-005056b707be', 'ORD-1764941212168', 'paid', '2529.89', '0.00', '505.98', '0.00', '3035.87', '2025-12-05 13:26:51'),
+('c265d846-d1de-11f0-a24b-005056b707be', 'fa27a8ef-d115-11f0-a24b-005056b707be', 'ORD-1764941512504', 'paid', '2779.88', '0.00', '555.98', '0.00', '3335.86', '2025-12-05 13:31:52'),
+('cecd84c1-d1dd-11f0-a24b-005056b707be', 'fa27a8ef-d115-11f0-a24b-005056b707be', 'ORD-1764941103821', 'paid', '2249.91', '224.99', '404.98', '0.00', '2429.90', '2025-12-05 13:25:03');
 
 -- --------------------------------------------------------
 
@@ -211,42 +230,13 @@ INSERT INTO `orders` (`order_id`, `user_id`, `order_number`, `status`, `subtotal
 --
 
 CREATE TABLE `order_items` (
-  `order_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT uuid(),
-  `order_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `variant_id` char(36) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `order_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `quantity` int NOT NULL,
   `unit_price` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`order_item_id`, `order_id`, `variant_id`, `quantity`, `unit_price`, `line_total`) VALUES
-('0de00229-d174-11f0-99f5-107c6124c5e6', '0ddf1729-d174-11f0-99f5-107c6124c5e6', 'd4d7ba58-d12e-11f0-a24b-005056b707be', 1, 44.99, 44.99),
-('0e6ba166-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 2, 249.99, 499.98),
-('0e6c5865-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', '3a2810ed-cf7f-11f0-a24b-005056b707be', 1, 29.99, 29.99),
-('0e6cbf25-d176-11f0-99f5-107c6124c5e6', '0e6abe44-d176-11f0-99f5-107c6124c5e6', 'e0a64b34-d12e-11f0-a24b-005056b707be', 1, 7.99, 7.99),
-('5019585f-d1cf-11f0-a4d7-107c6124c5e6', '501908ce-d1cf-11f0-a4d7-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 10, 249.99, 2499.90),
-('5019acd1-d1cf-11f0-a4d7-107c6124c5e6', '501908ce-d1cf-11f0-a4d7-107c6124c5e6', '3a2818d6-cf7f-11f0-a24b-005056b707be', 4, 34.99, 139.96),
-('53ecf27d-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', '14e2ddc5-d12f-11f0-a24b-005056b707be', 1, 59.99, 59.99),
-('53ee4b07-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', '67e58211-cf7f-11f0-a24b-005056b707be', 1, 69.99, 69.99),
-('53eea809-d176-11f0-99f5-107c6124c5e6', '53ec2b09-d176-11f0-99f5-107c6124c5e6', 'e75613ac-d12e-11f0-a24b-005056b707be', 1, 59.99, 59.99),
-('73ed9180-d179-11f0-99f5-107c6124c5e6', '73ec3a77-d179-11f0-99f5-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 1, 249.99, 249.99),
-('73ee03f1-d179-11f0-99f5-107c6124c5e6', '73ec3a77-d179-11f0-99f5-107c6124c5e6', '3a281ad3-cf7f-11f0-a24b-005056b707be', 1, 34.99, 34.99),
-('73ee5e63-d179-11f0-99f5-107c6124c5e6', '73ec3a77-d179-11f0-99f5-107c6124c5e6', '67e58114-cf7f-11f0-a24b-005056b707be', 1, 49.99, 49.99),
-('73ef801c-d179-11f0-99f5-107c6124c5e6', '73ec3a77-d179-11f0-99f5-107c6124c5e6', 'e0a653c7-d12e-11f0-a24b-005056b707be', 1, 5.99, 5.99),
-('85d06e43-d179-11f0-99f5-107c6124c5e6', '85cf7fad-d179-11f0-99f5-107c6124c5e6', 'd4d7ba58-d12e-11f0-a24b-005056b707be', 1, 44.99, 44.99),
-('8bdec743-d173-11f0-99f5-107c6124c5e6', '8bde4e0f-d173-11f0-99f5-107c6124c5e6', '14e2d8b4-d12f-11f0-a24b-005056b707be', 2, 49.99, 99.98),
-('8bdf33a8-d173-11f0-99f5-107c6124c5e6', '8bde4e0f-d173-11f0-99f5-107c6124c5e6', '67e58211-cf7f-11f0-a24b-005056b707be', 1, 69.99, 69.99),
-('8f8c906f-d1c8-11f0-a4d7-107c6124c5e6', '8f8c488a-d1c8-11f0-a4d7-107c6124c5e6', '14e2ddc5-d12f-11f0-a24b-005056b707be', 14, 59.99, 839.86),
-('a336135c-d173-11f0-99f5-107c6124c5e6', 'a3354ef2-d173-11f0-99f5-107c6124c5e6', '33de1609-cf7e-11f0-a24b-005056b707be', 1, 249.99, 249.99),
-('a3379e45-d173-11f0-99f5-107c6124c5e6', 'a3354ef2-d173-11f0-99f5-107c6124c5e6', '3a281ca0-cf7f-11f0-a24b-005056b707be', 1, 34.99, 34.99),
-('b298cabe-d1c8-11f0-a4d7-107c6124c5e6', 'b2986891-d1c8-11f0-a4d7-107c6124c5e6', 'ac601922-d12f-11f0-a24b-005056b707be', 9, 119.99, 1079.91),
-('b29906ad-d1c8-11f0-a4d7-107c6124c5e6', 'b2986891-d1c8-11f0-a4d7-107c6124c5e6', 'ac602534-d12f-11f0-a24b-005056b707be', 1, 199.99, 199.99),
-('bed6869e-d1ca-11f0-a4d7-107c6124c5e6', 'bed60fbf-d1ca-11f0-a4d7-107c6124c5e6', '650e3d6b-cd3f-11f0-982a-005056b707be', 15, 199.99, 2999.85),
-('f40d873d-d173-11f0-99f5-107c6124c5e6', 'f40c9a2b-d173-11f0-99f5-107c6124c5e6', 'ac602889-d12f-11f0-a24b-005056b707be', 1, 179.99, 179.99);
+) ;
 
 -- --------------------------------------------------------
 
@@ -255,8 +245,8 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `variant_id`, `quantity`
 --
 
 CREATE TABLE `padel_attributes` (
-  `attribute_id` char(36) NOT NULL DEFAULT uuid(),
-  `name` varchar(255) NOT NULL
+  `attribute_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -266,6 +256,8 @@ CREATE TABLE `padel_attributes` (
 INSERT INTO `padel_attributes` (`attribute_id`, `name`) VALUES
 ('40ffd25b-cd3f-11f0-982a-005056b707be', 'Balance'),
 ('40ffde32-cd3f-11f0-982a-005056b707be', 'Ball Pack Size'),
+('6dd98005-1e10-11f1-b595-005056b707be', 'Booking Type'),
+('6dd74e45-1e10-11f1-b595-005056b707be', 'Brand'),
 ('40ffded5-cd3f-11f0-982a-005056b707be', 'Clothing Size'),
 ('40ffdd89-cd3f-11f0-982a-005056b707be', 'Colour'),
 ('40ffdc2d-cd3f-11f0-982a-005056b707be', 'Core'),
@@ -273,6 +265,7 @@ INSERT INTO `padel_attributes` (`attribute_id`, `name`) VALUES
 ('40ffdfa8-cd3f-11f0-982a-005056b707be', 'Gender'),
 ('40ffdcd8-cd3f-11f0-982a-005056b707be', 'Grip Size'),
 ('40ffe04e-cd3f-11f0-982a-005056b707be', 'Level'),
+('6dd88796-1e10-11f1-b595-005056b707be', 'Material'),
 ('40ffdb4a-cd3f-11f0-982a-005056b707be', 'Shape'),
 ('40ffce70-cd3f-11f0-982a-005056b707be', 'Weight (g)');
 
@@ -283,17 +276,17 @@ INSERT INTO `padel_attributes` (`attribute_id`, `name`) VALUES
 --
 
 CREATE TABLE `products` (
-  `product_id` char(36) NOT NULL DEFAULT uuid(),
-  `category_id` char(36) NOT NULL,
-  `name` text NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `image_url` text DEFAULT NULL,
+  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `category_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_520_ci,
+  `image_url` text COLLATE utf8mb4_unicode_520_ci,
   `base_price` decimal(10,2) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `product_url` varchar(500) DEFAULT NULL
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `product_url` varchar(500) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -301,92 +294,270 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `description`, `image_url`, `base_price`, `is_active`, `created_at`, `updated_at`, `product_url`) VALUES
-('14e2d8b4-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Padel Core Carry Case', 'core-carry-case', 'Durable carry case designed specifically for padel, with padded racket compartment and additional space for balls, towel and small accessories. Ideal for everyday training or matches.', NULL, 49.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://y1sport.com/products/padel-core-carry-case-copy'),
-('14e2ddc5-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26013 Hack Bag', 'bp-bpp26013-hack', 'Large Bullpadel Hack racket bag with multiple compartments for rackets, clothing and accessories, plus reinforced straps for comfortable transport to and from the club.', NULL, 59.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/5745-paletero-bullpadel-bpp26013-hack-gris-verdoso.html'),
-('14e2df31-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26021 Pearl Bag', 'bp-bpp26021-pearl', 'Bullpadel Pearl racket bag in greenish blue, featuring separate sections for rackets, clothes and footwear, perfect for players who travel frequently to tournaments and training sessions.', NULL, 59.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/bea-gonzalez/5626-racket-bag-bullpadel-bpp26021-pearl-greenish-blue.html'),
-('14e2e040-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25022 Xplo Red Bag', 'bp-bpp25022-xplo', 'Compact Bullpadel BPP25022 Xplo red racket bag with enough space for several rackets and basic gear, ideal for players who want a light and easy-to-carry option.', NULL, 49.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4984-rackets-bag-bullpadel-bpp25022-xplo-red.html'),
-('14e2e141-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25015 Tour Bag', 'bp-bpp25015-tour', 'Versatile Bullpadel BPP25015 Tour racket bag in greenish blue, offering multiple compartments to organise rackets, clothing, shoes and accessories for both training and competition.', NULL, 49.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4980-bolsa-bullpadel-bpp25015-tour-verde-azulado.html'),
-('14e2e301-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Varlion Summum Lime Green Bag', 'varlion-summum-green', 'Varlion Summum padel bag in lime green with spacious central compartment, separate racket area and additional pockets, perfect for players who carry a full set of equipment to the court.', NULL, 69.99, 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.padelnuestro.com/uk/lime-green-varlion-summum-padel-bag-29217-p'),
-('33de1609-cf7e-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-x-lamborghini-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', NULL, 249.99, 1, '2025-12-02 12:55:39', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
-('3a280bd4-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'short-sleeve-training-top-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
-('3a2810ed-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Red', 'short-sleeve-training-top-mens-red', 'Short sleeve men\'s training top in red, using moisture-wicking material with an athletic cut that allows full freedom of movement on court.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-red'),
-('3a281241-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Navy', 'short-sleeve-training-top-mens-navy', 'Men\'s navy short sleeve training top crafted from soft, quick-dry fabric, ideal for regular padel practice or gym workouts.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-navy'),
-('3a281352-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Navy', 'short-sleeve-training-top-womens-navy', 'Women\'s navy training top with short sleeves and a flattering athletic fit, designed to combine comfort, style and performance on court.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-navy'),
-('3a2814c0-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Black', 'short-sleeve-training-top-mens-black', 'Black short sleeve training top for men, built with breathable stretch fabric that manages sweat and moves with you through every shot.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-black'),
-('3a2817d3-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens White', 'short-sleeve-training-top-mens-white', 'Classic white men\'s training top in a lightweight, quick-dry fabric that makes it perfect for padel matches, fitness sessions or casual wear.', NULL, 29.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-white'),
-('3a2818d6-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Paquito 25I White', 't-shirt-bullpadel-paquito-25i-white', 'Official Bullpadel Paquito Navarro 25I match T-shirt in white, featuring high-performance fabric and the signature style of one of the world’s top padel players.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5470-18711-t-shirt-bullpadel-paquito-25i-white.html'),
-('3a2819d8-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Chingotto 25I Stone', 't-shirt-bullpadel-chingotto-25i-stone', 'Official Bullpadel Chingotto 25I T-shirt in stone colour, designed with breathable materials and the look worn by professional player Fede Chingotto.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5439-18571-t-shirt-bullpadel-chingotto-25i-stone.html'),
-('3a281ad3-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Di Nenno 25I Hybiscus', 't-shirt-bullpadel-di-nenno-25i-hybiscus', 'Official Bullpadel Di Nenno 25I T-shirt in hibiscus, made from lightweight technical fabric and inspired by the on-court style of Franco Stupaczuk’s partner Martín Di Nenno.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5460-18676-t-shirt-bullpadel-di-nenno-25i-hybiscus.html'),
-('3a281ca0-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Tello 25I Blue Green', 't-shirt-bullpadel-tello-25i-blue-green', 'Official Bullpadel Tello 25I T-shirt in blue and green, combining striking design with breathable fabric for high-intensity padel play.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5450-18671-t-shirt-bullpadel-tello-25i-blue-green.html'),
-('3a281d9f-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Batea Woman', 't-shirt-bullpadel-batea-woman', 'Bullpadel Batea women\'s T-shirt with a feminine fit and soft, quick-dry fabric, perfect for both matches and training sessions.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-batea-woman'),
-('3a281e9b-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Gemma 25V Woman', 't-shirt-bullpadel-gemma-25v-woman', 'Bullpadel Gemma 25V women\'s T-shirt inspired by Gemma Triay, offering an athletic cut, lightweight fabric and stylish design for competitive padel players.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-gemma-25v-woman'),
-('3a281f89-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Nox Pro 2025', 't-shirt-nox-pro-2025', 'Nox Pro 2025 performance T-shirt with technical fabric that wicks away sweat, ideal for players who value comfort and a clean, professional look.', NULL, 34.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-nox-pro-2025'),
-('3a282085-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Lacoste TH5195', 't-shirt-lacoste-th5195', 'Lacoste TH5195 padel T-shirt combining the brand’s classic style with breathable sports fabric, suitable for both on-court performance and casual wear.', NULL, 44.99, 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-lacoste-th5195'),
-('4c5a0ac5-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Babolat Court Padel X3 Balls Canister', 'babolat-court-padel-x3', 'Pressurised can of Babolat Court Padel X3 balls, offering consistent bounce and durability for both training sessions and competitive matches.', NULL, 7.99, 1, '2025-12-02 13:03:29', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/babolat-court-padel-x3-balls-canister-24650-p'),
-('4c5a0fb8-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Wilson Premier Padel Balls Canister', 'wilson-premier-padel-balls', 'Wilson Premier padel balls supplied in a pressurised canister, designed for official circuits with excellent visibility, feel and long-lasting performance.', 'https://www.padelnuestro.com/media/catalog/product/i/m/imagen_1_14782_287f511e_6fd5.jpg?optimize=high&bg-color=255,255,255&fit=bounds&height=220&width=220&canvas=220:220&dpr=2', 8.99, 1, '2025-12-02 13:03:29', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/wilson-premier-padel-balls-canister-113567-p'),
-('4c5a1116-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', '3-Ball Can Nox Nerbo', '3-ball-can-nox-nerbo', 'Nox Nerbo padel balls in a 3-ball can, providing a lively bounce and great control for advanced players who demand precision in every rally.', NULL, 6.99, 1, '2025-12-02 13:03:29', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/3-ball-can-nox-nerbo'),
-('4c5a1220-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premium Pro Boat', 'bullpadel-premium-pro-boat', 'Bullpadel Premium Pro balls, ideal for competition and high-level training, with a consistent flight and extra-durable felt for extended play.', NULL, 7.99, 1, '2025-12-02 13:03:29', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/bullpadel-premium-pro-boat-4151-p'),
-('4c5a1330-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Train Ball Jar 465464', 'bullpadel-train-ball-465464', 'Bullpadel Train Ball Jar 465464, developed specifically for coaching and practice, offering reliable bounce and durability for intensive use on court.', NULL, 5.99, 1, '2025-12-02 13:03:29', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/bullpadel-train-ball-jar-465464-108760-p'),
-('5c4d1dfb-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Neuron Vibram 25V Clay', 'bullpadel-neuron-vibram-25v-clay', 'Bullpadel Neuron Vibram 25V Clay shoes featuring Vibram outsole for exceptional grip on clay and padel surfaces, with reinforced upper for stability and protection during aggressive movements.', NULL, 99.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4893-16336-trainers-bullpadel-neuron-vibram-25v-clay.html'),
-('5c4d226a-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Hybrid Fly 25I Steel Blue', 'bullpadel-hybrid-fly-25i-steel-blue', 'Bullpadel Hybrid Fly 25I in steel blue, a lightweight, responsive shoe with excellent cushioning and lateral support for fast, explosive padel play.', NULL, 109.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/5561-19285-trainers-bullpadel-hybrid-fly-25i-steel-blue.html'),
-('5c4d23b4-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Vertex Vibram 25V Yellow', 'bullpadel-vertex-vibram-25v-yellow', 'Bullpadel Vertex Vibram 25V Yellow shoes equipped with Vibram outsole and reinforced toe, giving maximum traction and durability for advanced tournament players.', NULL, 119.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4839-16235-trainers-bullpadel-vertex-vibram-25v-yellow.html'),
-('5c4d24c0-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premier P1 White', 'bullpadel-premier-p1-white', 'Bullpadel Premier P1 white shoes combining low-profile cushioning, breathable mesh and strong lateral support for comfortable, stable movement on court.', NULL, 89.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4591-15718-trainers-bullpadel-premier-p1-white.html'),
-('5c4d25ea-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Babolat Jet Mach 3 All Court Blue/Orange Men 30523629', 'babolat-jet-mach-3-blue-orange', 'Babolat Jet Mach 3 All Court Blue/Orange padel and tennis shoes, designed with a lightweight chassis and durable outsole for explosive acceleration and quick changes of direction.', NULL, 129.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/babolat-jet-mach-3-all-court-blue-orange-men-30523629'),
-('5c4d26e9-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'K-Swiss Hypercourt Supreme 2 White 09071102', 'kswiss-hypercourt-supreme-2-white', 'K-Swiss Hypercourt Supreme 2 White offers plush cushioning, wide platform stability and a grippy outsole, ideal for players who demand comfort over long matches.', NULL, 119.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/kswiss-hypercourt-supreme-2-white-09071102'),
-('5c4d283b-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Joma Master 1000 Men 25 Clay Fluorescent Yellow TM100S2599CC', 'joma-master-1000-men-yellow', 'Joma Master 1000 clay shoes in fluorescent yellow, built with a resistant sole pattern for clay and padel courts and cushioning that absorbs impacts on every step.', NULL, 69.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/joma-master-1000-men-25-clay-fluorescent-yellow-tm100s2599cc'),
-('5c4d29b9-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Trainers Buker JR 25I White', 'bullpadel-buker-jr-25i-white', 'Bullpadel Buker JR 25I white junior shoes, designed for young padel players with a flexible sole, reinforced toe and comfortable fit for developing feet.', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg', 59.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg'),
-('5c4d2b8c-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Wilson Rush Pro 4.5 White/Blue', 'wilson-rush-pro-45-white-blue', 'Wilson Rush Pro 4.5 shoes in white and blue, providing explosive propulsion, strong heel stability and a durable outsole engineered for padel and tennis courts.', NULL, 109.99, 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/wilson-rush-pro-4-5-white-blue'),
-('650e3d6b-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Venom Pro Padel Racket', 'viborauk-venom-pro-padel-racket', 'Advanced-level racket with teardrop shape and medium balance.', '/images/products/rackets/venom-pro.jpg', 199.99, 1, '2025-11-29 16:21:01', '2025-11-29 16:21:01', NULL),
-('650f7cec-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Strike Control Padel Racket', 'viborauk-strike-control-padel-racket', 'Control-oriented round-shaped racket ideal for intermediate players.', '/images/products/rackets/strike-control.jpg', 159.99, 1, '2025-11-29 16:21:01', '2025-11-29 16:21:01', NULL),
-('67e5789d-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Padel Core Carry Case', 'padel-core-carry-case', 'Durable carry case designed specifically for padel, with padded racket compartment and additional space for balls, towel and small accessories. Ideal for everyday training or matches.', NULL, 49.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://y1sport.com/products/padel-core-carry-case-copy'),
-('67e57d21-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26013 Hack Racket Bag Grey-Green', 'bullpadel-bpp26013-hack-bag', 'Large Bullpadel Hack racket bag with multiple compartments for rackets, clothing and accessories, plus reinforced straps for comfortable transport to and from the club.', NULL, 59.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/5745-paletero-bullpadel-bpp26013-hack-gris-verdoso.html'),
-('67e57e8e-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26021 Pearl Racket Bag Greenish Blue', 'bullpadel-bpp26021-pearl-bag', 'Bullpadel Pearl racket bag in greenish blue, featuring separate sections for rackets, clothes and footwear, perfect for players who travel frequently to tournaments and training sessions.', NULL, 59.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/bea-gonzalez/5626-racket-bag-bullpadel-bpp26021-pearl-greenish-blue.html'),
-('67e57fcc-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25022 Xplo Red Racket Bag', 'bullpadel-bpp25022-xplo-bag', 'Compact Bullpadel BPP25022 Xplo red racket bag with enough space for several rackets and basic gear, ideal for players who want a light and easy-to-carry option.', NULL, 49.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4984-rackets-bag-bullpadel-bpp25022-xplo-red.html'),
-('67e58114-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25015 Tour Greenish Blue Bag', 'bullpadel-bpp25015-tour-bag', 'Versatile Bullpadel BPP25015 Tour racket bag in greenish blue, offering multiple compartments to organise rackets, clothing, shoes and accessories for both training and competition.', NULL, 49.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4980-bolsa-bullpadel-bpp25015-tour-verde-azulado.html'),
-('67e58211-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Lime Green Varlion Summum Padel Bag', 'varlion-summum-lime-green-bag', 'Varlion Summum padel bag in lime green with spacious central compartment, separate racket area and additional pockets, perfect for players who carry a full set of equipment to the court.', NULL, 69.99, 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.padelnuestro.com/uk/lime-green-varlion-summum-padel-bag-29217-p'),
-('78bbde7a-cd3f-11f0-982a-005056b707be', '352893d0-cd3f-11f0-982a-005056b707be', '1-to-1 Padel Coaching Session', '1-to-1-padel-coaching-session', 'Personal coaching session with a ViboraUK certified coach.', '/images/products/coaching/1-to-1-session.jpg', 40.00, 1, '2025-11-29 16:21:34', '2025-11-29 16:21:34', NULL),
-('ac601922-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Mirage 25 Padel Racket', 'mirage-25-padel-racket', 'Mirage 25 padel racket from Y1Sport, designed for intermediate to advanced players who want a balanced mix of power and control in a manoeuvrable frame.', NULL, 119.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-mirage-25'),
-('ac601e4f-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Panna 25 Padel Racket', 'panna-25-padel-racket', 'Panna 25 padel racket from Y1Sport, offering easy handling and a forgiving sweet spot, ideal for players who prioritise control without losing power.', NULL, 99.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-panna-25'),
-('ac6021c2-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Pro X 25 Padel Racket', 'pro-x-25-padel-racket', 'Pro X 25 padel racket from Y1Sport, a more aggressive model with a powerful response and precise feel for attacking players who dominate at the net.', NULL, 179.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-pro-x-25'),
-('ac6022ee-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Arlo 25 Padel Racket', 'arlo-25-padel-racket', 'Arlo 25 padel racket from Y1Sport, built for all-round performance with a comfortable feel, great control and enough power for confident finishing shots.', NULL, 99.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://y1sport.com/products/padel-arlo-25'),
-('ac602414-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 25', 'bullpadel-vertex-04-25', 'Bullpadel Vertex 04 2025 professional racket with diamond shape and high balance, delivering maximum power for advanced players who like to finish points quickly.', NULL, 169.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/proline/4547-pala-bullpadel-vertex-04-25.html'),
-('ac602534-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 MX 24', 'bullpadel-vertex-04-mx-24', 'Limited-edition Bullpadel Vertex 04 MX 24, combining premium materials and an aggressive profile for players seeking explosive power and a distinctive look.', NULL, 199.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/ltd-collection/3790-racket-bullpadel-vertex-04-mx-24.html'),
-('ac602649-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Pearl 25', 'bullpadel-pearl-25', 'Bullpadel Pearl 25 racket designed for versatile players, offering a comfortable touch, wide sweet spot and easy access to both control and power.', NULL, 149.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/proline/4552-racket-bullpadel-pearl-25.html'),
-('ac602749-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex JR 25', 'bullpadel-vertex-jr-25', 'Bullpadel Vertex JR 25 junior racket, inspired by the adult Vertex line but with a lighter construction that helps young players develop proper technique.', NULL, 89.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.bullpadel.com/gb/junior/4920-racket-bullpadel-vertex-jr-25.html'),
-('ac602889-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox AT10 Genius 18K Alum 2026', 'nox-at10-genius-18k-alum-2026', 'Nox AT10 Genius 18K Alum 2026, signature racket of Agustin Tapia, built with 18K carbon and advanced core for exceptional power, spin and precision.', NULL, 179.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/nox-at10-genius-18k-alum-by-agustin-tapia-2026'),
-('ac602bac-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox X-One Casual Series 23', 'nox-x-one-casual-series-23', 'Nox X-One Casual Series 23, an easy-to-play padel racket that combines comfort and control, perfect for improving players who want a quality feel at a good price.', NULL, 99.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/nox-x-one-casual-series-23-31592-p'),
-('ac603612-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Evo Extreme 2025', 'head-evo-extreme-2025', 'HEAD Evo Extreme 2025 padel racket with a comfortable soft feel and enlarged sweet spot, ideal for beginners and intermediate players wanting confidence on every shot.', NULL, 129.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/head-evo-extreme-2025'),
-('ac603906-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Speed Motion 2025', 'head-speed-motion-2025', 'HEAD Speed Motion 2025, a lightweight and highly manoeuvrable racket used on tour, offering fast swing speed and excellent blend of power and control.', NULL, 159.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/head-speed-motion-2025'),
-('ac603a2e-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-lambo-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', NULL, 249.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
-('ac603b52-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat Air Origin', 'babolat-air-origin', 'Babolat Air Origin racket focused on speed and manoeuvrability, allowing quick reactions at the net while still providing plenty of power from the back of the court.', NULL, 139.99, 1, '2025-12-04 16:38:33', '2025-12-04 19:07:24', 'https://www.padelnuestro.com/uk/babolat-air-origin'),
-('d4d75ec4-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'sst-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
-('d4d76400-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Red', 'sst-mens-red', 'Short sleeve men\'s training top in red, using moisture-wicking material with an athletic cut that allows full freedom of movement on court.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-red'),
-('d4d76640-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Navy', 'sst-mens-navy', 'Men\'s navy short sleeve training top crafted from soft, quick-dry fabric, ideal for regular padel practice or gym workouts.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-navy'),
-('d4d7aeeb-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Navy', 'sst-womens-navy', 'Women\'s navy training top with short sleeves and a flattering athletic fit, designed to combine comfort, style and performance on court.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-womens-navy'),
-('d4d7b041-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Black', 'sst-mens-black', 'Black short sleeve training top for men, built with breathable stretch fabric that manages sweat and moves with you through every shot.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-black'),
-('d4d7b162-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens White', 'sst-mens-white', 'Classic white men\'s training top in a lightweight, quick-dry fabric that makes it perfect for padel matches, fitness sessions or casual wear.', NULL, 29.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://y1sport.com/products/short-sleeve-training-top-mens-white'),
-('d4d7b265-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Paquito 25I White', 'bp-paquito-25i', 'Official Bullpadel Paquito Navarro 25I match T-shirt in white, featuring high-performance fabric and the signature style of one of the world’s top padel players.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5470-18711-t-shirt-bullpadel-paquito-25i-white.html'),
-('d4d7b3ae-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Chingotto 25I Stone', 'bp-chingotto-25i', 'Official Bullpadel Chingotto 25I T-shirt in stone colour, designed with breathable materials and the look worn by professional player Fede Chingotto.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5439-18571-t-shirt-bullpadel-chingotto-25i-stone.html'),
-('d4d7b4a9-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Di Nenno 25I Hybiscus', 'bp-dinenno-25i', 'Official Bullpadel Di Nenno 25I T-shirt in hibiscus, made from lightweight technical fabric and inspired by the on-court style of Franco Stupaczuk’s partner Martín Di Nenno.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5460-18676-t-shirt-bullpadel-di-nenno-25i-hybiscus.html'),
-('d4d7b5a9-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Tello 25I Blue Green', 'bp-tello-25i', 'Official Bullpadel Tello 25I T-shirt in blue and green, combining striking design with breathable fabric for high-intensity padel play.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.bullpadel.com/gb/official-t-shirts/5450-18671-t-shirt-bullpadel-tello-25i-blue-green.html'),
-('d4d7b70a-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Batea Woman', 'bp-batea-woman', 'Bullpadel Batea women\'s T-shirt with a feminine fit and soft, quick-dry fabric, perfect for both matches and training sessions.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-batea-woman'),
-('d4d7b80d-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Gemma 25V Woman', 'bp-gemma-25v', 'Bullpadel Gemma 25V women\'s T-shirt inspired by Gemma Triay, offering an athletic cut, lightweight fabric and stylish design for competitive padel players.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-gemma-25v-woman'),
-('d4d7b8fe-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Nox Pro 2025', 'nox-pro-2025', 'Nox Pro 2025 performance T-shirt with technical fabric that wicks away sweat, ideal for players who value comfort and a clean, professional look.', NULL, 34.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-nox-pro-2025'),
-('d4d7ba58-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Lacoste TH5195', 'lacoste-th5195', 'Lacoste TH5195 padel T-shirt combining the brand’s classic style with breathable sports fabric, suitable for both on-court performance and casual wear.', NULL, 44.99, 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-lacoste-th5195'),
-('e0a64b34-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Babolat Court Padel X3 Balls Canister', 'babolat-x3', 'Pressurised can of Babolat Court Padel X3 balls, offering consistent bounce and durability for both training sessions and competitive matches.', NULL, 7.99, 1, '2025-12-04 16:32:51', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/babolat-court-padel-x3-balls-canister-24650-p'),
-('e0a64ff7-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Wilson Premier Padel Balls Canister', 'wilson-premier', 'Wilson Premier padel balls supplied in a pressurised canister, designed for official circuits with excellent visibility, feel and long-lasting performance.', 'https://www.padelnuestro.com/media/catalog/product/i/m/imagen_1_14782_287f511e_6fd5.jpg?dpr=2', 8.99, 1, '2025-12-04 16:32:51', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/wilson-premier-padel-balls-canister-113567-p'),
-('e0a65179-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', '3-Ball Can Nox Nerbo', 'nox-nerbo-3ball', 'Nox Nerbo padel balls in a 3-ball can, providing a lively bounce and great control for advanced players who demand precision in every rally.', NULL, 6.99, 1, '2025-12-04 16:32:51', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/3-ball-can-nox-nerbo'),
-('e0a6529c-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premium Pro Boat', 'bullpadel-premium-pro', 'Bullpadel Premium Pro balls, ideal for competition and high-level training, with a consistent flight and extra-durable felt for extended play.', NULL, 7.99, 1, '2025-12-04 16:32:51', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/bullpadel-premium-pro-boat-4151-p'),
-('e0a653c7-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Train Ball Jar 465464', 'bullpadel-train-465464', 'Bullpadel Train Ball Jar 465464, developed specifically for coaching and practice, offering reliable bounce and durability for intensive use on court.', NULL, 5.99, 1, '2025-12-04 16:32:51', '2025-12-04 19:07:02', 'https://www.padelnuestro.com/uk/bullpadel-train-ball-jar-465464-108760-p'),
-('e75605f7-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Neuron Vibram 25V Clay', 'bp-neuron-vibram-25v', 'Bullpadel Neuron Vibram 25V Clay shoes featuring Vibram outsole for exceptional grip on clay and padel surfaces, with reinforced upper for stability and protection during aggressive movements.', NULL, 99.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4893-16336-trainers-bullpadel-neuron-vibram-25v-clay.html'),
-('e7560b58-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Hybrid Fly 25I Steel Blue', 'bp-hybrid-fly-25i', 'Bullpadel Hybrid Fly 25I in steel blue, a lightweight, responsive shoe with excellent cushioning and lateral support for fast, explosive padel play.', NULL, 109.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/5561-19285-trainers-bullpadel-hybrid-fly-25i-steel-blue.html'),
-('e7560ca4-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Vertex Vibram 25V Yellow', 'bp-vertex-vibram-25v', 'Bullpadel Vertex Vibram 25V Yellow shoes equipped with Vibram outsole and reinforced toe, giving maximum traction and durability for advanced tournament players.', NULL, 119.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4839-16235-trainers-bullpadel-vertex-vibram-25v-yellow.html'),
-('e7560db9-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premier P1 White', 'bp-premier-p1-white', 'Bullpadel Premier P1 white shoes combining low-profile cushioning, breathable mesh and strong lateral support for comfortable, stable movement on court.', NULL, 89.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4591-15718-trainers-bullpadel-premier-p1-white.html'),
-('e7560f46-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Babolat Jet Mach 3 Blue/Orange', 'babolat-jet-mach-3', 'Babolat Jet Mach 3 All Court Blue/Orange padel and tennis shoes, designed with a lightweight chassis and durable outsole for explosive acceleration and quick changes of direction.', NULL, 129.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/babolat-jet-mach-3-all-court-blue-orange-men-30523629'),
-('e7561058-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'K-Swiss Hypercourt Supreme 2 White', 'kswiss-hypercourt-2', 'K-Swiss Hypercourt Supreme 2 White offers plush cushioning, wide platform stability and a grippy outsole, ideal for players who demand comfort over long matches.', NULL, 119.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/kswiss-hypercourt-supreme-2-white-09071102'),
-('e756115a-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Joma Master 1000 Men Yellow Clay', 'joma-master-1000', 'Joma Master 1000 clay shoes in fluorescent yellow, built with a resistant sole pattern for clay and padel courts and cushioning that absorbs impacts on every step.', NULL, 69.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/joma-master-1000-men-25-clay-fluorescent-yellow-tm100s2599cc'),
-('e75613ac-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Trainers Buker JR 25I White', 'bp-buker-jr-white', 'Bullpadel Buker JR 25I white junior shoes, designed for young padel players with a flexible sole, reinforced toe and comfortable fit for developing feet.', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg', 59.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg'),
-('e75614f4-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Wilson Rush Pro 4.5 White/Blue', 'wilson-rush-pro-45', 'Wilson Rush Pro 4.5 shoes in white and blue, providing explosive propulsion, strong heel stability and a durable outsole engineered for padel and tennis courts.', NULL, 109.99, 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/wilson-rush-pro-4-5-white-blue');
+('14e2d8b4-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Padel Core Carry Case', 'core-carry-case', 'Durable carry case designed specifically for padel, with padded racket compartment and additional space for balls, towel and small accessories. Ideal for everyday training or matches.', NULL, '49.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://y1sport.com/products/padel-core-carry-case-copy'),
+('14e2ddc5-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26013 Hack Bag', 'bp-bpp26013-hack', 'Large Bullpadel Hack racket bag with multiple compartments for rackets, clothing and accessories, plus reinforced straps for comfortable transport to and from the club.', NULL, '59.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/5745-paletero-bullpadel-bpp26013-hack-gris-verdoso.html'),
+('14e2df31-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26021 Pearl Bag', 'bp-bpp26021-pearl', 'Bullpadel Pearl racket bag in greenish blue, featuring separate sections for rackets, clothes and footwear, perfect for players who travel frequently to tournaments and training sessions.', NULL, '59.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/bea-gonzalez/5626-racket-bag-bullpadel-bpp26021-pearl-greenish-blue.html'),
+('14e2e040-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25022 Xplo Red Bag', 'bp-bpp25022-xplo', 'Compact Bullpadel BPP25022 Xplo red racket bag with enough space for several rackets and basic gear, ideal for players who want a light and easy-to-carry option.', NULL, '49.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4984-rackets-bag-bullpadel-bpp25022-xplo-red.html'),
+('14e2e141-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25015 Tour Bag', 'bp-bpp25015-tour', 'Versatile Bullpadel BPP25015 Tour racket bag in greenish blue, offering multiple compartments to organise rackets, clothing, shoes and accessories for both training and competition.', NULL, '49.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4980-bolsa-bullpadel-bpp25015-tour-verde-azulado.html'),
+('14e2e301-d12f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Varlion Summum Lime Green Bag', 'varlion-summum-green', 'Varlion Summum padel bag in lime green with spacious central compartment, separate racket area and additional pockets, perfect for players who carry a full set of equipment to the court.', NULL, '69.99', 1, '2025-12-04 16:34:19', '2025-12-04 19:05:27', 'https://www.padelnuestro.com/uk/lime-green-varlion-summum-padel-bag-29217-p'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-x-lamborghini-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', 'images/products/rackets/babolat-x-lamborghini-bl002-scandal-green.jpg', '249.99', 1, '2025-12-02 12:55:39', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
+('3a280bd4-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'short-sleeve-training-top-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', 'images/products/tshirts/short-sleeve-training-top-womens-red.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
+('3a2810ed-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Red', 'short-sleeve-training-top-mens-red', 'Short sleeve men\'s training top in red, using moisture-wicking material with an athletic cut that allows full freedom of movement on court.', 'images/products/tshirts/short-sleeve-training-top-mens-red.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-red'),
+('3a281241-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Navy', 'short-sleeve-training-top-mens-navy', 'Men\'s navy short sleeve training top crafted from soft, quick-dry fabric, ideal for regular padel practice or gym workouts.', 'images/products/tshirts/short-sleeve-training-top-mens-navy.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-navy'),
+('3a281352-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Navy', 'short-sleeve-training-top-womens-navy', 'Women\'s navy training top with short sleeves and a flattering athletic fit, designed to combine comfort, style and performance on court.', 'images/products/tshirts/short-sleeve-training-top-womens-navy.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-womens-navy'),
+('3a2814c0-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Black', 'short-sleeve-training-top-mens-black', 'Black short sleeve training top for men, built with breathable stretch fabric that manages sweat and moves with you through every shot.', 'images/products/tshirts/short-sleeve-training-top-mens-black.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-black'),
+('3a2817d3-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens White', 'short-sleeve-training-top-mens-white', 'Classic white men\'s training top in a lightweight, quick-dry fabric that makes it perfect for padel matches, fitness sessions or casual wear.', 'images/products/tshirts/short-sleeve-training-top-mens-white.jpg', '29.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-white'),
+('3a2818d6-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Paquito 25I White', 't-shirt-bullpadel-paquito-25i-white', 'Official Bullpadel Paquito Navarro 25I match T-shirt in white, featuring high-performance fabric and the signature style of one of the world’s top padel players.', 'images/products/tshirts/t-shirt-bullpadel-paquito-25i-white.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://www.bullpadel.com/gb/official-t-shirts/5470-18711-t-shirt-bullpadel-paquito-25i-white.html'),
+('3a2819d8-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Chingotto 25I Stone', 't-shirt-bullpadel-chingotto-25i-stone', 'Official Bullpadel Chingotto 25I T-shirt in stone colour, designed with breathable materials and the look worn by professional player Fede Chingotto.', 'https://www.bullpadel.com/18062-large_default/t-shirt-bullpadel-chingotto-25i-stone.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5439-18571-t-shirt-bullpadel-chingotto-25i-stone.html'),
+('3a281ad3-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Di Nenno 25I Hybiscus', 't-shirt-bullpadel-di-nenno-25i-hybiscus', 'Official Bullpadel Di Nenno 25I T-shirt in hibiscus, made from lightweight technical fabric and inspired by the on-court style of Franco Stupaczuk’s partner Martín Di Nenno.', 'https://www.bullpadel.com/18103-large_default/t-shirt-bullpadel-di-nenno-25i-hybiscus.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5460-18676-t-shirt-bullpadel-di-nenno-25i-hybiscus.html'),
+('3a281ca0-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Tello 25I Blue Green', 't-shirt-bullpadel-tello-25i-blue-green', 'Official Bullpadel Tello 25I T-shirt in blue and green, combining striking design with breathable fabric for high-intensity padel play.', 'https://www.bullpadel.com/17902-large_default/t-shirt-bullpadel-tello-25i-blue-green.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5450-18671-t-shirt-bullpadel-tello-25i-blue-green.html'),
+('3a281d9f-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Batea Woman', 't-shirt-bullpadel-batea-woman', 'Bullpadel Batea women\'s T-shirt with a feminine fit and soft, quick-dry fabric, perfect for both matches and training sessions.', 'images/products/tshirts/t-shirt-bullpadel-batea-woman.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-batea-woman'),
+('3a281e9b-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Gemma 25V Woman', 't-shirt-bullpadel-gemma-25v-woman', 'Bullpadel Gemma 25V women\'s T-shirt inspired by Gemma Triay, offering an athletic cut, lightweight fabric and stylish design for competitive padel players.', NULL, '34.99', 1, '2025-12-02 13:02:59', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-gemma-25v-woman'),
+('3a281f89-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Nox Pro 2025', 't-shirt-nox-pro-2025', 'Nox Pro 2025 performance T-shirt with technical fabric that wicks away sweat, ideal for players who value comfort and a clean, professional look.', 'images/products/tshirts/t-shirt-nox-pro-2025.jpg', '34.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-nox-pro-2025'),
+('3a282085-cf7f-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Lacoste TH5195', 't-shirt-lacoste-th5195', 'Lacoste TH5195 padel T-shirt combining the brand’s classic style with breathable sports fabric, suitable for both on-court performance and casual wear.', 'images/products/tshirts/t-shirt-lacoste-th5195.jpg', '44.99', 1, '2025-12-02 13:02:59', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-lacoste-th5195'),
+('4c5a0ac5-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Babolat Court Padel X3 Balls Canister', 'babolat-court-padel-x3', 'Pressurised can of Babolat Court Padel X3 balls, offering consistent bounce and durability for both training sessions and competitive matches.', 'images/products/balls/babolat-court-padel-x3-balls-canister.jpg', '7.99', 1, '2025-12-02 13:03:29', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/babolat-court-padel-x3-balls-canister-24650-p'),
+('4c5a0fb8-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Wilson Premier Padel Balls Canister', 'wilson-premier-padel-balls', 'Wilson Premier padel balls supplied in a pressurised canister, designed for official circuits with excellent visibility, feel and long-lasting performance.', 'images/products/balls/wilson-premier-padel-balls-canister.jpg', '8.99', 1, '2025-12-02 13:03:29', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/wilson-premier-padel-balls-canister-113567-p'),
+('4c5a1116-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', '3-Ball Can Nox Nerbo', '3-ball-can-nox-nerbo', 'Nox Nerbo padel balls in a 3-ball can, providing a lively bounce and great control for advanced players who demand precision in every rally.', 'images/products/balls/3-ball-can-nox-nerbo.jpg', '6.99', 1, '2025-12-02 13:03:29', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/3-ball-can-nox-nerbo'),
+('4c5a1220-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premium Pro Boat', 'bullpadel-premium-pro-boat', 'Bullpadel Premium Pro balls, ideal for competition and high-level training, with a consistent flight and extra-durable felt for extended play.', 'images/products/balls/bullpadel-premium-pro-boat.jpg', '7.99', 1, '2025-12-02 13:03:29', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/bullpadel-premium-pro-boat-4151-p'),
+('4c5a1330-cf7f-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Train Ball Jar 465464', 'bullpadel-train-ball-465464', 'Bullpadel Train Ball Jar 465464, developed specifically for coaching and practice, offering reliable bounce and durability for intensive use on court.', 'images/products/balls/bullpadel-train-ball-jar-465464.jpg', '5.99', 1, '2025-12-02 13:03:29', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/bullpadel-train-ball-jar-465464-108760-p'),
+('5c4d1dfb-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Neuron Vibram 25V Clay', 'bullpadel-neuron-vibram-25v-clay', 'Bullpadel Neuron Vibram 25V Clay shoes featuring Vibram outsole for exceptional grip on clay and padel surfaces, with reinforced upper for stability and protection during aggressive movements.', NULL, '99.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4893-16336-trainers-bullpadel-neuron-vibram-25v-clay.html'),
+('5c4d226a-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Hybrid Fly 25I Steel Blue', 'bullpadel-hybrid-fly-25i-steel-blue', 'Bullpadel Hybrid Fly 25I in steel blue, a lightweight, responsive shoe with excellent cushioning and lateral support for fast, explosive padel play.', NULL, '109.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/5561-19285-trainers-bullpadel-hybrid-fly-25i-steel-blue.html'),
+('5c4d23b4-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Vertex Vibram 25V Yellow', 'bullpadel-vertex-vibram-25v-yellow', 'Bullpadel Vertex Vibram 25V Yellow shoes equipped with Vibram outsole and reinforced toe, giving maximum traction and durability for advanced tournament players.', NULL, '119.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4839-16235-trainers-bullpadel-vertex-vibram-25v-yellow.html'),
+('5c4d24c0-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premier P1 White', 'bullpadel-premier-p1-white', 'Bullpadel Premier P1 white shoes combining low-profile cushioning, breathable mesh and strong lateral support for comfortable, stable movement on court.', NULL, '89.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4591-15718-trainers-bullpadel-premier-p1-white.html'),
+('5c4d25ea-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Babolat Jet Mach 3 All Court Blue/Orange Men 30523629', 'babolat-jet-mach-3-blue-orange', 'Babolat Jet Mach 3 All Court Blue/Orange padel and tennis shoes, designed with a lightweight chassis and durable outsole for explosive acceleration and quick changes of direction.', '/images/products/shoes/babolat-jet-mach-3-all-court-blue-orange-men-30523629.jpeg', '129.99', 1, '2025-12-02 13:03:56', '2026-03-02 13:28:05', 'https://www.padelnuestro.com/uk/babolat-jet-mach-3-all-court-blue-orange-men-30523629'),
+('5c4d26e9-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'K-Swiss Hypercourt Supreme 2 White 09071102', 'kswiss-hypercourt-supreme-2-white', 'K-Swiss Hypercourt Supreme 2 White offers plush cushioning, wide platform stability and a grippy outsole, ideal for players who demand comfort over long matches.', NULL, '119.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/kswiss-hypercourt-supreme-2-white-09071102'),
+('5c4d283b-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Joma Master 1000 Men 25 Clay Fluorescent Yellow TM100S2599CC', 'joma-master-1000-men-yellow', 'Joma Master 1000 clay shoes in fluorescent yellow, built with a resistant sole pattern for clay and padel courts and cushioning that absorbs impacts on every step.', '/images/products/shoes/joma-master-1000-men-25-clay-fluorescent-yellow-tm100s2599cc.jpeg', '69.99', 1, '2025-12-02 13:03:56', '2026-03-02 13:28:05', 'https://www.padelnuestro.com/uk/joma-master-1000-men-25-clay-fluorescent-yellow-tm100s2599cc'),
+('5c4d29b9-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Trainers Buker JR 25I White', 'bullpadel-buker-jr-25i-white', 'Bullpadel Buker JR 25I white junior shoes, designed for young padel players with a flexible sole, reinforced toe and comfortable fit for developing feet.', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg', '59.99', 1, '2025-12-02 13:03:56', '2025-12-04 19:07:14', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg'),
+('5c4d2b8c-cf7f-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Wilson Rush Pro 4.5 White/Blue', 'wilson-rush-pro-45-white-blue', 'Wilson Rush Pro 4.5 shoes in white and blue, providing explosive propulsion, strong heel stability and a durable outsole engineered for padel and tennis courts.', '/images/products/shoes/wilson-rush-pro-4-5-white-blue.jpeg', '109.99', 1, '2025-12-02 13:03:56', '2026-03-02 13:28:05', 'https://www.padelnuestro.com/uk/wilson-rush-pro-4-5-white-blue'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Venom Pro Padel Racket', 'viborauk-venom-pro-padel-racket', 'Advanced-level racket with teardrop shape and medium balance.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '199.99', 1, '2025-11-29 16:21:01', '2025-12-05 10:54:28', NULL),
+('650f7cec-cd3f-11f0-982a-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'ViboraUK Strike Control Padel Racket', 'viborauk-strike-control-padel-racket', 'Control-oriented round-shaped racket ideal for intermediate players.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '159.99', 1, '2025-11-29 16:21:01', '2025-12-05 10:54:28', NULL),
+('67e5789d-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Padel Core Carry Case', 'padel-core-carry-case', 'Durable carry case designed specifically for padel, with padded racket compartment and additional space for balls, towel and small accessories. Ideal for everyday training or matches.', NULL, '49.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://y1sport.com/products/padel-core-carry-case-copy'),
+('67e57d21-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26013 Hack Racket Bag Grey-Green', 'bullpadel-bpp26013-hack-bag', 'Large Bullpadel Hack racket bag with multiple compartments for rackets, clothing and accessories, plus reinforced straps for comfortable transport to and from the club.', NULL, '59.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/5745-paletero-bullpadel-bpp26013-hack-gris-verdoso.html'),
+('67e57e8e-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP26021 Pearl Racket Bag Greenish Blue', 'bullpadel-bpp26021-pearl-bag', 'Bullpadel Pearl racket bag in greenish blue, featuring separate sections for rackets, clothes and footwear, perfect for players who travel frequently to tournaments and training sessions.', NULL, '59.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/bea-gonzalez/5626-racket-bag-bullpadel-bpp26021-pearl-greenish-blue.html'),
+('67e57fcc-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25022 Xplo Red Racket Bag', 'bullpadel-bpp25022-xplo-bag', 'Compact Bullpadel BPP25022 Xplo red racket bag with enough space for several rackets and basic gear, ideal for players who want a light and easy-to-carry option.', NULL, '49.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4984-rackets-bag-bullpadel-bpp25022-xplo-red.html'),
+('67e58114-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Bullpadel BPP25015 Tour Greenish Blue Bag', 'bullpadel-bpp25015-tour-bag', 'Versatile Bullpadel BPP25015 Tour racket bag in greenish blue, offering multiple compartments to organise rackets, clothing, shoes and accessories for both training and competition.', NULL, '49.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.bullpadel.com/gb/racket-bags/4980-bolsa-bullpadel-bpp25015-tour-verde-azulado.html'),
+('67e58211-cf7f-11f0-a24b-005056b707be', 'e6660af2-cf7e-11f0-a24b-005056b707be', 'Lime Green Varlion Summum Padel Bag', 'varlion-summum-lime-green-bag', 'Varlion Summum padel bag in lime green with spacious central compartment, separate racket area and additional pockets, perfect for players who carry a full set of equipment to the court.', NULL, '69.99', 1, '2025-12-02 13:04:15', '2025-12-04 19:05:27', 'https://www.padelnuestro.com/uk/lime-green-varlion-summum-padel-bag-29217-p'),
+('78bbde7a-cd3f-11f0-982a-005056b707be', '352893d0-cd3f-11f0-982a-005056b707be', '1-to-1 Padel Coaching Session', '1-to-1-padel-coaching-session', 'Personal coaching session with a ViboraUK certified coach.', '/images/products/coaching/1-to-1-session.jpg', '40.00', 1, '2025-11-29 16:21:34', '2025-11-29 16:21:34', NULL),
+('ac601922-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Mirage 25 Padel Racket', 'mirage-25-padel-racket', 'Mirage 25 padel racket from Y1Sport, designed for intermediate to advanced players who want a balanced mix of power and control in a manoeuvrable frame.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '119.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://y1sport.com/products/padel-mirage-25'),
+('ac601e4f-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Panna 25 Padel Racket', 'panna-25-padel-racket', 'Panna 25 padel racket from Y1Sport, offering easy handling and a forgiving sweet spot, ideal for players who prioritise control without losing power.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '99.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://y1sport.com/products/padel-panna-25'),
+('ac6021c2-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Pro X 25 Padel Racket', 'pro-x-25-padel-racket', 'Pro X 25 padel racket from Y1Sport, a more aggressive model with a powerful response and precise feel for attacking players who dominate at the net.', '/images/products/rackets/pro-x-25-padel-racket.jpeg', '179.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://y1sport.com/products/padel-pro-x-25'),
+('ac6022ee-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Arlo 25 Padel Racket', 'arlo-25-padel-racket', 'Arlo 25 padel racket from Y1Sport, built for all-round performance with a comfortable feel, great control and enough power for confident finishing shots.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '99.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://y1sport.com/products/padel-arlo-25'),
+('ac602414-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 25', 'bullpadel-vertex-04-25', 'Bullpadel Vertex 04 2025 professional racket with diamond shape and high balance, delivering maximum power for advanced players who like to finish points quickly.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '169.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://www.bullpadel.com/gb/proline/4547-pala-bullpadel-vertex-04-25.html'),
+('ac602534-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex 04 MX 24', 'bullpadel-vertex-04-mx-24', 'Limited-edition Bullpadel Vertex 04 MX 24, combining premium materials and an aggressive profile for players seeking explosive power and a distinctive look.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '199.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://www.bullpadel.com/gb/ltd-collection/3790-racket-bullpadel-vertex-04-mx-24.html'),
+('ac602649-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Pearl 25', 'bullpadel-pearl-25', 'Bullpadel Pearl 25 racket designed for versatile players, offering a comfortable touch, wide sweet spot and easy access to both control and power.', '/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png', '149.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:54:28', 'https://www.bullpadel.com/gb/proline/4552-racket-bullpadel-pearl-25.html'),
+('ac602749-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Bullpadel Vertex JR 25', 'bullpadel-vertex-jr-25', 'Bullpadel Vertex JR 25 junior racket, inspired by the adult Vertex line but with a lighter construction that helps young players develop proper technique.', '/images/products/rackets/bullpadel-vertex-jr-25.jpeg', '89.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.bullpadel.com/gb/junior/4920-racket-bullpadel-vertex-jr-25.html'),
+('ac602889-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox AT10 Genius 18K Alum 2026', 'nox-at10-genius-18k-alum-2026', 'Nox AT10 Genius 18K Alum 2026, signature racket of Agustin Tapia, built with 18K carbon and advanced core for exceptional power, spin and precision.', '/images/products/rackets/nox-at10-genius-18k-alum-2026.jpeg', '179.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/nox-at10-genius-18k-alum-by-agustin-tapia-2026'),
+('ac602bac-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Nox X-One Casual Series 23', 'nox-x-one-casual-series-23', 'Nox X-One Casual Series 23, an easy-to-play padel racket that combines comfort and control, perfect for improving players who want a quality feel at a good price.', '/images/products/rackets/nox-x-one-casual-series-23.jpeg', '99.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/nox-x-one-casual-series-23-31592-p'),
+('ac603612-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Evo Extreme 2025', 'head-evo-extreme-2025', 'HEAD Evo Extreme 2025 padel racket with a comfortable soft feel and enlarged sweet spot, ideal for beginners and intermediate players wanting confidence on every shot.', 'images/products/rackets/head-evo-extreme-2025.jpg', '129.99', 1, '2025-12-04 16:38:33', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/head-evo-extreme-2025'),
+('ac603906-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Head Speed Motion 2025', 'head-speed-motion-2025', 'HEAD Speed Motion 2025, a lightweight and highly manoeuvrable racket used on tour, offering fast swing speed and excellent blend of power and control.', '/images/products/rackets/head-speed-motion-2025.jpeg', '159.99', 1, '2025-12-04 16:38:33', '2025-12-05 10:32:19', 'https://www.padelnuestro.com/uk/head-speed-motion-2025'),
+('ac603a2e-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat X Lamborghini BL002 Scandal Green', 'babolat-lambo-bl002-scandal-green', 'Babolat X Lamborghini BL002 Scandal Green, a premium collaboration racket with aggressive aesthetics and high-performance construction for players who demand the best.', 'images/products/rackets/babolat-x-lamborghini-bl002-scandal-green.jpg', '249.99', 1, '2025-12-04 16:38:33', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/babolat-x-lamborghini-bl002-scandal-green'),
+('ac603b52-d12f-11f0-a24b-005056b707be', '352883ba-cd3f-11f0-982a-005056b707be', 'Babolat Air Origin', 'babolat-air-origin', 'Babolat Air Origin racket focused on speed and manoeuvrability, allowing quick reactions at the net while still providing plenty of power from the back of the court.', 'images/products/rackets/babolat-air-origin.jpg', '139.99', 1, '2025-12-04 16:38:33', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/babolat-air-origin'),
+('d4d75ec4-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Red', 'sst-womens-red', 'Lightweight short sleeve training top for women in red, made from breathable performance fabric to keep you cool and comfortable during intense padel sessions.', 'images/products/tshirts/short-sleeve-training-top-womens-red.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-womens-red'),
+('d4d76400-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Red', 'sst-mens-red', 'Short sleeve men\'s training top in red, using moisture-wicking material with an athletic cut that allows full freedom of movement on court.', 'images/products/tshirts/short-sleeve-training-top-mens-red.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-red'),
+('d4d76640-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Navy', 'sst-mens-navy', 'Men\'s navy short sleeve training top crafted from soft, quick-dry fabric, ideal for regular padel practice or gym workouts.', 'images/products/tshirts/short-sleeve-training-top-mens-navy.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-navy'),
+('d4d7aeeb-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Womens Navy', 'sst-womens-navy', 'Women\'s navy training top with short sleeves and a flattering athletic fit, designed to combine comfort, style and performance on court.', 'images/products/tshirts/short-sleeve-training-top-womens-navy.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-womens-navy'),
+('d4d7b041-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens Black', 'sst-mens-black', 'Black short sleeve training top for men, built with breathable stretch fabric that manages sweat and moves with you through every shot.', 'images/products/tshirts/short-sleeve-training-top-mens-black.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-black'),
+('d4d7b162-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'Short Sleeve Training Top Mens White', 'sst-mens-white', 'Classic white men\'s training top in a lightweight, quick-dry fabric that makes it perfect for padel matches, fitness sessions or casual wear.', 'images/products/tshirts/short-sleeve-training-top-mens-white.jpg', '29.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://y1sport.com/products/short-sleeve-training-top-mens-white'),
+('d4d7b265-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Paquito 25I White', 'bp-paquito-25i', 'Official Bullpadel Paquito Navarro 25I match T-shirt in white, featuring high-performance fabric and the signature style of one of the world’s top padel players.', 'images/products/tshirts/t-shirt-bullpadel-paquito-25i-white.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://www.bullpadel.com/gb/official-t-shirts/5470-18711-t-shirt-bullpadel-paquito-25i-white.html'),
+('d4d7b3ae-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Chingotto 25I Stone', 'bp-chingotto-25i', 'Official Bullpadel Chingotto 25I T-shirt in stone colour, designed with breathable materials and the look worn by professional player Fede Chingotto.', 'https://www.bullpadel.com/18062-large_default/t-shirt-bullpadel-chingotto-25i-stone.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5439-18571-t-shirt-bullpadel-chingotto-25i-stone.html'),
+('d4d7b4a9-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Di Nenno 25I Hybiscus', 'bp-dinenno-25i', 'Official Bullpadel Di Nenno 25I T-shirt in hibiscus, made from lightweight technical fabric and inspired by the on-court style of Franco Stupaczuk’s partner Martín Di Nenno.', 'https://www.bullpadel.com/18103-large_default/t-shirt-bullpadel-di-nenno-25i-hybiscus.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5460-18676-t-shirt-bullpadel-di-nenno-25i-hybiscus.html'),
+('d4d7b5a9-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Tello 25I Blue Green', 'bp-tello-25i', 'Official Bullpadel Tello 25I T-shirt in blue and green, combining striking design with breathable fabric for high-intensity padel play.', 'https://www.bullpadel.com/17902-large_default/t-shirt-bullpadel-tello-25i-blue-green.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-02 13:37:30', 'https://www.bullpadel.com/gb/official-t-shirts/5450-18671-t-shirt-bullpadel-tello-25i-blue-green.html'),
+('d4d7b70a-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Batea Woman', 'bp-batea-woman', 'Bullpadel Batea women\'s T-shirt with a feminine fit and soft, quick-dry fabric, perfect for both matches and training sessions.', 'images/products/tshirts/t-shirt-bullpadel-batea-woman.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-batea-woman'),
+('d4d7b80d-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Bullpadel Gemma 25V Woman', 'bp-gemma-25v', 'Bullpadel Gemma 25V women\'s T-shirt inspired by Gemma Triay, offering an athletic cut, lightweight fabric and stylish design for competitive padel players.', NULL, '34.99', 1, '2025-12-04 16:32:31', '2025-12-04 19:06:01', 'https://www.padelnuestro.com/uk/t-shirt-bullpadel-gemma-25v-woman'),
+('d4d7b8fe-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Nox Pro 2025', 'nox-pro-2025', 'Nox Pro 2025 performance T-shirt with technical fabric that wicks away sweat, ideal for players who value comfort and a clean, professional look.', 'images/products/tshirts/t-shirt-nox-pro-2025.jpg', '34.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-nox-pro-2025'),
+('d4d7ba58-d12e-11f0-a24b-005056b707be', 'e6660501-cf7e-11f0-a24b-005056b707be', 'T-Shirt Lacoste TH5195', 'lacoste-th5195', 'Lacoste TH5195 padel T-shirt combining the brand’s classic style with breathable sports fabric, suitable for both on-court performance and casual wear.', 'images/products/tshirts/t-shirt-lacoste-th5195.jpg', '44.99', 1, '2025-12-04 16:32:31', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/t-shirt-lacoste-th5195'),
+('e0a64b34-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Babolat Court Padel X3 Balls Canister', 'babolat-x3', 'Pressurised can of Babolat Court Padel X3 balls, offering consistent bounce and durability for both training sessions and competitive matches.', 'images/products/balls/babolat-court-padel-x3-balls-canister.jpg', '7.99', 1, '2025-12-04 16:32:51', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/babolat-court-padel-x3-balls-canister-24650-p'),
+('e0a64ff7-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Wilson Premier Padel Balls Canister', 'wilson-premier', 'Wilson Premier padel balls supplied in a pressurised canister, designed for official circuits with excellent visibility, feel and long-lasting performance.', 'images/products/balls/wilson-premier-padel-balls-canister.jpg', '8.99', 1, '2025-12-04 16:32:51', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/wilson-premier-padel-balls-canister-113567-p'),
+('e0a65179-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', '3-Ball Can Nox Nerbo', 'nox-nerbo-3ball', 'Nox Nerbo padel balls in a 3-ball can, providing a lively bounce and great control for advanced players who demand precision in every rally.', 'images/products/balls/3-ball-can-nox-nerbo.jpg', '6.99', 1, '2025-12-04 16:32:51', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/3-ball-can-nox-nerbo'),
+('e0a6529c-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premium Pro Boat', 'bullpadel-premium-pro', 'Bullpadel Premium Pro balls, ideal for competition and high-level training, with a consistent flight and extra-durable felt for extended play.', 'images/products/balls/bullpadel-premium-pro-boat.jpg', '7.99', 1, '2025-12-04 16:32:51', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/bullpadel-premium-pro-boat-4151-p'),
+('e0a653c7-d12e-11f0-a24b-005056b707be', 'e6660920-cf7e-11f0-a24b-005056b707be', 'Bullpadel Train Ball Jar 465464', 'bullpadel-train-465464', 'Bullpadel Train Ball Jar 465464, developed specifically for coaching and practice, offering reliable bounce and durability for intensive use on court.', 'images/products/balls/bullpadel-train-ball-jar-465464.jpg', '5.99', 1, '2025-12-04 16:32:51', '2026-03-05 14:01:48', 'https://www.padelnuestro.com/uk/bullpadel-train-ball-jar-465464-108760-p'),
+('e75605f7-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Neuron Vibram 25V Clay', 'bp-neuron-vibram-25v', 'Bullpadel Neuron Vibram 25V Clay shoes featuring Vibram outsole for exceptional grip on clay and padel surfaces, with reinforced upper for stability and protection during aggressive movements.', NULL, '99.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4893-16336-trainers-bullpadel-neuron-vibram-25v-clay.html'),
+('e7560b58-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Hybrid Fly 25I Steel Blue', 'bp-hybrid-fly-25i', 'Bullpadel Hybrid Fly 25I in steel blue, a lightweight, responsive shoe with excellent cushioning and lateral support for fast, explosive padel play.', NULL, '109.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/5561-19285-trainers-bullpadel-hybrid-fly-25i-steel-blue.html'),
+('e7560ca4-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Vertex Vibram 25V Yellow', 'bp-vertex-vibram-25v', 'Bullpadel Vertex Vibram 25V Yellow shoes equipped with Vibram outsole and reinforced toe, giving maximum traction and durability for advanced tournament players.', NULL, '119.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4839-16235-trainers-bullpadel-vertex-vibram-25v-yellow.html'),
+('e7560db9-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Premier P1 White', 'bp-premier-p1-white', 'Bullpadel Premier P1 white shoes combining low-profile cushioning, breathable mesh and strong lateral support for comfortable, stable movement on court.', NULL, '89.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/gb/man/4591-15718-trainers-bullpadel-premier-p1-white.html'),
+('e7560f46-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Babolat Jet Mach 3 Blue/Orange', 'babolat-jet-mach-3', 'Babolat Jet Mach 3 All Court Blue/Orange padel and tennis shoes, designed with a lightweight chassis and durable outsole for explosive acceleration and quick changes of direction.', NULL, '129.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/babolat-jet-mach-3-all-court-blue-orange-men-30523629'),
+('e7561058-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'K-Swiss Hypercourt Supreme 2 White', 'kswiss-hypercourt-2', 'K-Swiss Hypercourt Supreme 2 White offers plush cushioning, wide platform stability and a grippy outsole, ideal for players who demand comfort over long matches.', NULL, '119.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/kswiss-hypercourt-supreme-2-white-09071102'),
+('e756115a-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Joma Master 1000 Men Yellow Clay', 'joma-master-1000', 'Joma Master 1000 clay shoes in fluorescent yellow, built with a resistant sole pattern for clay and padel courts and cushioning that absorbs impacts on every step.', NULL, '69.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.padelnuestro.com/uk/joma-master-1000-men-25-clay-fluorescent-yellow-tm100s2599cc'),
+('e75613ac-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Bullpadel Trainers Buker JR 25I White', 'bp-buker-jr-white', 'Bullpadel Buker JR 25I white junior shoes, designed for young padel players with a flexible sole, reinforced toe and comfortable fit for developing feet.', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg', '59.99', 1, '2025-12-04 16:33:02', '2025-12-04 19:07:14', 'https://www.bullpadel.com/17544-home_default/bullpadel-trainers-buker-jr-25i-white.jpg'),
+('e75614f4-d12e-11f0-a24b-005056b707be', 'e6660a4e-cf7e-11f0-a24b-005056b707be', 'Wilson Rush Pro 4.5 White/Blue', 'wilson-rush-pro-45', 'Wilson Rush Pro 4.5 shoes in white and blue, providing explosive propulsion, strong heel stability and a durable outsole engineered for padel and tennis courts.', '/images/products/shoes/wilson-rush-pro-4-5-white-blue.jpeg', '109.99', 1, '2025-12-04 16:33:02', '2026-03-02 13:28:05', 'https://www.padelnuestro.com/uk/wilson-rush-pro-4-5-white-blue');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_attributes`
+--
+
+CREATE TABLE `product_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_attributes`
+--
+
+INSERT INTO `product_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('33de1609-cf7e-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Babolat'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Carbon Fibre'),
+('4c5a0ac5-cf7f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Babolat'),
+('4c5a0fb8-cf7f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Wilson'),
+('4c5a1116-cf7f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Nox'),
+('4c5a1220-cf7f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Bullpadel'),
+('4c5a1330-cf7f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Bullpadel'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'ViboraUK'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Carbon Fibre'),
+('78bbde7a-cd3f-11f0-982a-005056b707be', '6dd98005-1e10-11f1-b595-005056b707be', 'Coaching'),
+('ac601922-d12f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Y1Sport'),
+('ac601922-d12f-11f0-a24b-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Carbon Fibre'),
+('ac601e4f-d12f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Y1Sport'),
+('ac601e4f-d12f-11f0-a24b-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Fibreglass'),
+('ac6021c2-d12f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Y1Sport'),
+('ac6021c2-d12f-11f0-a24b-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Carbon Fibre'),
+('ac6022ee-d12f-11f0-a24b-005056b707be', '6dd74e45-1e10-11f1-b595-005056b707be', 'Y1Sport'),
+('ac6022ee-d12f-11f0-a24b-005056b707be', '6dd88796-1e10-11f1-b595-005056b707be', 'Fibreglass');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_bag_attributes`
+--
+
+CREATE TABLE `product_bag_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_bag_attributes`
+--
+
+INSERT INTO `product_bag_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('67e57d21-cf7f-11f0-a24b-005056b707be', '50f7a135-1e13-11f1-b595-005056b707be', 'Grey-Green'),
+('67e57e8e-cf7f-11f0-a24b-005056b707be', '50f7a135-1e13-11f1-b595-005056b707be', 'Greenish Blue'),
+('67e57fcc-cf7f-11f0-a24b-005056b707be', '50f7a135-1e13-11f1-b595-005056b707be', 'Red'),
+('67e58114-cf7f-11f0-a24b-005056b707be', '50f7a135-1e13-11f1-b595-005056b707be', 'Greenish Blue'),
+('67e58211-cf7f-11f0-a24b-005056b707be', '50f7a135-1e13-11f1-b595-005056b707be', 'Lime Green');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_ball_attributes`
+--
+
+CREATE TABLE `product_ball_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_ball_attributes`
+--
+
+INSERT INTO `product_ball_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('4c5a0ac5-cf7f-11f0-a24b-005056b707be', '50f69405-1e13-11f1-b595-005056b707be', 'Babolat'),
+('4c5a0ac5-cf7f-11f0-a24b-005056b707be', '50f71165-1e13-11f1-b595-005056b707be', '3'),
+('4c5a0fb8-cf7f-11f0-a24b-005056b707be', '50f69405-1e13-11f1-b595-005056b707be', 'Wilson'),
+('4c5a0fb8-cf7f-11f0-a24b-005056b707be', '50f71165-1e13-11f1-b595-005056b707be', '3'),
+('4c5a1116-cf7f-11f0-a24b-005056b707be', '50f69405-1e13-11f1-b595-005056b707be', 'Nox'),
+('4c5a1116-cf7f-11f0-a24b-005056b707be', '50f71165-1e13-11f1-b595-005056b707be', '3'),
+('4c5a1220-cf7f-11f0-a24b-005056b707be', '50f69405-1e13-11f1-b595-005056b707be', 'Bullpadel'),
+('4c5a1220-cf7f-11f0-a24b-005056b707be', '50f71165-1e13-11f1-b595-005056b707be', '3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_racket_attributes`
+--
+
+CREATE TABLE `product_racket_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_racket_attributes`
+--
+
+INSERT INTO `product_racket_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('33de1609-cf7e-11f0-a24b-005056b707be', '50f49d48-1e13-11f1-b595-005056b707be', 'Babolat'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '50f52784-1e13-11f1-b595-005056b707be', '365'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '50f5ada2-1e13-11f1-b595-005056b707be', 'Carbon Fibre'),
+('33de1609-cf7e-11f0-a24b-005056b707be', '50f62304-1e13-11f1-b595-005056b707be', '4 1/4'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '50f49d48-1e13-11f1-b595-005056b707be', 'ViboraUK'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '50f52784-1e13-11f1-b595-005056b707be', '360'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '50f5ada2-1e13-11f1-b595-005056b707be', 'Carbon Fibre'),
+('650e3d6b-cd3f-11f0-982a-005056b707be', '50f62304-1e13-11f1-b595-005056b707be', '4 1/4'),
+('ac601922-d12f-11f0-a24b-005056b707be', '50f49d48-1e13-11f1-b595-005056b707be', 'Y1Sport'),
+('ac601922-d12f-11f0-a24b-005056b707be', '50f52784-1e13-11f1-b595-005056b707be', '360'),
+('ac601922-d12f-11f0-a24b-005056b707be', '50f5ada2-1e13-11f1-b595-005056b707be', 'Carbon Fibre'),
+('ac601922-d12f-11f0-a24b-005056b707be', '50f62304-1e13-11f1-b595-005056b707be', '4 1/4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_shoe_attributes`
+--
+
+CREATE TABLE `product_shoe_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_shoe_attributes`
+--
+
+INSERT INTO `product_shoe_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('5c4d25ea-cf7f-11f0-a24b-005056b707be', '50f8371e-1e13-11f1-b595-005056b707be', 'UK 9'),
+('5c4d25ea-cf7f-11f0-a24b-005056b707be', '50f8b10a-1e13-11f1-b595-005056b707be', 'Men'),
+('5c4d283b-cf7f-11f0-a24b-005056b707be', '50f8371e-1e13-11f1-b595-005056b707be', 'UK 9'),
+('5c4d283b-cf7f-11f0-a24b-005056b707be', '50f8b10a-1e13-11f1-b595-005056b707be', 'Men'),
+('5c4d29b9-cf7f-11f0-a24b-005056b707be', '50f8371e-1e13-11f1-b595-005056b707be', 'UK 5'),
+('5c4d29b9-cf7f-11f0-a24b-005056b707be', '50f8b10a-1e13-11f1-b595-005056b707be', 'Junior');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_tshirt_attributes`
+--
+
+CREATE TABLE `product_tshirt_attributes` (
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `product_tshirt_attributes`
+--
+
+INSERT INTO `product_tshirt_attributes` (`product_id`, `attribute_id`, `value`) VALUES
+('3a280bd4-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Women'),
+('3a280bd4-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a280bd4-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'Red'),
+('3a2810ed-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Men'),
+('3a2810ed-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a2810ed-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'Red'),
+('3a281241-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Men'),
+('3a281241-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a281241-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'Navy'),
+('3a281352-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Women'),
+('3a281352-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a281352-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'Navy'),
+('3a2814c0-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Men'),
+('3a2814c0-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a2814c0-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'Black'),
+('3a2817d3-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Men'),
+('3a2817d3-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a2817d3-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'White'),
+('3a281d9f-cf7f-11f0-a24b-005056b707be', '50f95460-1e13-11f1-b595-005056b707be', 'Women'),
+('3a281d9f-cf7f-11f0-a24b-005056b707be', '50f9d0e3-1e13-11f1-b595-005056b707be', 'M'),
+('3a281d9f-cf7f-11f0-a24b-005056b707be', '50fa3543-1e13-11f1-b595-005056b707be', 'White');
 
 -- --------------------------------------------------------
 
@@ -395,13 +566,13 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `descriptio
 --
 
 CREATE TABLE `product_variants` (
-  `variant_id` char(36) NOT NULL DEFAULT uuid(),
-  `product_id` char(36) NOT NULL,
-  `sku` varchar(64) NOT NULL,
-  `variant_name` varchar(255) NOT NULL,
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `sku` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -409,10 +580,11 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`variant_id`, `product_id`, `sku`, `variant_name`, `price`, `is_active`, `created_at`) VALUES
-('e85ae4e1-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-360-BLK', 'Venom Pro 360g - Black', 199.99, 1, '2025-11-29 16:24:41'),
-('e85c3963-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-370-BLU', 'Venom Pro 370g - Blue', 209.99, 1, '2025-11-29 16:24:41'),
-('f2aec2a8-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-60', '1-to-1 Coaching 60 Minutes', 40.00, 1, '2025-11-29 16:24:58'),
-('f2b02b11-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-90', '1-to-1 Coaching 90 Minutes', 55.00, 1, '2025-11-29 16:24:58');
+('6df5045a-1e10-11f1-b595-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-120', '1-to-1 Coaching 120 Minutes', '70.00', 1, '2026-03-12 12:38:53'),
+('e85ae4e1-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-360-BLK', 'Venom Pro 360g - Black', '199.99', 1, '2025-11-29 16:24:41'),
+('e85c3963-cd3f-11f0-982a-005056b707be', '650e3d6b-cd3f-11f0-982a-005056b707be', 'VB-VENOMPRO-370-BLU', 'Venom Pro 370g - Blue', '209.99', 1, '2025-11-29 16:24:41'),
+('f2aec2a8-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-60', '1-to-1 Coaching 60 Minutes', '40.00', 1, '2025-11-29 16:24:58'),
+('f2b02b11-cd3f-11f0-982a-005056b707be', '78bbde7a-cd3f-11f0-982a-005056b707be', 'COACH-1TO1-90', '1-to-1 Coaching 90 Minutes', '55.00', 1, '2025-11-29 16:24:58');
 
 -- --------------------------------------------------------
 
@@ -421,9 +593,9 @@ INSERT INTO `product_variants` (`variant_id`, `product_id`, `sku`, `variant_name
 --
 
 CREATE TABLE `product_variant_attributes` (
-  `variant_id` char(36) NOT NULL,
-  `attribute_id` char(36) NOT NULL,
-  `value` text NOT NULL
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -431,11 +603,36 @@ CREATE TABLE `product_variant_attributes` (
 --
 
 INSERT INTO `product_variant_attributes` (`variant_id`, `attribute_id`, `value`) VALUES
+('6df5045a-1e10-11f1-b595-005056b707be', '40ffe04e-cd3f-11f0-982a-005056b707be', 'Advanced'),
+('6df5045a-1e10-11f1-b595-005056b707be', '40ffe0f4-cd3f-11f0-982a-005056b707be', '120'),
 ('e85ae4e1-cd3f-11f0-982a-005056b707be', '40ffce70-cd3f-11f0-982a-005056b707be', '360'),
 ('e85ae4e1-cd3f-11f0-982a-005056b707be', '40ffdd89-cd3f-11f0-982a-005056b707be', 'Black'),
 ('e85c3963-cd3f-11f0-982a-005056b707be', '40ffce70-cd3f-11f0-982a-005056b707be', '370'),
 ('e85c3963-cd3f-11f0-982a-005056b707be', '40ffdd89-cd3f-11f0-982a-005056b707be', 'Blue'),
-('f2aec2a8-cd3f-11f0-982a-005056b707be', '40ffe0f4-cd3f-11f0-982a-005056b707be', '60');
+('f2aec2a8-cd3f-11f0-982a-005056b707be', '40ffe04e-cd3f-11f0-982a-005056b707be', 'Beginner'),
+('f2aec2a8-cd3f-11f0-982a-005056b707be', '40ffe0f4-cd3f-11f0-982a-005056b707be', '60'),
+('f2b02b11-cd3f-11f0-982a-005056b707be', '40ffe04e-cd3f-11f0-982a-005056b707be', 'Intermediate');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `racket_attributes`
+--
+
+CREATE TABLE `racket_attributes` (
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `racket_attributes`
+--
+
+INSERT INTO `racket_attributes` (`attribute_id`, `name`) VALUES
+('50f49d48-1e13-11f1-b595-005056b707be', 'Brand'),
+('50f62304-1e13-11f1-b595-005056b707be', 'Grip Size'),
+('50f5ada2-1e13-11f1-b595-005056b707be', 'Material'),
+('50f52784-1e13-11f1-b595-005056b707be', 'Weight (g)');
 
 -- --------------------------------------------------------
 
@@ -444,11 +641,11 @@ INSERT INTO `product_variant_attributes` (`variant_id`, `attribute_id`, `value`)
 --
 
 CREATE TABLE `restock_items` (
-  `restock_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT uuid(),
-  `restock_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `restock_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `restock_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `quantity` int NOT NULL
+) ;
 
 -- --------------------------------------------------------
 
@@ -457,10 +654,10 @@ CREATE TABLE `restock_items` (
 --
 
 CREATE TABLE `restock_orders` (
-  `restock_id` char(36) NOT NULL DEFAULT uuid(),
-  `created_by_admin_id` char(36) NOT NULL,
-  `status` varchar(50) NOT NULL DEFAULT 'draft',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `restock_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `created_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'draft',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -470,12 +667,12 @@ CREATE TABLE `restock_orders` (
 --
 
 CREATE TABLE `returns` (
-  `return_id` char(36) NOT NULL DEFAULT uuid(),
-  `order_id` char(36) NOT NULL,
-  `user_id` char(36) NOT NULL,
-  `requested_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(50) NOT NULL DEFAULT 'requested',
-  `reason` text DEFAULT NULL
+  `return_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `requested_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'requested',
+  `reason` text COLLATE utf8mb4_unicode_520_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -485,13 +682,13 @@ CREATE TABLE `returns` (
 --
 
 CREATE TABLE `return_items` (
-  `return_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT uuid(),
-  `return_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `order_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `condition_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `resolution` enum('refund','exchange') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `return_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `return_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `order_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `condition_text` text COLLATE utf8mb4_unicode_520_ci,
+  `resolution` enum('refund','exchange') COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
+) ;
 
 -- --------------------------------------------------------
 
@@ -500,14 +697,14 @@ CREATE TABLE `return_items` (
 --
 
 CREATE TABLE `reviews` (
-  `review_id` char(36) NOT NULL DEFAULT uuid(),
-  `user_id` char(36) NOT NULL,
-  `product_id` char(36) NOT NULL,
-  `rating` tinyint(4) NOT NULL,
-  `title` text DEFAULT NULL,
-  `body` text DEFAULT NULL,
-  `is_verified_purchase` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `review_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `rating` tinyint NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_520_ci,
+  `body` text COLLATE utf8mb4_unicode_520_ci,
+  `is_verified_purchase` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -517,8 +714,8 @@ CREATE TABLE `reviews` (
 --
 
 CREATE TABLE `roles` (
-  `role_id` char(36) NOT NULL DEFAULT uuid(),
-  `role_name` enum('customer','admin') NOT NULL
+  `role_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `role_name` enum('customer','admin') COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -536,13 +733,32 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 --
 
 CREATE TABLE `shipments` (
-  `shipment_id` char(36) NOT NULL DEFAULT uuid(),
-  `order_id` char(36) NOT NULL,
-  `carrier` text DEFAULT NULL,
-  `tracking_no` text DEFAULT NULL,
-  `shipped_at` timestamp NULL DEFAULT current_timestamp(),
-  `status` varchar(50) NOT NULL DEFAULT 'processing'
+  `shipment_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `carrier` text COLLATE utf8mb4_unicode_520_ci,
+  `tracking_no` text COLLATE utf8mb4_unicode_520_ci,
+  `shipped_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shoe_attributes`
+--
+
+CREATE TABLE `shoe_attributes` (
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `shoe_attributes`
+--
+
+INSERT INTO `shoe_attributes` (`attribute_id`, `name`) VALUES
+('50f8b10a-1e13-11f1-b595-005056b707be', 'Gender'),
+('50f8371e-1e13-11f1-b595-005056b707be', 'Size');
 
 -- --------------------------------------------------------
 
@@ -551,13 +767,13 @@ CREATE TABLE `shipments` (
 --
 
 CREATE TABLE `stock_ledger` (
-  `movement_id` char(36) NOT NULL DEFAULT uuid(),
-  `variant_id` char(36) NOT NULL,
-  `movement_type` varchar(50) NOT NULL,
-  `qty_delta` int(11) NOT NULL,
-  `reference_type` text DEFAULT NULL,
-  `reference_id` char(36) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `movement_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `movement_type` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `qty_delta` int NOT NULL,
+  `reference_type` text COLLATE utf8mb4_unicode_520_ci,
+  `reference_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -567,11 +783,11 @@ CREATE TABLE `stock_ledger` (
 --
 
 CREATE TABLE `stock_levels` (
-  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `on_hand` int(11) NOT NULL DEFAULT 0,
-  `reserved` int(11) NOT NULL DEFAULT 0,
-  `reorder_threshold` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `on_hand` int NOT NULL DEFAULT '0',
+  `reserved` int NOT NULL DEFAULT '0',
+  `reorder_threshold` int NOT NULL DEFAULT '0'
+) ;
 
 --
 -- Dumping data for table `stock_levels`
@@ -586,19 +802,39 @@ INSERT INTO `stock_levels` (`variant_id`, `on_hand`, `reserved`, `reorder_thresh
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tshirt_attributes`
+--
+
+CREATE TABLE `tshirt_attributes` (
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Dumping data for table `tshirt_attributes`
+--
+
+INSERT INTO `tshirt_attributes` (`attribute_id`, `name`) VALUES
+('50fa3543-1e13-11f1-b595-005056b707be', 'Colour'),
+('50f95460-1e13-11f1-b595-005056b707be', 'Gender'),
+('50f9d0e3-1e13-11f1-b595-005056b707be', 'Size');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `user_id` char(36) NOT NULL DEFAULT uuid(),
-  `email` varchar(255) NOT NULL,
-  `password_hash` text NOT NULL,
-  `first_name` text NOT NULL,
-  `last_name` text NOT NULL,
-  `phone` text DEFAULT NULL,
-  `must_change_password` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password_hash` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `first_name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `last_name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `phone` text COLLATE utf8mb4_unicode_520_ci,
+  `must_change_password` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -606,11 +842,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password_hash`, `first_name`, `last_name`, `phone`, `must_change_password`, `created_at`, `updated_at`) VALUES
-('3b564ee7-d1c8-11f0-a4d7-107c6124c5e6', 'ahmedtesting1@viborauk.com', '$2b$10$//nZTVo9eC1LjcEB5oBM.eR4iJDzAeSHpmzuMX5iso2pVg00r6X2K', 'ahned', 'sf', '07123456789', 1, '2025-12-05 10:50:36', '2025-12-05 10:50:36'),
-('8e541a20-d16c-11f0-99f5-107c6124c5e6', 'ahmedtesting@viborauk.com', '$2b$10$4rGnpLrmF8/uBGfuRKQcA.7s2O5TO62PCGUOyn2GVSiwiVM9dgioi', 'ahmed', 'fay', '07123456789', 1, '2025-12-04 23:54:21', '2025-12-04 23:54:21'),
-('ee98a0d1-d175-11f0-99f5-107c6124c5e6', 'shoka@gmail.com', '$2b$10$GGhE21I7ehhX5kMsVlejp.h3x705Uz3H8NobHeXJu5FIKs0hm5tLG', 'shoka', 'son', '07123456787', 1, '2025-12-05 01:01:28', '2025-12-05 01:01:28'),
 ('f5403f50-cd3e-11f0-982a-005056b707be', 'macdonald@viborauk.com', '<HASHED_ADMIN_PASSWORD>', 'Macdonald', 'Admin', '07000000000', 1, '2025-11-29 16:17:53', '2025-11-29 16:17:53'),
 ('f5404352-cd3e-11f0-982a-005056b707be', 'customer1@viborauk.com', '<HASHED_CUSTOMER_PASSWORD>', 'Alex', 'Player', '07111111111', 0, '2025-11-29 16:17:53', '2025-11-29 16:17:53'),
+('f7ed5451-d1d9-11f0-a24b-005056b707be', 'ajaysangha1@gmail.com', '$2b$10$6TereW9aS5ske7V.j/ul9Ofh9Bt122z13hT4gUYCYB97xDKqdu72m', 'Ajay', 'Sangha', '07309857660', 1, '2025-12-05 12:57:34', '2025-12-05 12:57:34'),
 ('fa27a8ef-d115-11f0-a24b-005056b707be', 'ajaysangha56@gmail.com', '$2b$10$X.sOYO2BzARGsqREs075I.RcWPTByzrBigAD/LXTv.DZeZmj8gxVq', 'Ajay', 'Sangha', '07309857660', 1, '2025-12-04 13:34:36', '2025-12-04 13:34:36');
 
 -- --------------------------------------------------------
@@ -620,8 +854,8 @@ INSERT INTO `users` (`user_id`, `email`, `password_hash`, `first_name`, `last_na
 --
 
 CREATE TABLE `user_roles` (
-  `user_id` char(36) NOT NULL,
-  `role_id` char(36) NOT NULL
+  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `role_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -630,8 +864,8 @@ CREATE TABLE `user_roles` (
 
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
 ('f5403f50-cd3e-11f0-982a-005056b707be', '3470626c-cd3e-11f0-982a-005056b707be'),
-('f5403f50-cd3e-11f0-982a-005056b707be', '347065ea-cd3e-11f0-982a-005056b707be'),
-('f5404352-cd3e-11f0-982a-005056b707be', '3470626c-cd3e-11f0-982a-005056b707be');
+('f5404352-cd3e-11f0-982a-005056b707be', '3470626c-cd3e-11f0-982a-005056b707be'),
+('f5403f50-cd3e-11f0-982a-005056b707be', '347065ea-cd3e-11f0-982a-005056b707be');
 
 --
 -- Indexes for dumped tables
@@ -643,6 +877,20 @@ INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
 ALTER TABLE `addresses`
   ADD PRIMARY KEY (`address_id`),
   ADD KEY `fk_addresses_user` (`user_id`);
+
+--
+-- Indexes for table `bag_attributes`
+--
+ALTER TABLE `bag_attributes`
+  ADD PRIMARY KEY (`attribute_id`),
+  ADD UNIQUE KEY `uk_bag_attribute_name` (`name`);
+
+--
+-- Indexes for table `ball_attributes`
+--
+ALTER TABLE `ball_attributes`
+  ADD PRIMARY KEY (`attribute_id`),
+  ADD UNIQUE KEY `uk_ball_attribute_name` (`name`);
 
 --
 -- Indexes for table `carts`
@@ -719,6 +967,48 @@ ALTER TABLE `products`
   ADD KEY `fk_products_category` (`category_id`);
 
 --
+-- Indexes for table `product_attributes`
+--
+ALTER TABLE `product_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `fk_pa_attribute` (`attribute_id`);
+
+--
+-- Indexes for table `product_bag_attributes`
+--
+ALTER TABLE `product_bag_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `idx_pbga_attribute_id` (`attribute_id`);
+
+--
+-- Indexes for table `product_ball_attributes`
+--
+ALTER TABLE `product_ball_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `idx_pba_attribute_id` (`attribute_id`);
+
+--
+-- Indexes for table `product_racket_attributes`
+--
+ALTER TABLE `product_racket_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `idx_pra_attribute_id` (`attribute_id`);
+
+--
+-- Indexes for table `product_shoe_attributes`
+--
+ALTER TABLE `product_shoe_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `idx_psa_attribute_id` (`attribute_id`);
+
+--
+-- Indexes for table `product_tshirt_attributes`
+--
+ALTER TABLE `product_tshirt_attributes`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`),
+  ADD KEY `idx_pta_attribute_id` (`attribute_id`);
+
+--
 -- Indexes for table `product_variants`
 --
 ALTER TABLE `product_variants`
@@ -732,6 +1022,13 @@ ALTER TABLE `product_variants`
 ALTER TABLE `product_variant_attributes`
   ADD PRIMARY KEY (`variant_id`,`attribute_id`),
   ADD KEY `fk_pva_attribute` (`attribute_id`);
+
+--
+-- Indexes for table `racket_attributes`
+--
+ALTER TABLE `racket_attributes`
+  ADD PRIMARY KEY (`attribute_id`),
+  ADD UNIQUE KEY `uk_racket_attribute_name` (`name`);
 
 --
 -- Indexes for table `restock_items`
@@ -787,6 +1084,13 @@ ALTER TABLE `shipments`
   ADD KEY `fk_shipments_order` (`order_id`);
 
 --
+-- Indexes for table `shoe_attributes`
+--
+ALTER TABLE `shoe_attributes`
+  ADD PRIMARY KEY (`attribute_id`),
+  ADD UNIQUE KEY `uk_shoe_attribute_name` (`name`);
+
+--
 -- Indexes for table `stock_ledger`
 --
 ALTER TABLE `stock_ledger`
@@ -798,6 +1102,13 @@ ALTER TABLE `stock_ledger`
 --
 ALTER TABLE `stock_levels`
   ADD PRIMARY KEY (`variant_id`);
+
+--
+-- Indexes for table `tshirt_attributes`
+--
+ALTER TABLE `tshirt_attributes`
+  ADD PRIMARY KEY (`attribute_id`),
+  ADD UNIQUE KEY `uk_tshirt_attribute_name` (`name`);
 
 --
 -- Indexes for table `users`
@@ -834,7 +1145,7 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `fk_cart_items_cart` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`cart_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_cart_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+  ADD CONSTRAINT `fk_cart_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `contact_requests`
@@ -859,13 +1170,56 @@ ALTER TABLE `orders`
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_order_items_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`variant_id`);
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
+  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE RESTRICT;
+
+--
+-- Constraints for table `product_attributes`
+--
+ALTER TABLE `product_attributes`
+  ADD CONSTRAINT `fk_pa_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `padel_attributes` (`attribute_id`),
+  ADD CONSTRAINT `fk_pa_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_bag_attributes`
+--
+ALTER TABLE `product_bag_attributes`
+  ADD CONSTRAINT `fk_pbga_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `bag_attributes` (`attribute_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_pbga_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_ball_attributes`
+--
+ALTER TABLE `product_ball_attributes`
+  ADD CONSTRAINT `fk_pba_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `ball_attributes` (`attribute_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_pba_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_racket_attributes`
+--
+ALTER TABLE `product_racket_attributes`
+  ADD CONSTRAINT `fk_pra_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `racket_attributes` (`attribute_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_pra_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_shoe_attributes`
+--
+ALTER TABLE `product_shoe_attributes`
+  ADD CONSTRAINT `fk_psa_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `shoe_attributes` (`attribute_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_psa_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_tshirt_attributes`
+--
+ALTER TABLE `product_tshirt_attributes`
+  ADD CONSTRAINT `fk_pta_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `tshirt_attributes` (`attribute_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_pta_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_variants`
