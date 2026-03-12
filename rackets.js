@@ -1,56 +1,195 @@
-rackets.js
-
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("productsContainer");
   const searchInput = document.getElementById("searchInput");
   const searchBtn = document.getElementById("searchBtn");
+
+  const brandSelect = document.getElementById("racketbrands");
+  const priceSelect = document.getElementById("price");
+  const levelSelect = document.getElementById("level");
+  const materialSelect = document.getElementById("material");
+
   const CATEGORY_ID = "352883ba-cd3f-11f0-982a-005056b707be";
+
+  const racketImages = {
+    "Babolat X Lamborghini BL002 Scandal Green":
+      "database/images/products/rackets/BABOLAT X LAMBORGHINI BL002 SCANDAL GREEN.jpg",
+    "ViboraUK Venom Pro Padel Racket":
+      "database/images/products/rackets/Arlo Padel Racket.jpg",
+    "ViboraUK Strike Control Padel Racket":
+      "database/images/products/rackets/Pro X Padel Racket.jpg",
+    "Babolat Air Vertuo Padel Racket 2025":
+      "database/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png",
+    "Mirage 25 Padel Racket":
+      "database/images/products/rackets/Mirage-Front-2655789586.jpg",
+    "Panna 25 Padel Racket":
+      "database/images/products/rackets/Panna TF Padel Racket.jpg",
+    "Pro X 25 Padel Racket":
+      "database/images/products/rackets/pro-x-25-padel-racket.jpeg"
+  };
+
   if (!container) return;
+
+  let allProducts = [];
+
+  function getImageUrl(product) {
+    if (product.image_url && product.image_url.trim() !== "") {
+      return product.image_url;
+    }
+
+    if (racketImages[product.name]) {
+      return racketImages[product.name];
+    }
+
+    return "database/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png";
+  }
 
   function renderProducts(products) {
     container.innerHTML = "";
-    if (!products.length) {
+
+    if (!products || products.length === 0) {
       container.innerHTML = "<p>No rackets found.</p>";
       return;
     }
+
     products.forEach((product) => {
       const card = document.createElement("div");
       card.classList.add("product-card");
-      const imageUrl = "images/racket1.jpg";
-      const priceHtml =
+
+      const name = product.name || "Racket";
+      const brand = (product.brand || "").toString();
+      const level = (product.level || "").toString();
+      const material = (product.material || "").toString();
+
+      const priceValue =
         product.base_price !== null && product.base_price !== undefined
-          ? <div class="product-price">£${Number(product.base_price).toFixed(2)}</div>
-          : "";
+          ? Number(product.base_price)
+          : null;
+
+      const imageUrl = getImageUrl(product);
+
+      const priceHtml =
+        priceValue !== null && !Number.isNaN(priceValue)
+          ? `<div class="product-price">£${priceValue.toFixed(2)}</div>`
+          : `<div class="product-price">Price on request</div>`;
+
       card.innerHTML = `
-        <img src="${imageUrl}" alt="${product.name}">
+        <img src="${imageUrl}" alt="${name}">
         <div class="product-info">
-          <div class="product-name">${product.name}</div>
+          <div class="product-name">${name}</div>
+          <div class="product-meta">
+            ${brand ? `<span class="product-brand">${brand}</span>` : ""}
+            ${level ? `<span class="product-level">${level}</span>` : ""}
+            ${material ? `<span class="product-material">${material}</span>` : ""}
+          </div>
           <div class="product-bottom">
             ${priceHtml}
-            <button onclick="window.location.href='product-details.html?id=${product.product_id}'">See Details</button>
+            <button class="product-details-btn" data-product-id="${product.product_id}">
+              See Details
+            </button>
           </div>
-        </div>`;
+        </div>
+      `;
+
       container.appendChild(card);
+    });
+
+    container.querySelectorAll(".product-details-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = e.currentTarget.getAttribute("data-product-id");
+        if (id) {
+          window.location.href = `product-details.html?id=${encodeURIComponent(id)}`;
+        }
+      });
     });
   }
 
-  function loadProducts(term = "") {
-    fetch(http://localhost:5000/api/products?category_id=${CATEGORY_ID})
-      .then((res) => res.json())
-      .then((products) => {
-        const filtered = term
-          ? products.filter((p) => p.name.toLowerCase().includes(term.toLowerCase()))
-          : products;
-        renderProducts(filtered);
+  function priceMatches(price, filter) {
+    if (!price && price !== 0) return filter === "all";
+
+    const p = Number(price);
+
+    switch (filter) {
+      case "under50":
+        return p < 50;
+      case "50to75":
+        return p >= 50 && p <= 75;
+      case "75to100":
+        return p > 75 && p <= 100;
+      case "100to150":
+        return p > 100 && p <= 150;
+      case "over150":
+        return p > 150;
+      default:
+        return true;
+    }
+  }
+
+  function applyFilters() {
+    const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const brandFilter = brandSelect ? brandSelect.value : "all";
+    const priceFilter = priceSelect ? priceSelect.value : "all";
+    const levelFilter = levelSelect ? levelSelect.value : "all";
+    const materialFilter = materialSelect ? materialSelect.value : "all";
+
+    const filtered = allProducts.filter((p) => {
+      const name = (p.name || "").toLowerCase();
+      const brand = (p.brand || "").toLowerCase();
+      const level = (p.level || "").toLowerCase();
+      const material = (p.material || "").toLowerCase();
+
+      const matchesSearch = !term || name.includes(term) || brand.includes(term);
+      const matchesBrand = !brandFilter || brandFilter === "all" || brand === brandFilter;
+      const matchesLevel = !levelFilter || levelFilter === "all" || level === levelFilter;
+      const matchesMaterial =
+        !materialFilter || materialFilter === "all" || material === materialFilter;
+      const matchesPrice = priceMatches(p.base_price, priceFilter);
+
+      return (
+        matchesSearch &&
+        matchesBrand &&
+        matchesLevel &&
+        matchesMaterial &&
+        matchesPrice
+      );
+    });
+
+    renderProducts(filtered);
+  }
+
+  function loadProducts() {
+    container.innerHTML = "<p>Loading rackets...</p>";
+
+    fetch(
+      `http://localhost:5000/api/products?category_id=${encodeURIComponent(CATEGORY_ID)}`
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network error");
+        }
+        return res.json();
       })
-      .catch(() => {
+      .then((products) => {
+        allProducts = Array.isArray(products) ? products : [];
+        applyFilters();
+      })
+      .catch((error) => {
+        console.error("Error loading rackets:", error);
         container.innerHTML = "<p>Error loading rackets.</p>";
       });
   }
 
   if (searchBtn && searchInput) {
-    searchBtn.addEventListener("click", () => loadProducts(searchInput.value.trim()));
+    searchBtn.addEventListener("click", applyFilters);
+    searchInput.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") applyFilters();
+    });
+    searchInput.addEventListener("input", applyFilters);
   }
+
+  if (brandSelect) brandSelect.addEventListener("change", applyFilters);
+  if (priceSelect) priceSelect.addEventListener("change", applyFilters);
+  if (levelSelect) levelSelect.addEventListener("change", applyFilters);
+  if (materialSelect) materialSelect.addEventListener("change", applyFilters);
 
   loadProducts();
 });
