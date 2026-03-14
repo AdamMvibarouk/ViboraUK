@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 05, 2026 at 02:16 PM
+-- Generation Time: Mar 14, 2026 at 04:37 PM
 -- Server version: 8.0.45-0ubuntu0.22.04.1
 -- PHP Version: 8.3.30
 
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `addresses` (
-  `address_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `line1` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `line2` text COLLATE utf8mb4_unicode_520_ci,
-  `city` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `postcode` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `country` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `address_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `line1` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `line2` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `city` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `postcode` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `country` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `is_default` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -45,8 +45,8 @@ CREATE TABLE `addresses` (
 --
 
 CREATE TABLE `carts` (
-  `cart_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `cart_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -66,9 +66,9 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `cart_items` (
-  `cart_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `cart_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `cart_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `cart_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `quantity` int NOT NULL,
   `unit_price` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
@@ -81,10 +81,10 @@ CREATE TABLE `cart_items` (
 --
 
 CREATE TABLE `categories` (
-  `category_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `slug` varchar(191) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_520_ci,
+  `category_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -112,14 +112,14 @@ INSERT INTO `categories` (`category_id`, `name`, `slug`, `description`, `is_acti
 --
 
 CREATE TABLE `contact_requests` (
-  `contact_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `email` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `subject` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `contact_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `subject` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `handled_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `status` enum('open','in_progress','closed') COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'open'
+  `handled_by_admin_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `status` enum('open','in_progress','closed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -129,9 +129,9 @@ CREATE TABLE `contact_requests` (
 --
 
 CREATE TABLE `enquiries` (
-  `enquiry_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `enquiry_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -149,12 +149,12 @@ INSERT INTO `enquiries` (`enquiry_id`, `email`, `message`, `created_at`) VALUES
 --
 
 CREATE TABLE `inventory_alerts` (
-  `alert_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `alert_type` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `alert_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `alert_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `triggered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `message` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `acknowledged_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `acknowledged_by_admin_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `acknowledged_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -165,10 +165,10 @@ CREATE TABLE `inventory_alerts` (
 --
 
 CREATE TABLE `orders` (
-  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `order_number` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'pending',
+  `order_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `order_number` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'pending',
   `subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
   `discount_total` decimal(10,2) NOT NULL DEFAULT '0.00',
   `tax_total` decimal(10,2) NOT NULL DEFAULT '0.00',
@@ -193,13 +193,13 @@ INSERT INTO `orders` (`order_id`, `user_id`, `order_number`, `status`, `subtotal
 --
 
 CREATE TABLE `order_items` (
-  `order_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `order_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `quantity` int NOT NULL,
   `unit_price` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -208,8 +208,8 @@ CREATE TABLE `order_items` (
 --
 
 CREATE TABLE `padel_attributes` (
-  `attribute_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -236,17 +236,17 @@ INSERT INTO `padel_attributes` (`attribute_id`, `name`) VALUES
 --
 
 CREATE TABLE `products` (
-  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `category_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_520_ci,
-  `image_url` text COLLATE utf8mb4_unicode_520_ci,
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `category_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `image_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
   `base_price` decimal(10,2) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `product_url` varchar(500) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
+  `product_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -348,10 +348,10 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `slug`, `descriptio
 --
 
 CREATE TABLE `product_variants` (
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `sku` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `variant_name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `sku` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -374,9 +374,9 @@ INSERT INTO `product_variants` (`variant_id`, `product_id`, `sku`, `variant_name
 --
 
 CREATE TABLE `product_variant_attributes` (
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `attribute_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `attribute_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -397,11 +397,11 @@ INSERT INTO `product_variant_attributes` (`variant_id`, `attribute_id`, `value`)
 --
 
 CREATE TABLE `restock_items` (
-  `restock_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `restock_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `restock_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `restock_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `quantity` int NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -410,9 +410,9 @@ CREATE TABLE `restock_items` (
 --
 
 CREATE TABLE `restock_orders` (
-  `restock_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `created_by_admin_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'draft',
+  `restock_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `created_by_admin_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'draft',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -423,12 +423,12 @@ CREATE TABLE `restock_orders` (
 --
 
 CREATE TABLE `returns` (
-  `return_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `return_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `requested_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'requested',
-  `reason` text COLLATE utf8mb4_unicode_520_ci
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'requested',
+  `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -438,13 +438,13 @@ CREATE TABLE `returns` (
 --
 
 CREATE TABLE `return_items` (
-  `return_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `return_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `order_item_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `return_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `return_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `order_item_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `quantity` int NOT NULL,
-  `condition_text` text COLLATE utf8mb4_unicode_520_ci,
-  `resolution` enum('refund','exchange') COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
-) ;
+  `condition_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `resolution` enum('refund','exchange') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
 
@@ -453,12 +453,12 @@ CREATE TABLE `return_items` (
 --
 
 CREATE TABLE `reviews` (
-  `review_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `product_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `review_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `rating` tinyint NOT NULL,
-  `title` text COLLATE utf8mb4_unicode_520_ci,
-  `body` text COLLATE utf8mb4_unicode_520_ci,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
   `is_verified_purchase` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -470,8 +470,8 @@ CREATE TABLE `reviews` (
 --
 
 CREATE TABLE `roles` (
-  `role_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `role_name` enum('customer','admin') COLLATE utf8mb4_unicode_520_ci NOT NULL
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `role_name` enum('customer','admin') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -489,12 +489,12 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 --
 
 CREATE TABLE `shipments` (
-  `shipment_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `order_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `carrier` text COLLATE utf8mb4_unicode_520_ci,
-  `tracking_no` text COLLATE utf8mb4_unicode_520_ci,
+  `shipment_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `order_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `carrier` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `tracking_no` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
   `shipped_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'processing'
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- --------------------------------------------------------
@@ -504,12 +504,12 @@ CREATE TABLE `shipments` (
 --
 
 CREATE TABLE `stock_ledger` (
-  `movement_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `movement_type` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `movement_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `movement_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `qty_delta` int NOT NULL,
-  `reference_type` text COLLATE utf8mb4_unicode_520_ci,
-  `reference_id` char(36) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `reference_type` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  `reference_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -520,11 +520,11 @@ CREATE TABLE `stock_ledger` (
 --
 
 CREATE TABLE `stock_levels` (
-  `variant_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `variant_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `on_hand` int NOT NULL DEFAULT '0',
   `reserved` int NOT NULL DEFAULT '0',
   `reorder_threshold` int NOT NULL DEFAULT '0'
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
 -- Dumping data for table `stock_levels`
@@ -543,12 +543,12 @@ INSERT INTO `stock_levels` (`variant_id`, `on_hand`, `reserved`, `reorder_thresh
 --
 
 CREATE TABLE `users` (
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
-  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `password_hash` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `first_name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `last_name` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `phone` text COLLATE utf8mb4_unicode_520_ci,
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT (uuid()),
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `first_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `last_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `phone` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
   `must_change_password` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -571,8 +571,8 @@ INSERT INTO `users` (`user_id`, `email`, `password_hash`, `first_name`, `last_na
 --
 
 CREATE TABLE `user_roles` (
-  `user_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `role_id` char(36) COLLATE utf8mb4_unicode_520_ci NOT NULL
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
