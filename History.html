@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order History</title>
+
+    <link rel="stylesheet" href="styling.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                <span>VIBORA UK</span>
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rackets.html">Rackets</a></li>
+                <li><a href="sportswear.html">Sportswear</a></li>
+
+                <li class="dropdown">
+                    <a href="#">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="bags.html">Bags</a></li>
+                        <li><a href="shoes.html">Shoes</a></li>
+                        <li><a href="balls.html">Balls</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="orderHistory.html" class="active">Order History</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="login">
+            <a href="Basket.html" class="basket-link">
+                <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+            </a>
+            <a href="accountPage.html" class="login-btn">Login</a>
+        </div>
+    </header>
+
+
+    <section id="order-history" class="page-section">
+        <h1>Your Order History</h1>
+
+        <table id="table" cellspacing="15" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+        </table>
+    </section>
+
+
+    <footer>
+        <h4>@ ViboraUK Ltd</h4>
+
+        <div class="credentials">
+            <h5><a href="./footers/T_and_C.html">Terms and Conditions</a></h5>
+            <h5><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h5>
+            <h5><a href="./footers/Cookies.html">Cookies</a></h5>
+            <h5><a href="./footers/DeliveryInformation.html">Delivery Information</a></h5>
+            <h5><a href="./footers/Returns.html">Returns</a></h5>
+            <h5><a href="contact.html">Contact</a></h5>
+        </div>
+
+        <p>&copy; 2025 ViboraUK. All rights reserved.</p>
+
+        <script src="js/orderHistory.js"></script>
+    </footer>
+
+</body>
+
+</html>
