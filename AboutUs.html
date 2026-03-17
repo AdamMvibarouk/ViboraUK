@@ -186,10 +186,28 @@
         
     </div>
     <script src="scriptARM.js"></script>
+    <link rel="stylesheet" href="styling.css">
 
         <p>&copy; 2025 VIBORA UK. All rights reserved.</p>
-    </footer>
+<script>
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
 
+    // Show popup instantly on page load
+    window.onload = function() {
+        document.getElementById("popup").style.display = "flex";
+    };
+</script>
 
 </body>
+<button onclick="myFunction()">Toggle dark mode</button>
+    </footer>
+<script>
+function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+</script>
 </html>

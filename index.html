@@ -113,20 +113,39 @@
     </section>
 
     <footer>
-        <h4>@ ViboraUK Ltd</h4>
-        <div class="credentials">
-            <h5><a href="./footers/T_and_C.html">Terms and Conditions</a></h5>
-            <h5><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h5>
-            <h5><a href="./footers/Cookies.html">Cookies</a></h5>
-            <h5><a href="./footers/DeliveryInformation.html">Delivery Information</a></h5>
-            <h5><a href="./footers/Returns.html">Returns</a></h5>
-            <h5><a href="contact.html">Contact</a></h5>
-        </div>
-        <p>&copy; 2025 PADEL UK. All rights reserved.</p>
+            <h5>@ ViboraUK Ltd</h5>
+    <div class = "credentials">
+        <h6> <a href="./footers/T_and_C.html">Terms and Conditions</a></h6>
+        <h6><a href ="./footers/PrivacyPolicy.html">Privacy Policy</a></h6>
+        <h6><a href ="./footers/Cookies.html">Cookies</a></h6>
+        <h6><a href="./footers/DeliveryInformation.html">Delivery Information</a></h6>
+        <h6><a href ="./footers/Returns.html">Returns</a></h6>
+        <h6><a href ="">Contact</a></h6>
+        
+    </div>
+    <script src="scriptARM.js"></script>
+    <link rel="stylesheet" href="styling.css">
 
-        <script src="tanimscript.js"></script>
-    </footer>
+        <p>&copy; 2025 VIBORA UK. All rights reserved.</p>
+<script>
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+    // Show popup instantly on page load
+    window.onload = function() {
+        document.getElementById("popup").style.display = "flex";
+    };
+</script>
 
 </body>
-
+<button onclick="myFunction()">Toggle dark mode</button>
+    </footer>
+<script>
+function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+</script>
 </html>
