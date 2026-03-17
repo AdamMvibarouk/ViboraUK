@@ -49,22 +49,69 @@
         </nav>
     </header> 
     <h2>Inventory</h2>
+    <br>
+
+    <form id="Search">
+        <input type="search" name="search" id="searchbar" placeholder="Enter name of product"> 
+    </form>
+   <div class="filter-container">
+
+        <div class="filter">
+            <!-- <form action="">
+            <textarea id="Search" name="Name" rows="2" cols="2" placeholder="Enter name here" > </textarea>
+            </form> -->
+            <label for="Filter">Product Type:</label>
+            <select id="product">
+                <option value="All">All</option>
+                <option value="Rackets">Rackets</option>
+                <option value="Sportswear">Sportswear</option>
+
+            </select>
+        </div>
+        <button class="Submission-button" type= "submit">Search</button> <br>
+   </div>
+   <br>
+    
     
             <table cellspacing="5"  cellpadding="5" id="table" >
-            <tr> <th align='left'><b>Customer Name</b></th> 
-            <th align='center'><b>Orders</b></th > 
-            <th align='left'><b>Shipment Processing</b></th >
-            <th align='left'><b>Order Status Update</b></th>
-            <th align='left'><b>Customer Transaction View</b></th> <!--Should have a link to dummy transaction-->
+            <tr> <th align='left'><b>Product Name</b></th> 
+            <th align='center'><b>Description</b></th > 
+            <th align='left'><b>Price</b></th >
+            <th align='left'><b>Stock Level</b></th>
+            <th align='left'><b>Image</b></th>
+            <th align='left'><b></b></th>
+            <th align='left'><b></b></th>
             </tr>
 
-            <td>Customer</td>
+            <td>Product</td>
             <td>Sportswear/Racket</td>
-            <td>Awaiting Shipment</td>
-            <td>Shipping</td>
-            <td><button id="View"> <a href="">  View Transaction Page </a> </button></td>
+            <td>£15.99</td>
+            <td>10</td>
+            <td></td>
+            <td><button id="Edit"> <a href="">  Edit </a> </button></td>
+            <td><button id="Remove"> <a href="">  Remove </a> </button></td>
+            
 
             </table>
+            <br>
+
+            <button id="Add"> <a href="">  Add New Product </a> </button>
+            <br>
+            <br>
+
+            <form id ="Adding-Product">
+            <input type ="text" name="name" id="Product" placeholder="Product Name" required/>
+            <input type ="text" name="Description" id="Description" placeholder="Enter Product Description" required/>
+            <br>
+            <input type="number" name="Price" id="Price" placeholder="Enter Product Price" required/>
+            <input type="number" name="Stock" id="Stock" placeholder="Enter Stock amount" required/>
+            <br>
+            <input type="text" name="Image" id="Image" placeholder="Enter Image URL" required/><br>
+            
+
+            <button class="Submission-button" type= "submit">submit</button> 
+            <br>
+        </form>
 
 
 
