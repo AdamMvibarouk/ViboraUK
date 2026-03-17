@@ -24,7 +24,27 @@ document.addEventListener("DOMContentLoaded", () => {
     "Panna 25 Padel Racket":
       "database/images/products/rackets/Panna TF Padel Racket.jpg",
     "Pro X 25 Padel Racket":
-      "database/images/products/rackets/pro-x-25-padel-racket.jpeg"
+      "database/images/products/rackets/pro-x-25-padel-racket.jpeg",
+    "Arlo 25 Padel Racket":
+      "database/images/products/rackets/Arlo Padel Racket.jpg",
+    "Bullpadel Vertex 04 25":
+      "database/images/products/rackets/RACKET BULLPADEL VERTEX 04 25.jpg",
+    "Bullpadel Vertex 04 MX 24":
+      "database/images/products/rackets/RACKET BULLPADEL VERTEX 04 MX 24.jpg",
+    "Bullpadel Pearl 25":
+      "database/images/products/rackets/racket-bullpadel-pearl-25.jpg",
+    "Bullpadel Vertex JR 25":
+    "database/images/products/rackets/bullpadel-vertex-jr-25.jpeg",
+    "Nox AT10 Genius 18K Alum 2026":
+      "database/images/products/rackets/nox-at10-genius-18k-alum-2026.jpeg",
+    "Nox X-One Casual Series 23":
+      "database/images/products/rackets/nox-x-one-casual-series-23.jpeg",
+    "Head Evo Extreme 2025":
+      "database/images/products/rackets/head-evo-extreme-2025.jpeg",
+    "Head Speed Motion 2025":
+      "database/images/products/rackets/HEAD EVO EXTREME 2025.jpg",
+    "Babolat Air Origin":
+      "database/images/products/rackets/Babolat-Air-Vertuo-Padel-Racket-2025.png"
   };
 
   if (!container) return;
@@ -44,54 +64,51 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderProducts(products) {
-    container.innerHTML = "";
+  container.innerHTML = "";
 
-    if (!products || products.length === 0) {
-      container.innerHTML = "<p>No rackets found.</p>";
-      return;
-    }
+  if (!products || products.length === 0) {
+    container.innerHTML = "<p>No sportswear found.</p>";
+    return;
+  }
 
-    products.forEach((product) => {
-      const card = document.createElement("div");
-      card.classList.add("product-card");
+  products.forEach((product) => {
+    const card = document.createElement("div");
+    card.classList.add("product-card");
 
-      const name = product.name || "Racket";
-      const brand = (product.brand || "").toString();
-      const level = (product.level || "").toString();
-      const material = (product.material || "").toString();
+    const name = product.name || "Sportswear item";
+    const brand = (product.brand || "").toString();
+    const level = (product.level || "").toString();
+    const material = (product.material || "").toString();
+    const priceValue =
+      product.base_price !== null && product.base_price !== undefined
+        ? Number(product.base_price)
+        : null;
 
-      const priceValue =
-        product.base_price !== null && product.base_price !== undefined
-          ? Number(product.base_price)
-          : null;
+    // Use sportswearImages mapping if available, otherwise use product.image_url or default
+    const imageUrl = racketImages[name] || product.image_url || "images/racket1.jpg";
 
-      const imageUrl = getImageUrl(product);
+    const priceHtml =
+      priceValue !== null && !Number.isNaN(priceValue)
+        ? `<div class="product-price">£${priceValue.toFixed(2)}</div>`
+        : `<div class="product-price">Price on request</div>`;
 
-      const priceHtml =
-        priceValue !== null && !Number.isNaN(priceValue)
-          ? `<div class="product-price">£${priceValue.toFixed(2)}</div>`
-          : `<div class="product-price">Price on request</div>`;
-
-      card.innerHTML = `
-        <img src="${imageUrl}" alt="${name}">
-        <div class="product-info">
-          <div class="product-name">${name}</div>
-          <div class="product-meta">
-            ${brand ? `<span class="product-brand">${brand}</span>` : ""}
-            ${level ? `<span class="product-level">${level}</span>` : ""}
-            ${material ? `<span class="product-material">${material}</span>` : ""}
-          </div>
-          <div class="product-bottom">
-            ${priceHtml}
-            <button class="product-details-btn" data-product-id="${product.product_id}">
-              See Details
-            </button>
-          </div>
+    card.innerHTML = `
+      <img src="${imageUrl}" alt="${name}">
+      <div class="product-info">
+        <div class="product-name">${name}</div>
+        <div class="product-meta">
+          ${brand ? `<span class="product-brand">${brand}</span>` : ""}
+          ${level ? `<span class="product-level">${level}</span>` : ""}
+          ${material ? `<span class="product-material">${material}</span>` : ""}
         </div>
-      `;
+        ${priceHtml}
+      </div>
+    `;
 
-      container.appendChild(card);
-    });
+    container.appendChild(card);
+  });
+}
+
 
     container.querySelectorAll(".product-details-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -101,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-  }
+  
 
   function priceMatches(price, filter) {
     if (!price && price !== 0) return filter === "all";
