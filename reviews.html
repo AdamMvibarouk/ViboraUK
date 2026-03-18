@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reviews</title>
+        <link rel="stylesheet" href="styling.css">  
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+     </head>
+
+     <body>
+        <header id="main-header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/Vibora_UK_logo.png" alt="Vibora UK logo">
+                    <span>VIBORA UK</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rackets">Rackets</a></li>
+                    <li><a href="sportswear">Sportswear</a></li>
+        
+                    <li class="dropdown">
+                        <a href="#">More</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="bags.html">Bags</a></li>
+                            <li><a href="shoes.html">Shoes</a></li>
+                            <li><a href="balls.html">Balls</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="reviews.html" class="active">Reviews</a></li>
+                        </ul>
+                    </li>
+        
+                    <li><a href="AboutUs.html">About Us</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="login">
+                <a href="Basket.html" class="basket-link">
+                    <img src="images/shopping-basket-icon-png-3309830814.png" class="basket-icon" alt="Basket">
+                </a>
+                <a href="accountPage.html" class="login-btn">Login</a>
+            </div>
+        </header>
+
+        <section id="reviews">
+            <h1>REVIEWS</h1>
+            <p>Share your experience with Vibora UK and read what other customers have said.</p>
+
+            <form id="review-form">
+                <input type="text" id="review-name" placeholder="Full Name" required>
+
+                <select id="review-rating" required>
+                    <option value="">Select Rating</option>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="3">3 - Good</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="1">1 - Poor</option>
+                </select>
+
+                <textarea id="review-message" rows="6" placeholder="Write your review here..." required></textarea>
+
+                <button type="submit" id="review-submit">Submit Review</button>
+            </form>
+
+            <div id="reviews-list"></div>
+        </section>
+
+        <footer>
+            <h4>@ ViboraUK</h4>
+            <div class = "credentials">
+                <h5><a href="./footers/T_and_C.html">Terms and Conditions</a></h5>
+                <h5><a href="./footers/PrivacyPolicy.html">Privacy Policy</a></h5>
+                <h5><a href="./footers/Cookies.html">Cookies</a></h5>
+                <h5><a href="./footers/DeliveryInformation.html">Delivery Information</a></h5>
+                <h5><a href="./footers/Returns.html">Returns</a></h5>
+                <h5><a href="contact-us.html">Contact</a></h5>
+            </div>
+            <script src="tanimscript.js"></script>
+        </footer>
+
+        <footer>
+            <p>&copy; 2025 PADEL UK. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
