@@ -36,7 +36,11 @@
         <a href="{{ url('/basket') }}" class="basket-link">
             <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" class="basket-icon" alt="Basket">
         </a>
-        <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @auth
+    <a href="{{ url('/account') }}" class="login-btn">My Account</a>
+@else
+    <a href="{{ url('/account') }}" class="login-btn">Login</a>
+@endauth
     </div>
 </header>
 
@@ -95,8 +99,28 @@
         </div>
     </div>
 </section>
+
+<!-- Chatbot -->
+<div id="chatbot-container">
+    <button id="chat-toggle" type="button">Chat</button>
+
+    <div id="chat-window" class="hidden">
+        <div id="chat-header">
+            <span>Vibora Assistant</span>
+            <button id="chat-close" type="button">&times;</button>
+        </div>
+
+        <div id="chat-messages"></div>
+
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message..." />
+            <button id="chat-send" type="button">Send</button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
 <script src="{{ asset('js/tanimscript.js') }}"></script>
+<script src="{{ asset('js/chatbot.js') }}"></script>
 @endsection

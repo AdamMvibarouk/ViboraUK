@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function balls()
     {
-        $products = Product::where('category_id', 'e6660920-cf7e-11f0-a24b-005056b707be')->get();
+        $products = Product::where('category_id', 'e6660af2-cf7e-11f0-a24b-005056b707be')->get();
         return view('balls', compact('products'));
     }
 

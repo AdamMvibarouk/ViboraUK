@@ -38,7 +38,11 @@
             <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" class="basket-icon" alt="Basket">
         </a>
 
-        <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @auth
+            <a href="{{ url('/account') }}" class="login-btn">My Account</a>
+        @else
+            <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @endauth
     </div>
 </header>
 
@@ -99,11 +103,55 @@
 
 <div class="products-container" id="productsContainer">
     @forelse($products as $product)
+        @php
+            $productId = $product->id ?? $product->product_id ?? $product->slug;
+
+            $slug = $product->slug ?? '';
+
+            $slugImageMap = [
+                'babolat-x-lamborghini-bl002-scandal-green' => 'BABOLAT X LAMBORGHINT BL002 SCANDAL GREEN.jpg',
+                'mirage-25-padel-racket' => 'Mirage-Front-2655789586.jpg',
+                'panna-25-padel-racket' => 'Panna TF Padel Racket.jpg',
+                'pro-x-25-padel-racket' => 'pro-x-25-padel-racket.jpeg',
+                'arlo-25-padel-racket' => 'Arlo Padel Racket.jpg',
+                'bullpadel-vertex-04-25' => 'RACKET BULLPADEL VERTEX 04 25.jpg',
+                'head-evo-extreme-2025' => 'HEAD EVO EXTREME 2025.jpg',
+                'head-speed-motion-2025' => 'head-speed-motion-2025.jpeg',
+                'nox-at10-genius-18k-alum-2026' => 'nox-at10-genius-18k-alum-2026.jpeg',
+                'nox-x-one-casual-series-23' => 'nox-x-one-casual-series-23.jpeg',
+                'bullpadel-vertex-jr-25' => 'bullpadel-vertex-jr-25.jpeg',
+            ];
+
+            $imageFile = $slugImageMap[$slug] ?? null;
+        @endphp
+
         <div class="product-card">
-            <img src="{{ asset('products/rackets/' . ($product->image_url ?: 'Arlo Padel Racket.jpg')) }}" alt="{{ $product->name }}">
+            @if($imageFile)
+                <img
+                    src="{{ asset('products/rackets/' . rawurlencode($imageFile)) }}"
+                    alt="{{ $product->name }}"
+                    onerror="this.onerror=null;this.src='{{ asset('images/Vibora_UK_logo.png') }}';"
+                >
+            @else
+                <img
+                    src="{{ asset('images/Vibora_UK_logo.png') }}"
+                    alt="{{ $product->name }}"
+                >
+            @endif
+
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->slug }}</p>
             <p>£{{ number_format((float) $product->base_price, 2) }}</p>
+
+            <button
+                type="button"
+                class="add-to-basket-btn"
+                data-product-id="{{ $productId }}"
+                data-product-name="{{ $product->name }}"
+                data-product-price="{{ (float) $product->base_price }}"
+            >
+                Add to Basket
+            </button>
         </div>
     @empty
         <p>No rackets found.</p>
@@ -127,4 +175,52 @@
 
 @section('scripts')
 <script src="{{ asset('js/script1.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".add-to-basket-btn");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            const productId = button.getAttribute("data-product-id");
+            const productName = button.getAttribute("data-product-name");
+            const productPrice = button.getAttribute("data-product-price");
+
+            if (!productId || !productName || !productPrice) {
+                alert("Product info missing on page.");
+                console.log({ productId, productName, productPrice });
+                return;
+            }
+
+            try {
+                const res = await fetch("/api/cart/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        product_id: productId,
+                        name: productName,
+                        price: Number(productPrice),
+                        quantity: 1
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Failed to add item to basket.");
+                    return;
+                }
+
+                alert(productName + " added to basket.");
+            } catch (err) {
+                console.error("Add to basket error:", err);
+                alert("There was a problem adding this item to the basket.");
+            }
+        });
+    });
+});
+</script>
 @endsection

@@ -1,21 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Group 18')</title>
+<?php
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style1.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styleARM.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styling.css') }}">
+namespace App\Http\Controllers;
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-</head>
-<body>
-    @yield('content')
-    @yield('scripts')
-</body>
-</html>
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+class AuthController extends Controller
+{
+    public function showSignup()
+    {
+        return view('signup');
+    }
+
+    public function showAccount()
+    {
+        return view('account');
+    }
+
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|confirmed|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        $user = User::create([
+            'user_id' => (string) Str::uuid(),
+            'email' => $request->email,
+            'password_hash' => Hash::make($request->password),
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/account')->with('success', 'Account created successfully.');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect('/account')->with('success', 'Logged in successfully.');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid email or password.',
+        ])->withInput();
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/account')->with('success', 'Logged out successfully.');
+    }
+}

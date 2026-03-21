@@ -36,7 +36,11 @@
             <img src="{{ asset('images/basket.png') }}" alt="Basket" class="basket-icon">
         </a>
 
-        <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @auth
+    <a href="{{ url('/account') }}" class="login-btn">My Account</a>
+@else
+    <a href="{{ url('/account') }}" class="login-btn">Login</a>
+@endauth
     </div>
 </header>
 

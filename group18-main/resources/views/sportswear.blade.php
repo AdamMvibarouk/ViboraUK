@@ -38,7 +38,11 @@
             <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" class="basket-icon" alt="Basket">
         </a>
 
-        <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @auth
+            <a href="{{ url('/account') }}" class="login-btn">My Account</a>
+        @else
+            <a href="{{ url('/account') }}" class="login-btn">Login</a>
+        @endauth
     </div>
 </header>
 
@@ -105,6 +109,16 @@
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->slug }}</p>
             <p>£{{ number_format((float) $product->base_price, 2) }}</p>
+
+            <button
+                type="button"
+                class="add-to-basket-btn"
+                data-product-id="{{ $product->id }}"
+                data-product-name="{{ $product->name }}"
+                data-product-price="{{ (float) $product->base_price }}"
+            >
+                Add to Basket
+            </button>
         </div>
     @empty
         <p>No sportswear found.</p>
@@ -128,4 +142,46 @@
 
 @section('scripts')
 <script src="{{ asset('js/script1.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".add-to-basket-btn");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            const productId = button.getAttribute("data-product-id");
+            const productName = button.getAttribute("data-product-name");
+            const productPrice = button.getAttribute("data-product-price");
+
+            try {
+                const res = await fetch("/api/cart/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        product_id: productId,
+                        name: productName,
+                        price: Number(productPrice),
+                        quantity: 1
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Failed to add item to basket.");
+                    return;
+                }
+
+                alert(productName + " added to basket.");
+            } catch (err) {
+                console.error("Add to basket error:", err);
+                alert("There was a problem adding this item to the basket.");
+            }
+        });
+    });
+});
+</script>
 @endsection

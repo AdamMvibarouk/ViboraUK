@@ -42,65 +42,47 @@
     </div>
 </header>
 
-
 <div class="signup-content">
     <h1>Signup</h1>
 
     <section id="Signup">
         <h2>Enter the specified details below</h2>
 
-        <form id="signup-form">
+        @if ($errors->any())
+            <div id="signup-message" style="color: red; margin-bottom: 10px;">
+                <ul style="margin: 0; padding-left: 20px;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            <input type="text" name="first_name" id="first_name" placeholder="First Name" required />
-            <input type="text" name="last_name" id="last_name" placeholder="Surname" required />
+        <form method="POST" action="{{ route('signup.post') }}">
+            @csrf
 
-            <label for="birthday">Date of Birth:</label>
-            <input type="date" id="birthday" name="birthday" required />
+            <input type="text" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required />
+            <input type="text" name="last_name" placeholder="Surname" value="{{ old('last_name') }}" required />
 
-            <br>
+            <br><br>
 
-            <input type="email" id="email" name="email" placeholder="Email" required />
-            <input type="email" id="emailconfirm" name="emailconfirm" placeholder="Email Confirmation" required />
+            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required />
+            <input type="email" name="email_confirmation" placeholder="Email Confirmation" value="{{ old('email_confirmation') }}" required />
 
-            <br>
+            <br><br>
 
-            <input type="password" id="password" name="password" placeholder="Password" required />
-            <input type="password" id="passwordconfirm" name="passwordconfirm" placeholder="Password Confirmation" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <input type="password" name="password_confirmation" placeholder="Password Confirmation" required />
 
-            <br>
+            <br><br>
 
-            <input type="tel" id="phone" name="PhoneNumber" placeholder="Phone Number (optional)" pattern="[0-9]{11}" />
+            <input type="tel" name="phone" placeholder="Phone Number (optional)" value="{{ old('phone') }}" />
 
-            <br>
-
-            How do you prefer to be contacted by?
-
-            <label>
-                <input type="checkbox" id="emailA" value="Email Address"> Email
-            </label>
-
-            <label>
-                <input type="checkbox" name="PhoneN" value="Phone Number"> Mobile
-            </label>
-
-            <br>
+            <br><br>
 
             <button class="Submission-button" type="submit">Submit</button>
-
-            <br>
-
-            <div id="signup-message"></div>
-
         </form>
     </section>
 </div>
-
-@endsection
-
-
-@section('scripts')
-
-<script src="{{ asset('js/api.js') }}"></script>
-<script src="{{ asset('js/Signup.js') }}"></script>
 
 @endsection

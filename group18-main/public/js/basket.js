@@ -6,17 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadBasket() {
   const itemsBody = document.getElementById("basket-items");
   const totalEl = document.getElementById("basket-total");
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    alert("Please log in first.");
-    window.location.href = "accountPage.html";
-    return;
-  }
 
   try {
-    const res = await fetch("http://localhost:5000/api/cart", {
-      headers: { Authorization: "Bearer " + token },
+    const res = await fetch("/api/cart", {
+      credentials: "include",
     });
 
     const data = await res.json();
@@ -38,7 +31,10 @@ async function loadBasket() {
     }
 
     items.forEach((item) => {
-      const lineTotal = Number(item.line_total) || 0;
+      const price = Number(item.price) || 0;
+      const quantity = Number(item.quantity) || 0;
+      const lineTotal = price * quantity;
+
       grandTotal += lineTotal;
 
       const tr = document.createElement("tr");
@@ -47,16 +43,16 @@ async function loadBasket() {
 
         <td>
           <div class="qty-control" data-id="${item.cart_item_id}">
-            <button class="qty-minus">-</button>
-            <span class="qty-number">${item.quantity}</span>
-            <button class="qty-plus">+</button>
+            <button type="button" class="qty-minus">-</button>
+            <span class="qty-number">${quantity}</span>
+            <button type="button" class="qty-plus">+</button>
           </div>
         </td>
 
         <td><h2>£${lineTotal.toFixed(2)}</h2></td>
 
         <td>
-          <button class="remove-btn" data-id="${item.cart_item_id}">
+          <button type="button" class="remove-btn" data-id="${item.cart_item_id}">
             Remove
           </button>
         </td>
@@ -65,23 +61,26 @@ async function loadBasket() {
     });
 
     totalEl.textContent = `£${grandTotal.toFixed(2)}`;
-    enableRemoval(token);
-    enableQuantityButtons(token);
+    enableRemoval();
+    enableQuantityButtons();
   } catch (err) {
     console.error("Error loading basket:", err);
+    itemsBody.innerHTML = `<tr><td colspan="4">Error loading basket.</td></tr>`;
+    totalEl.textContent = "£00.00";
   }
 }
 
-function enableRemoval(token) {
+function enableRemoval() {
   document.querySelectorAll(".remove-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-id");
 
       try {
-        await fetch(`http://localhost:5000/api/cart/remove/${id}`, {
+        await fetch(`/api/cart/remove/${id}`, {
           method: "DELETE",
-          headers: { Authorization: "Bearer " + token },
+          credentials: "include",
         });
+
         loadBasket();
       } catch (err) {
         console.error("Error removing item:", err);
@@ -90,7 +89,7 @@ function enableRemoval(token) {
   });
 }
 
-function enableQuantityButtons(token) {
+function enableQuantityButtons() {
   document.querySelectorAll(".qty-control").forEach((box) => {
     const id = box.getAttribute("data-id");
     const minusBtn = box.querySelector(".qty-minus");
@@ -103,20 +102,21 @@ function enableQuantityButtons(token) {
 
       try {
         if (newQty < 1) {
-          await fetch(`http://localhost:5000/api/cart/remove/${id}`, {
+          await fetch(`/api/cart/remove/${id}`, {
             method: "DELETE",
-            headers: { Authorization: "Bearer " + token },
+            credentials: "include",
           });
         } else {
-          await fetch(`http://localhost:5000/api/cart/update/${id}`, {
+          await fetch(`/api/cart/update/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
             },
+            credentials: "include",
             body: JSON.stringify({ quantity: newQty }),
           });
         }
+
         loadBasket();
       } catch (err) {
         console.error("Error updating quantity:", err);
@@ -128,14 +128,15 @@ function enableQuantityButtons(token) {
       const newQty = current + 1;
 
       try {
-        await fetch(`http://localhost:5000/api/cart/update/${id}`, {
+        await fetch(`/api/cart/update/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
           },
+          credentials: "include",
           body: JSON.stringify({ quantity: newQty }),
         });
+
         loadBasket();
       } catch (err) {
         console.error("Error updating quantity:", err);
@@ -151,13 +152,6 @@ function setupCheckoutForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in before checking out.");
-      window.location.href = "accountPage.html";
-      return;
-    }
-
     const nameOnCard = form.elements["nameOnCard"].value.trim();
     const numberOnCard = form.elements["numberOnCard"].value.trim();
     const expiry = form.elements["expiry"].value.trim();
@@ -169,26 +163,22 @@ function setupCheckoutForm() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/orders/checkout", {
+      const res = await fetch("/api/cart/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
         },
-        body: JSON.stringify({
-          payment_method: "card",
-          card_last4: numberOnCard.slice(-4),
-        }),
+        credentials: "include",
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || "There was a problem completing your order.");
+        alert(data.message || "There was a problem completing your order.");
         return;
       }
 
-      alert("Thank you! Your order is being processed.");
+      alert("Thank you! Your order has been placed.");
       form.reset();
       loadBasket();
     } catch (err) {
