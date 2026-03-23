@@ -7,7 +7,7 @@
 <header id="main-header">
     <div class="logo">
         <a href="{{ url('/') }}">
-            <img src="{{ asset('images/Vibora UK.png') }}" alt="Vibora UK logo">
+            <img src="{{ asset('images/Vibora_UK_logo.png') }}" alt="Vibora UK logo">
             <span>VIBORA UK</span>
         </a>
     </div>
@@ -24,6 +24,8 @@
                     <li><a href="{{ url('/shoes') }}">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
+                    <li><a href="{{ route('admin.login') }}">ADMIN</a></li>
                 </ul>
             </li>
             <li><a href="{{ url('/about') }}" class="active">About Us</a></li>
@@ -32,9 +34,13 @@
     </nav>
 
     <div class="login">
-        <a href="{{ url('/basket') }}" class="basket-link">
-            <img src="{{ asset('images/basket.png') }}" alt="Basket" class="basket-icon">
+        <a href="{{ route('wishlist.index') }}" class="wishlist-link">
+            <img src="{{ asset('images/heart-icon.png') }}" class="wishlist-icon" alt="Wishlist">
         </a>
+        <a href="{{ url('/basket') }}" class="basket-link">
+            <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" alt="Basket" class="basket-icon">
+        </a>
+        
 
         @auth
     <a href="{{ url('/account') }}" class="login-btn">My Account</a>

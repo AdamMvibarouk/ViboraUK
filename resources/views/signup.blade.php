@@ -25,6 +25,8 @@
                     <li><a href="{{ url('/shoes') }}">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
+                    <li><a href="{{ route('admin.login') }}">ADMIN</a></li>
                 </ul>
             </li>
 
@@ -42,15 +44,14 @@
     </div>
 </header>
 
-<div class="signup-content">
-    <h1>Signup</h1>
-
-    <section id="Signup">
-        <h2>Enter the specified details below</h2>
+<div class="auth-page">
+    <div class="auth-card" style="max-width: 700px;">
+        <h1>Create Account</h1>
+        <p class="auth-subtitle">Join Vibora UK today</p>
 
         @if ($errors->any())
-            <div id="signup-message" style="color: red; margin-bottom: 10px;">
-                <ul style="margin: 0; padding-left: 20px;">
+            <div class="auth-errors">
+                <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -58,31 +59,71 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('signup.post') }}">
+        <form method="POST" action="{{ route('signup.post') }}" class="auth-form">
             @csrf
 
-            <input type="text" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required />
-            <input type="text" name="last_name" placeholder="Surname" value="{{ old('last_name') }}" required />
+            <div class="auth-row">
+                <div>
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" required>
+                </div>
 
-            <br><br>
+                <div>
+                    <label for="last_name">Surname</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" required>
+                </div>
+            </div>
 
-            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required />
-            <input type="email" name="email_confirmation" placeholder="Email Confirmation" value="{{ old('email_confirmation') }}" required />
+            <div class="auth-row">
+                <div>
+                    <label for="signup_email">Email</label>
+                    <input type="email" id="signup_email" name="email" value="{{ old('email') }}" required>
+                </div>
 
-            <br><br>
+                <div>
+                    <label for="signup_email_confirmation">Confirm Email</label>
+                    <input type="email" id="signup_email_confirmation" name="email_confirmation" value="{{ old('email_confirmation') }}" required>
+                </div>
+            </div>
 
-            <input type="password" name="password" placeholder="Password" required />
-            <input type="password" name="password_confirmation" placeholder="Password Confirmation" required />
+            <div>
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" value="{{ old('phone') }}">
+            </div>
 
-            <br><br>
+            <div class="auth-row">
+                <div>
+                    <label for="signup_password">Password</label>
+                    <input type="password" id="signup_password" name="password" required>
+                </div>
 
-            <input type="tel" name="phone" placeholder="Phone Number (optional)" value="{{ old('phone') }}" />
+                <div>
+                    <label for="signup_password_confirmation">Confirm Password</label>
+                    <input type="password" id="signup_password_confirmation" name="password_confirmation" required>
+                </div>
+            </div>
 
-            <br><br>
-
-            <button class="Submission-button" type="submit">Submit</button>
+            <button class="auth-btn" type="submit">Create Account</button>
         </form>
-    </section>
+
+        <div class="auth-link-row">
+            Already have an account?
+            <a href="{{ url('/account') }}">Login here</a>
+        </div>
+    </div>
 </div>
+
+<footer>
+    <h5>@ ViboraUK Ltd</h5>
+
+    <div class="credentials">
+        <h6><a href="{{ url('/terms') }}">Terms and Conditions</a></h6>
+        <h6><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></h6>
+        <h6><a href="{{ url('/cookies') }}">Cookies</a></h6>
+        <h6><a href="{{ url('/delivery-information') }}">Delivery Information</a></h6>
+        <h6><a href="{{ url('/returns') }}">Returns</a></h6>
+        <h6><a href="{{ url('/contact') }}">Contact</a></h6>
+    </div>
+</footer>
 
 @endsection

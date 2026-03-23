@@ -1,77 +1,41 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Vibora UK')</title>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/styling.css') }}?v=8">
+    @yield('head')
+</head>
+<body>
+    <button id="darkModeToggle" class="dark-mode-toggle" type="button">
+        Toggle Dark Mode
+    </button>
 
-namespace App\Http\Controllers;
+    @yield('content')
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('darkModeToggle');
 
-class AuthController extends Controller
-{
-    public function showSignup()
-    {
-        return view('signup');
-    }
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
 
-    public function showAccount()
-    {
-        return view('account');
-    }
+            toggleBtn.addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
 
-    public function signup(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|confirmed|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            'phone' => 'nullable|string|max:20',
-        ]);
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
 
-        $user = User::create([
-            'user_id' => (string) Str::uuid(),
-            'email' => $request->email,
-            'password_hash' => Hash::make($request->password),
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/account')->with('success', 'Account created successfully.');
-    }
-
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/account')->with('success', 'Logged in successfully.');
-        }
-
-        return back()->withErrors([
-            'email' => 'Invalid email or password.',
-        ])->withInput();
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/account')->with('success', 'Logged out successfully.');
-    }
-}
+    @yield('scripts')
+</body>
+</html>

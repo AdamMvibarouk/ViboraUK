@@ -25,6 +25,7 @@
                     <li><a href="{{ url('/shoes') }}">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
                 </ul>
             </li>
 
@@ -34,6 +35,9 @@
     </nav>
 
     <div class="login">
+        <a href="{{ route('wishlist.index') }}" class="wishlist-link">
+            <img src="{{ asset('images/heart-icon.png') }}" class="wishlist-icon" alt="Wishlist">
+        </a>
         <a href="{{ url('/basket') }}" class="basket-link">
             <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" class="basket-icon" alt="Basket">
         </a>
@@ -56,18 +60,6 @@
 </div>
 
 <div class="filter-container">
-
-    <div class="filter">
-        <label for="sportswearbrands">Brand:</label>
-        <select id="sportswearbrands" name="sportswearbrands">
-            <option value="all">All</option>
-            <option value="bullpadel">Bullpadel</option>
-            <option value="y1">Y1</option>
-            <option value="nox">NOX</option>
-            <option value="head">Head</option>
-        </select>
-    </div>
-
     <div class="filter">
         <label for="price">Price:</label>
         <select id="price" name="price">
@@ -81,31 +73,67 @@
     </div>
 
     <div class="filter">
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender">
-            <option value="all">All</option>
-            <option value="male">M</option>
-            <option value="female">F</option>
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="default">Default</option>
+            <option value="name-asc">Name A-Z</option>
+            <option value="name-desc">Name Z-A</option>
+            <option value="price-asc">Price Low to High</option>
+            <option value="price-desc">Price High to Low</option>
         </select>
     </div>
-
-    <div class="filter">
-        <label for="material">Material:</label>
-        <select id="material" name="material">
-            <option value="all">All</option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-            <option value="c">C</option>
-            <option value="d">D</option>
-        </select>
-    </div>
-
+<div class="filter">
+<label for="brands">Brand:</label>
+<select id="brands">
+<option value="all">All</option>
+<option value="babolat">Babolat</option>
+<option value="bullpadel">Bullpadel</option>
+<option value="head">Head</option>
+<option value="nox">NOX</option>
+</select>
+</div>
 </div>
 
 <div class="products-container" id="productsContainer">
     @forelse($products as $product)
-        <div class="product-card">
-            <img src="{{ asset('products/sportswear/' . ($product->image_url ?: 'default-sportswear.jpg')) }}" alt="{{ $product->name }}">
+        @php
+            $productId = $product->product_id ?? $product->id ?? $product->slug;
+            $slug = $product->slug ?? '';
+
+            $slugImageMap = [
+                'short-sleeve-training-top-mens-black' => 'Short Sleeve Training Top Mens Black.jpg',
+                'short-sleeve-training-top-mens-navy' => 'Short Sleeve Training Top Mens Navy.jpg',
+                'short-sleeve-training-top-mens-red' => 'Short Sleeve Training Top Mens Red.jpg',
+                'short-sleeve-training-top-mens-white' => 'Short Sleeve Training Top Mens White.jpg',
+                'short-sleeve-training-top-womens-navy' => 'Short Sleeve Training Top Womens Navy.jpg',
+                'short-sleeve-training-top-womens-red' => 'Short Sleeve Training Top Womens Red.jpg',
+                't-shirt-bullpadel-batea-woman' => 'T-SHIRT BULLPADEL BATEA WOMAN.jpg',
+                't-shirt-bullpadel-paquito-25i-white' => 'T-SHIRT BULLPADEL PAQUITO 25I WHITE.jpg',
+                't-shirt-lacoste-th5195' => 'T-SHIRT LACOSTE TH5195.jpg',
+                't-shirt-nox-pro-2025' => 'T-SHIRT NOX PRO 2025.jpg',
+            ];
+
+            $imageFile = !empty($product->image_url)
+                ? $product->image_url
+                : ($slugImageMap[$slug] ?? null);
+        @endphp
+
+        <div
+            class="product-card"
+            data-name="{{ strtolower($product->name) }}"
+            data-slug="{{ strtolower($product->slug) }}"
+            data-description="{{ strtolower($product->description ?? '') }}"
+            data-price="{{ (float) $product->base_price }}"
+        >
+<img
+    src="{{ !empty($product->image_url) ? asset('products/tshirts/' . rawurlencode($product->image_url)) : asset('images/Vibora_UK_logo.png') }}"
+    alt="{{ $product->name }}"
+    onerror="this.onerror=null; this.src='{{ asset('images/Vibora_UK_logo.png') }}';"
+>
+
+<p style="font-size: 12px; color: #666; margin-top: 8px;">
+    {{ $product->image_url }}
+</p>
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->slug }}</p>
             <p>£{{ number_format((float) $product->base_price, 2) }}</p>
@@ -113,12 +141,24 @@
             <button
                 type="button"
                 class="add-to-basket-btn"
-                data-product-id="{{ $product->id }}"
+                data-product-id="{{ $productId }}"
                 data-product-name="{{ $product->name }}"
                 data-product-price="{{ (float) $product->base_price }}"
             >
                 Add to Basket
             </button>
+            
+                <button
+    type="button"
+    class="add-to-wishlist-btn"
+    data-product-id="{{ $productId }}"
+    data-product-name="{{ $product->name }}"
+    data-product-price="{{ (float) $product->base_price }}"
+    data-product-image="{{ $imageFile ? 'products/rackets/' . rawurlencode($imageFile) : 'images/Vibora_UK_logo.png' }}"
+    data-product-slug="{{ $product->slug }}"
+>
+    Add to Wishlist
+</button>
         </div>
     @empty
         <p>No sportswear found.</p>
@@ -142,46 +182,4 @@
 
 @section('scripts')
 <script src="{{ asset('js/script1.js') }}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".add-to-basket-btn");
-
-    buttons.forEach((button) => {
-        button.addEventListener("click", async () => {
-            const productId = button.getAttribute("data-product-id");
-            const productName = button.getAttribute("data-product-name");
-            const productPrice = button.getAttribute("data-product-price");
-
-            try {
-                const res = await fetch("/api/cart/add", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        product_id: productId,
-                        name: productName,
-                        price: Number(productPrice),
-                        quantity: 1
-                    })
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    alert(data.message || "Failed to add item to basket.");
-                    return;
-                }
-
-                alert(productName + " added to basket.");
-            } catch (err) {
-                console.error("Add to basket error:", err);
-                alert("There was a problem adding this item to the basket.");
-            }
-        });
-    });
-});
-</script>
 @endsection

@@ -24,6 +24,8 @@
                     <li><a href="{{ url('/shoes') }}">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
+                    <li><a href="{{ route('admin.login') }}">ADMIN</a></li>
                 </ul>
             </li>
             <li><a href="{{ url('/about') }}">About Us</a></li>
@@ -53,102 +55,110 @@
 @auth
 
 <div class="page-title">
-    <h1>MY ACCOUNT</h1>
+    <h1>My Account</h1>
 </div>
 
-<div class="account-content" style="max-width: 1000px; margin: 30px auto; padding: 20px;">
+<div class="account-content" style="max-width: 1100px; margin: 30px auto; padding: 20px;">
     @if(session('success'))
-        <div style="margin-bottom: 20px; padding: 12px; background: #dff0d8; border: 1px solid #b2d8b2;">
+        <div class="auth-success" style="margin-bottom: 20px;">
             {{ session('success') }}
         </div>
     @endif
 
-    <div style="background: #f5f5f5; border-radius: 20px; padding: 30px; text-align: center;">
-        <div style="margin-bottom: 20px;">
+    <div class="account-profile-card">
+        <div class="profile-avatar">
             <img
                 src="{{ Auth::user()->profile_picture ? asset(Auth::user()->profile_picture) : asset('images/Vibora_UK_logo.png') }}"
                 alt="Profile Picture"
-                style="width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 4px solid #a6c400;"
             >
         </div>
 
-        <form action="{{ url('/account/upload-profile-picture') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 25px;">
+        <h2 style="text-align:center;">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
+        <p class="profile-subtitle">Vibora UK Customer</p>
+
+        <form action="{{ route('profile.picture.upload') }}" method="POST" enctype="multipart/form-data" class="auth-form" style="max-width: 420px; margin: 0 auto 24px;">
             @csrf
-            <input type="file" name="profile_picture" required>
-            <button type="submit">Upload Picture</button>
+            <div>
+                <label for="profile_picture">Update Profile Picture</label>
+                <input type="file" id="profile_picture" name="profile_picture" required>
+            </div>
+            <button type="submit" class="auth-btn">Upload Picture</button>
         </form>
 
-        <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
-        <p>Vibora UK Customer</p>
-
-        <div style="margin-top: 25px; text-align: left;">
+        <div class="profile-info">
             <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
             <p><strong>Phone:</strong> {{ Auth::user()->phone ?? 'Not added' }}</p>
         </div>
 
-        <div style="margin-top: 30px; text-align: left;">
-            <h3>Past Orders</h3>
-
-            @if(isset($orders) && count($orders))
-                @foreach($orders as $order)
-                    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: white;">
-                        <p><strong>Order ID:</strong> {{ $order->order_id }}</p>
-                        <p><strong>Date:</strong> {{ $order->created_at ?? 'N/A' }}</p>
-                        <p><strong>Status:</strong> {{ $order->status ?? 'Processing' }}</p>
-                        <p><strong>Total:</strong> £{{ number_format((float)($order->total_amount ?? 0), 2) }}</p>
-                    </div>
-                @endforeach
-            @else
-                <p>You have no past orders yet.</p>
-            @endif
-        </div>
-
-        <div style="margin-top: 30px;">
-            <form action="{{ url('/logout') }}" method="POST">
+        <div style="margin-top: 24px;">
+            <form action="{{ url('/logout') }}" method="POST" style="max-width: 280px; margin: 0 auto;">
                 @csrf
-                <button type="submit">Logout</button>
+                <button type="submit" class="auth-btn">Logout</button>
             </form>
         </div>
+    </div>
+
+    <div class="account-orders-card">
+        <h3>Past Orders</h3>
+
+        @if(isset($orders) && count($orders))
+            @foreach($orders as $order)
+                <div class="order-card">
+                    <p><strong>Order ID:</strong> {{ $order->order_id }}</p>
+                    <p><strong>Date:</strong> {{ $order->created_at ?? 'N/A' }}</p>
+                    <p><strong>Status:</strong> {{ $order->status ?? 'Processing' }}</p>
+                    <p><strong>Total:</strong> £{{ number_format((float)($order->total_amount ?? 0), 2) }}</p>
+                </div>
+            @endforeach
+        @else
+            <p>You have no past orders yet.</p>
+        @endif
     </div>
 </div>
 
 @else
 
-<div class="page-title">
-    <h1>LOGIN</h1>
-</div>
+<div class="auth-page">
+    <div class="auth-card">
+        <h1>Login</h1>
+        <p class="auth-subtitle">Access your Vibora UK account</p>
 
-<div style="max-width: 500px; margin: 40px auto; background: #f5f5f5; padding: 30px; border-radius: 20px;">
-    @if(session('success'))
-        <div style="margin-bottom: 20px; padding: 12px; background: #dff0d8; border: 1px solid #b2d8b2;">
-            {{ session('success') }}
+        @if(session('success'))
+            <div class="auth-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="auth-errors">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ url('/login') }}" method="POST" class="auth-form">
+            @csrf
+
+            <div>
+                <label for="login_email">Email</label>
+                <input type="email" id="login_email" name="email" value="{{ old('email') }}" required>
+            </div>
+
+            <div>
+                <label for="login_password">Password</label>
+                <input type="password" id="login_password" name="password" required>
+            </div>
+
+            <button type="submit" class="auth-btn">Login</button>
+        </form>
+
+        <div class="auth-link-row">
+            Don’t have an account?
+            <a href="{{ url('/signup') }}">Create one here</a>
         </div>
-    @endif
-
-    @if($errors->any())
-        <div style="margin-bottom: 20px; padding: 12px; background: #f2dede; border: 1px solid #e0b4b4;">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
-    <form action="{{ url('/login') }}" method="POST">
-        @csrf
-        <div style="margin-bottom: 15px;">
-            <label>Email</label><br>
-            <input type="email" name="email" value="{{ old('email') }}" required style="width: 100%; padding: 10px;">
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <label>Password</label><br>
-            <input type="password" name="password" required style="width: 100%; padding: 10px;">
-        </div>
-
-        <button type="submit" style="width: 100%;">Login</button>
-    </form>
-
-    <div style="margin-top: 20px; text-align: center;">
-        <p>Don’t have an account?</p>
-        <a href="{{ url('/signup') }}">Create one here</a>
     </div>
 </div>
 
@@ -167,16 +177,4 @@
     </div>
 </footer>
 
-@endsection
-
-@section('scripts')
-<style>
-.nav-profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #000;
-}
-</style>
 @endsection

@@ -25,6 +25,8 @@
                     <li><a href="{{ url('/shoes') }}" class="active">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
+                    <li><a href="{{ route('admin.login') }}">ADMIN</a></li>
                 </ul>
             </li>
 
@@ -34,15 +36,18 @@
     </nav>
 
     <div class="login">
+        <a href="{{ route('wishlist.index') }}" class="wishlist-link">
+            <img src="{{ asset('images/heart-icon.png') }}" class="wishlist-icon" alt="Wishlist">
+        </a>
         <a href="{{ url('/basket') }}" class="basket-link">
             <img src="{{ asset('images/shopping-basket-icon-png-3309830814.png') }}" class="basket-icon" alt="Basket">
         </a>
 
-        @auth
-            <a href="{{ url('/account') }}" class="login-btn">My Account</a>
-        @else
-            <a href="{{ url('/account') }}" class="login-btn">Login</a>
-        @endauth
+      @auth
+    <a href="{{ url('/account') }}" class="login-btn">My Account</a>
+@else
+    <a href="{{ url('/account') }}" class="login-btn">Login</a>
+@endauth
     </div>
 </header>
 
@@ -57,16 +62,6 @@
 
 <div class="filter-container">
 
-    <div class="filter">
-        <label for="shoesbrands">Brand:</label>
-        <select id="shoesbrands" name="shoesbrands">
-            <option value="all">All</option>
-            <option value="bullpadel">Bullpadel</option>
-            <option value="y1">Y1</option>
-            <option value="nox">NOX</option>
-            <option value="head">Head</option>
-        </select>
-    </div>
 
     <div class="filter">
         <label for="price">Price:</label>
@@ -80,36 +75,55 @@
         </select>
     </div>
 
-    <div class="filter">
-        <label for="material">Material:</label>
-        <select id="material" name="material">
-            <option value="all">All</option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-            <option value="c">C</option>
-            <option value="d">D</option>
-        </select>
     </div>
 
 </div>
 
 <div class="products-container" id="productsContainer">
     @forelse($products as $product)
+        @php
+            $productId = $product->id ?? $product->product_id ?? $product->slug;
+            $imageFile = $product->image_url ?: 'default-shoe.jpg';
+        @endphp
+
         <div class="product-card">
-            <img src="{{ asset('products/shoes/' . ($product->image_url ?: 'default-shoe.jpg')) }}" alt="{{ $product->name }}">
-            <h3>{{ $product->name }}</h3>
+            <a href="{{ route('product.show', $product->slug) }}">
+                <img
+                    src="{{ asset('products/shoes/' . rawurlencode($imageFile)) }}"
+                    alt="{{ $product->name }}"
+                    onerror="this.onerror=null;this.src='{{ asset('images/Vibora_UK_logo.png') }}';"
+                >
+            </a>
+
+            <h3>
+                <a href="{{ route('product.show', $product->slug) }}">
+                    {{ $product->name }}
+                </a>
+            </h3>
+
             <p>{{ $product->slug }}</p>
             <p>£{{ number_format((float) $product->base_price, 2) }}</p>
 
             <button
                 type="button"
                 class="add-to-basket-btn"
-                data-product-id="{{ $product->id }}"
+                data-product-id="{{ $productId }}"
                 data-product-name="{{ $product->name }}"
                 data-product-price="{{ (float) $product->base_price }}"
             >
                 Add to Basket
             </button>
+                <button
+    type="button"
+    class="add-to-wishlist-btn"
+    data-product-id="{{ $productId }}"
+    data-product-name="{{ $product->name }}"
+    data-product-price="{{ (float) $product->base_price }}"
+    data-product-image="{{ $imageFile ? 'products/rackets/' . rawurlencode($imageFile) : 'images/Vibora_UK_logo.png' }}"
+    data-product-slug="{{ $product->slug }}"
+>
+    Add to Wishlist
+</button>
         </div>
     @empty
         <p>No shoes found.</p>
@@ -133,46 +147,4 @@
 
 @section('scripts')
 <script src="{{ asset('js/script1.js') }}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".add-to-basket-btn");
-
-    buttons.forEach((button) => {
-        button.addEventListener("click", async () => {
-            const productId = button.getAttribute("data-product-id");
-            const productName = button.getAttribute("data-product-name");
-            const productPrice = button.getAttribute("data-product-price");
-
-            try {
-                const res = await fetch("/api/cart/add", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        product_id: productId,
-                        name: productName,
-                        price: Number(productPrice),
-                        quantity: 1
-                    })
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    alert(data.message || "Failed to add item to basket.");
-                    return;
-                }
-
-                alert(productName + " added to basket.");
-            } catch (err) {
-                console.error("Add to basket error:", err);
-                alert("There was a problem adding this item to the basket.");
-            }
-        });
-    });
-});
-</script>
 @endsection

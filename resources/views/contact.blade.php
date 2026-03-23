@@ -24,6 +24,8 @@
                     <li><a href="{{ url('/shoes') }}">Shoes</a></li>
                     <li><a href="{{ url('/balls') }}">Balls</a></li>
                     <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/reviews') }}">Reviews</a></li>
+                    <li><a href="{{ route('admin.login') }}">ADMIN</a></li>
                 </ul>
             </li>
             <li><a href="{{ url('/about') }}">About Us</a></li>
